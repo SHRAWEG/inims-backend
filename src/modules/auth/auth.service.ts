@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,7 +9,7 @@ import { User } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { TokenResponseDto } from './dto/token-response.dto';
-import { UserResponseDto } from './dto/user-response.dto';
+import { UserResponseDto } from '../users/dto/user-response.dto';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
@@ -25,6 +26,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly auditLogService: AuditLogService,
+    private readonly usersService: UsersService,
   ) {}
 
   async register(
@@ -59,7 +61,7 @@ export class AuthService {
     });
 
     return {
-      user: this.toUserResponse(saved),
+      user: this.usersService.toResponseDto(saved),
       tokens,
     };
   }
@@ -116,7 +118,7 @@ export class AuthService {
     });
 
     return {
-      user: this.toUserResponse(user),
+      user: this.usersService.toResponseDto(user),
       tokens,
     };
   }
@@ -202,15 +204,5 @@ export class AuthService {
   ): Promise<void> {
     const refreshTokenHash = await bcrypt.hash(refreshToken, BCRYPT_ROUNDS);
     await this.userRepository.update(userId, { refreshTokenHash });
-  }
-
-  private toUserResponse(user: User): UserResponseDto {
-    return {
-      id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      role: user.role,
-    };
   }
 }

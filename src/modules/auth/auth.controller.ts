@@ -15,7 +15,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UserContext } from '../../common/types/user-context.type';
 import { buildResponse } from '../../common/utils/response.util';
 import { ApiResponse } from '../../common/types/api-response.type';
-import { UserResponseDto } from './dto/user-response.dto';
+import { UserResponseDto } from '../users/dto/user-response.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
