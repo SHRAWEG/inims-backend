@@ -16,7 +16,6 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { TypesService } from './types.service';
 import { CreateTypeDto } from './dto/create-type.dto';
@@ -25,7 +24,7 @@ import { QueryTypeDto } from './dto/query-type.dto';
 import { TypeResponseDto } from './dto/type-response.dto';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UserRole } from '../../common/enums/user-role.enum';
-import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
 @ApiTags('types')
@@ -46,41 +45,23 @@ export class TypesController {
 
   @Get()
   @ApiOperation({ summary: 'Get all types' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
   @ApiResponse({ status: 200, type: [TypeResponseDto] })
-  async findAll(
-    @Query() query: QueryTypeDto,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
-  ) {
-    const { data, total } = await this.typesService.findAll(
-      query,
-      locale,
-      String(withTranslations) === 'true',
-    );
-    return buildResponse(data, {
-      total,
-      page: query.page,
-      limit: query.limit,
-      totalPages: Math.ceil(total / query.limit),
-    });
+  async findAll(@Query() query: QueryTypeDto) {
+    const result = await this.typesService.findAll(query);
+    return buildResponse(result.data, result.meta);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a type by id' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
   @ApiResponse({ status: 200, type: TypeResponseDto })
   async findOne(
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
+    @Query() query: FindOneQueryDto,
   ) {
-    const data = await this.typesService.findOne(
+    const data = await this.typesService.findById(
       id,
-      locale,
-      String(withTranslations) === 'true',
+      query.locale,
+      query.withTranslations === true,
     );
     return buildResponse(data);
   }

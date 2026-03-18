@@ -1,4 +1,17 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateGenderDto } from './create-gender.dto';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { PartialLocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
-export class UpdateGenderDto extends PartialType(CreateGenderDto) {}
+export class UpdateGenderDto {
+  @ValidateNested()
+  @Type(() => PartialLocalizedFieldDto)
+  @IsOptional()
+  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
+  name?: PartialLocalizedFieldDto;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  isActive?: boolean;
+}

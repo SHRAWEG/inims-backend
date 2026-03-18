@@ -1,21 +1,15 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { MsnpIndicatorTranslation } from './msnp-indicator-translation.entity';
+import { LocalizedField } from '../../../common/types/i18n.type';
 
 @Entity('msnp_indicators')
 export class MsnpIndicator extends BaseEntity {
-  @Column({ name: 'code', type: 'varchar', length: 50, unique: true })
-  code: string;
+  @Column({ type: 'jsonb' })
+  code: LocalizedField;
+
+  @Column({ type: 'jsonb' })
+  name: LocalizedField;
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
-
-  @OneToMany(
-    () => MsnpIndicatorTranslation,
-    (translation: MsnpIndicatorTranslation) => translation.parent,
-    {
-      cascade: true,
-    },
-  )
-  translations: MsnpIndicatorTranslation[];
 }

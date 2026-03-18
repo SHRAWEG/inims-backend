@@ -1,4 +1,17 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateFrequencyDto } from './create-frequency.dto';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { PartialLocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
-export class UpdateFrequencyDto extends PartialType(CreateFrequencyDto) {}
+export class UpdateFrequencyDto {
+  @ValidateNested()
+  @Type(() => PartialLocalizedFieldDto)
+  @IsOptional()
+  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
+  name?: PartialLocalizedFieldDto;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  isActive?: boolean;
+}

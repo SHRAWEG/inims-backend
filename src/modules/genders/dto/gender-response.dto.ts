@@ -1,16 +1,43 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { GenderTranslationDto } from './gender-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  LocalizedField,
+  SupportedLocale,
+} from '../../../common/types/i18n.type';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class GenderResponseDto {
   @ApiProperty()
   id: string;
 
-  @ApiPropertyOptional()
-  name?: string;
-
-  @ApiPropertyOptional({ type: [GenderTranslationDto] })
-  translations?: GenderTranslationDto[];
+  @ApiProperty()
+  name: string;
 
   @ApiProperty()
   isActive: boolean;
+
+  @ApiProperty({ enum: ['en', 'ne'] })
+  locale: SupportedLocale;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+}
+
+export class GenderDetailResponseDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty({ type: LocalizedFieldDto })
+  name: LocalizedField;
+
+  @ApiProperty()
+  isActive: boolean;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

@@ -1,21 +1,43 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { SectorTranslationDto } from './sector-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  LocalizedField,
+  SupportedLocale,
+} from '../../../common/types/i18n.type';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class SectorResponseDto {
   @ApiProperty()
   id: string;
 
   @ApiProperty()
+  name: string; // resolved single string for the requested locale
+
+  @ApiProperty()
   isActive: boolean;
 
-  @ApiPropertyOptional({
-    description: 'Resolved name for the requested locale',
-  })
-  name?: string;
+  @ApiProperty({ enum: ['en', 'ne'] })
+  locale: SupportedLocale;
 
-  @ApiPropertyOptional({
-    type: [SectorTranslationDto],
-    description: 'All translations if withTranslations is true',
-  })
-  translations?: SectorTranslationDto[];
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+}
+
+export class SectorDetailResponseDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty({ type: LocalizedFieldDto })
+  name: LocalizedField; // full object: { en: '...', ne: '...' }
+
+  @ApiProperty()
+  isActive: boolean;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

@@ -1,201 +1,151 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource, FindOptionsWhere } from 'typeorm';
-import { Gender as GenderEntity } from './entities/gender.entity';
-import { GenderTranslation } from './entities/gender-translation.entity';
+import { Repository } from 'typeorm';
+import { Gender } from './entities/gender.entity';
 import { CreateGenderDto } from './dto/create-gender.dto';
 import { UpdateGenderDto } from './dto/update-gender.dto';
-import { QueryGenderDto } from './dto/query-gender.dto';
-import { GenderResponseDto } from './dto/gender-response.dto';
+import {
+  GenderResponseDto,
+  GenderDetailResponseDto,
+} from './dto/gender-response.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
-import {
-  validateTranslations,
-  resolveTranslation,
-} from '../../common/utils/translation.util';
-import { SupportedLocale } from '../../common/types/i18n.type';
+import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
+import { sanitizeForAudit } from '../../common/utils/audit.util';
+import { LocalizedField } from '../../common/types/i18n.type';
 
 @Injectable()
 export class GendersService {
   private readonly logger = new Logger(GendersService.name);
 
   constructor(
-    @InjectRepository(GenderEntity)
-    private readonly genderRepository: Repository<GenderEntity>,
+    @InjectRepository(Gender)
+    private readonly genderRepository: Repository<Gender>,
     private readonly auditLogService: AuditLogService,
-    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateGenderDto): Promise<GenderResponseDto> {
-    validateTranslations(dto.translations);
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      const gender = queryRunner.manager.create(GenderEntity, {
-        isActive: dto.isActive,
+      const entity = this.genderRepository.create({
+        name: { en: dto.name.en, ne: dto.name.ne },
+        isActive: dto.isActive ?? true,
       });
-      const savedGender = await queryRunner.manager.save(gender);
-
-      const translations = dto.translations.map((t) =>
-        queryRunner.manager.create(GenderTranslation, {
-          ...t,
-          genderId: savedGender.id,
-        }),
-      );
-      await queryRunner.manager.save(translations);
-
-      await queryRunner.commitTransaction();
+      const saved = await this.genderRepository.save(entity);
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'gender',
-        resourceId: savedGender.id,
-        after: { ...savedGender, translations } as unknown as Record<
-          string,
-          unknown
-        >,
+        resourceId: saved.id,
+        after: sanitizeForAudit(saved),
       });
 
-      return this.toResponseDto(
-        savedGender,
-        translations as unknown as GenderTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(saved, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
+      this.logger.error('Failed to create gender', {
+        error: (error as Error).message,
+      });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async findAll(
-    query: QueryGenderDto,
-    locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<{ data: GenderResponseDto[]; total: number }> {
-    const where: FindOptionsWhere<GenderEntity> = {};
-    if (query.isActive !== undefined) where.isActive = query.isActive;
+    query: LocaleQueryDto &
+      PaginationQueryDto & { search?: string; isActive?: boolean },
+  ) {
+    const qb = this.genderRepository
+      .createQueryBuilder('gender')
+      .where('gender.deletedAt IS NULL');
 
-    const [entities, total] = await this.genderRepository.findAndCount({
-      where,
-      relations: ['translations'],
-      skip: (query.page - 1) * query.limit,
-      take: query.limit,
-      order: { createdAt: 'DESC' },
-    });
+    if (query.search) {
+      qb.andWhere(
+        `(gender.name->>'en' ILIKE :search OR gender.name->>'ne' ILIKE :search)`,
+        { search: `%${query.search}%` },
+      );
+    }
+
+    if (query.isActive !== undefined) {
+      qb.andWhere('gender.isActive = :isActive', { isActive: query.isActive });
+    }
+
+    qb.orderBy(`gender.name->>'${query.locale}'`, 'ASC')
+      .skip((query.page - 1) * query.limit)
+      .take(query.limit);
+
+    const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: entities.map((e) =>
-        this.toResponseDto(
-          e,
-          e.translations as unknown as GenderTranslation[],
-          locale,
-          withTranslations,
-        ),
-      ),
-      total,
+      data: data.map((g) => this.toResponse(g, query.locale)),
+      meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findOne(
+  async findById(
     id: string,
     locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<GenderResponseDto> {
-    const gender = await this.genderRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
+    withTranslations?: boolean,
+  ): Promise<GenderResponseDto | GenderDetailResponseDto> {
+    const entity = await this.genderRepository.findOne({ where: { id } });
 
-    if (!gender) {
+    if (!entity) {
       throw new EntityNotFoundException('Gender', id);
     }
 
-    return this.toResponseDto(
-      gender,
-      gender.translations as unknown as GenderTranslation[],
-      locale,
-      withTranslations,
-    );
+    if (withTranslations) {
+      return {
+        id: entity.id,
+        name: entity.name,
+        isActive: entity.isActive,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      };
+    }
+
+    return this.toResponse(entity, locale);
   }
 
   async update(id: string, dto: UpdateGenderDto): Promise<GenderResponseDto> {
-    if (dto.translations) {
-      validateTranslations(dto.translations);
-    }
-
-    const gender = await this.genderRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
-
-    if (!gender) {
-      throw new EntityNotFoundException('Gender', id);
-    }
-
-    const before = {
-      ...gender,
-      translations: [
-        ...(gender.translations as unknown as GenderTranslation[]),
-      ],
-    };
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      if (dto.isActive !== undefined) {
-        gender.isActive = dto.isActive;
-      }
-      await queryRunner.manager.save(gender);
+      const existing = await this.genderRepository.findOneOrFail({
+        where: { id },
+      });
+      const before = { ...existing };
 
-      if (dto.translations) {
-        await queryRunner.manager.delete(GenderTranslation, { genderId: id });
-        const translations = dto.translations.map((t) =>
-          queryRunner.manager.create(GenderTranslation, {
-            ...t,
-            genderId: id,
-          }),
-        );
-        await queryRunner.manager.save(translations);
-        gender.translations = translations;
-      }
+      const updatedName: LocalizedField = {
+        en: dto.name?.en ?? existing.name.en,
+        ne: dto.name?.ne ?? existing.name.ne,
+      };
 
-      await queryRunner.commitTransaction();
+      const updated = await this.genderRepository.save({
+        ...existing,
+        ...dto,
+        name: updatedName,
+      });
 
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'gender',
         resourceId: id,
-        before: before as unknown as Record<string, unknown>,
-        after: gender as unknown as Record<string, unknown>,
+        before: sanitizeForAudit(before),
+        after: sanitizeForAudit(updated),
       });
 
-      return this.toResponseDto(
-        gender,
-        gender.translations as unknown as GenderTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(updated, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
+      this.logger.error(`Failed to update gender: ${id}`, {
+        error: (error as Error).message,
+      });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async remove(id: string): Promise<void> {
-    const gender = await this.genderRepository.findOne({ where: { id } });
-    if (!gender) {
+    const entity = await this.genderRepository.findOne({ where: { id } });
+    if (!entity) {
       throw new EntityNotFoundException('Gender', id);
     }
 
@@ -205,38 +155,31 @@ export class GendersService {
       action: AuditAction.SOFT_DELETE,
       resource: 'gender',
       resourceId: id,
-      before: gender as unknown as Record<string, unknown>,
+      before: sanitizeForAudit(entity),
     });
   }
 
-  private toResponseDto(
-    entity: GenderEntity,
-    translations: GenderTranslation[],
+  private toResponse(
+    entity: Gender,
     locale: SupportedLocale,
-    withTranslations: boolean,
   ): GenderResponseDto {
-    const response: GenderResponseDto = {
+    return {
       id: entity.id,
+      name: entity.name[locale] ?? entity.name['en'],
       isActive: entity.isActive,
+      locale,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     };
-
-    if (withTranslations) {
-      response.translations = translations.map((t) => ({
-        locale: t.locale,
-        name: t.name,
-      }));
-    } else {
-      const translation = resolveTranslation(translations, locale);
-      response.name = translation?.name;
-    }
-
-    return response;
   }
 
-  private handleDbError(error: unknown): never {
+  private handleDbError(error: any): never {
     const err = error as { code?: string; detail?: string };
     if (err?.code === '23505') {
       throw new BusinessLogicException(`Duplicate entry: ${err.detail}`);
+    }
+    if (err?.code === '23503') {
+      throw new BusinessLogicException('Referenced record does not exist');
     }
     throw error;
   }

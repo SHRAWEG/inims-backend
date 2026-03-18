@@ -1,6 +1,17 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateAdministrativeLevelDto } from './create-administrative-level.dto';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { PartialLocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
-export class UpdateAdministrativeLevelDto extends PartialType(
-  CreateAdministrativeLevelDto,
-) {}
+export class UpdateAdministrativeLevelDto {
+  @ValidateNested()
+  @Type(() => PartialLocalizedFieldDto)
+  @IsOptional()
+  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
+  name?: PartialLocalizedFieldDto;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  isActive?: boolean;
+}

@@ -1,22 +1,19 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsArray,
-  ValidateNested,
-  IsBoolean,
-  IsOptional,
-} from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { FrequencyTranslationDto } from './frequency-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateFrequencyDto {
-  @ApiProperty({ type: [FrequencyTranslationDto] })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => FrequencyTranslationDto)
-  translations: FrequencyTranslationDto[];
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Monthly', ne: 'मासिक' },
+  })
+  name: LocalizedFieldDto;
 
-  @ApiPropertyOptional({ default: true })
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
 }

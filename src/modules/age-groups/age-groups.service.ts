@@ -1,218 +1,157 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource, FindOptionsWhere } from 'typeorm';
-import { AgeGroup as AgeGroupEntity } from './entities/age-group.entity';
-import { AgeGroupTranslation } from './entities/age-group-translation.entity';
+import { Repository } from 'typeorm';
+import { AgeGroup } from './entities/age-group.entity';
 import { CreateAgeGroupDto } from './dto/create-age-group.dto';
 import { UpdateAgeGroupDto } from './dto/update-age-group.dto';
-import { QueryAgeGroupDto } from './dto/query-age-group.dto';
-import { AgeGroupResponseDto } from './dto/age-group-response.dto';
+import {
+  AgeGroupResponseDto,
+  AgeGroupDetailResponseDto,
+} from './dto/age-group-response.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
-import {
-  validateTranslations,
-  resolveTranslation,
-} from '../../common/utils/translation.util';
-import { SupportedLocale } from '../../common/types/i18n.type';
+import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
+import { sanitizeForAudit } from '../../common/utils/audit.util';
+import { LocalizedField } from '../../common/types/i18n.type';
 
 @Injectable()
 export class AgeGroupsService {
   private readonly logger = new Logger(AgeGroupsService.name);
 
   constructor(
-    @InjectRepository(AgeGroupEntity)
-    private readonly ageGroupRepository: Repository<AgeGroupEntity>,
+    @InjectRepository(AgeGroup)
+    private readonly ageGroupRepository: Repository<AgeGroup>,
     private readonly auditLogService: AuditLogService,
-    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateAgeGroupDto): Promise<AgeGroupResponseDto> {
-    validateTranslations(dto.translations);
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      const ageGroup = queryRunner.manager.create(AgeGroupEntity, {
-        isActive: dto.isActive,
+      const entity = this.ageGroupRepository.create({
+        name: { en: dto.name.en, ne: dto.name.ne },
+        isActive: dto.isActive ?? true,
       });
-      const savedAgeGroup = await queryRunner.manager.save(ageGroup);
-
-      const translations = dto.translations.map((t) =>
-        queryRunner.manager.create(AgeGroupTranslation, {
-          ...t,
-          ageGroupId: savedAgeGroup.id,
-        }),
-      );
-      await queryRunner.manager.save(translations);
-
-      await queryRunner.commitTransaction();
+      const saved = await this.ageGroupRepository.save(entity);
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'age-group',
-        resourceId: savedAgeGroup.id,
-        after: { ...savedAgeGroup, translations } as unknown as Record<
-          string,
-          unknown
-        >,
+        resourceId: saved.id,
+        after: sanitizeForAudit(saved),
       });
 
-      return this.toResponseDto(
-        savedAgeGroup,
-        translations as unknown as AgeGroupTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(saved, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
       this.logger.error('Failed to create age group', {
-        error: err.message,
-        stack: err.stack,
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async findAll(
-    query: QueryAgeGroupDto,
-    locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<{ data: AgeGroupResponseDto[]; total: number }> {
-    const where: FindOptionsWhere<AgeGroupEntity> = {};
-    if (query.isActive !== undefined) where.isActive = query.isActive;
+    query: LocaleQueryDto &
+      PaginationQueryDto & { search?: string; isActive?: boolean },
+  ) {
+    const qb = this.ageGroupRepository
+      .createQueryBuilder('ageGroup')
+      .where('ageGroup.deletedAt IS NULL');
 
-    const [entities, total] = await this.ageGroupRepository.findAndCount({
-      where,
-      relations: ['translations'],
-      skip: (query.page - 1) * query.limit,
-      take: query.limit,
-      order: { createdAt: 'DESC' },
-    });
+    if (query.search) {
+      qb.andWhere(
+        `(ageGroup.name->>'en' ILIKE :search OR ageGroup.name->>'ne' ILIKE :search)`,
+        { search: `%${query.search}%` },
+      );
+    }
+
+    if (query.isActive !== undefined) {
+      qb.andWhere('ageGroup.isActive = :isActive', {
+        isActive: query.isActive,
+      });
+    }
+
+    qb.orderBy(`ageGroup.name->>'${query.locale}'`, 'ASC')
+      .skip((query.page - 1) * query.limit)
+      .take(query.limit);
+
+    const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: entities.map((e) =>
-        this.toResponseDto(
-          e,
-          e.translations as unknown as AgeGroupTranslation[],
-          locale,
-          withTranslations,
-        ),
-      ),
-      total,
+      data: data.map((ag) => this.toResponse(ag, query.locale)),
+      meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findOne(
+  async findById(
     id: string,
     locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<AgeGroupResponseDto> {
-    const ageGroup = await this.ageGroupRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
+    withTranslations?: boolean,
+  ): Promise<AgeGroupResponseDto | AgeGroupDetailResponseDto> {
+    const entity = await this.ageGroupRepository.findOne({ where: { id } });
 
-    if (!ageGroup) {
-      throw new EntityNotFoundException('Age Group', id);
+    if (!entity) {
+      throw new EntityNotFoundException('AgeGroup', id);
     }
 
-    return this.toResponseDto(
-      ageGroup,
-      ageGroup.translations as unknown as AgeGroupTranslation[],
-      locale,
-      withTranslations,
-    );
+    if (withTranslations) {
+      return {
+        id: entity.id,
+        name: entity.name,
+        isActive: entity.isActive,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      };
+    }
+
+    return this.toResponse(entity, locale);
   }
 
   async update(
     id: string,
     dto: UpdateAgeGroupDto,
   ): Promise<AgeGroupResponseDto> {
-    if (dto.translations) {
-      validateTranslations(dto.translations);
-    }
-
-    const ageGroup = await this.ageGroupRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
-
-    if (!ageGroup) {
-      throw new EntityNotFoundException('Age Group', id);
-    }
-
-    const before = {
-      ...ageGroup,
-      translations: [
-        ...(ageGroup.translations as unknown as AgeGroupTranslation[]),
-      ],
-    };
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      if (dto.isActive !== undefined) {
-        ageGroup.isActive = dto.isActive;
-      }
-      await queryRunner.manager.save(ageGroup);
+      const existing = await this.ageGroupRepository.findOneOrFail({
+        where: { id },
+      });
+      const before = { ...existing };
 
-      if (dto.translations) {
-        await queryRunner.manager.delete(AgeGroupTranslation, {
-          ageGroupId: id,
-        });
-        const translations = dto.translations.map((t) =>
-          queryRunner.manager.create(AgeGroupTranslation, {
-            ...t,
-            ageGroupId: id,
-          }),
-        );
-        await queryRunner.manager.save(translations);
-        ageGroup.translations = translations;
-      }
+      const updatedName: LocalizedField = {
+        en: dto.name?.en ?? existing.name.en,
+        ne: dto.name?.ne ?? existing.name.ne,
+      };
 
-      await queryRunner.commitTransaction();
+      const updated = await this.ageGroupRepository.save({
+        ...existing,
+        ...dto,
+        name: updatedName,
+      });
 
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'age-group',
         resourceId: id,
-        before: before as unknown as Record<string, unknown>,
-        after: ageGroup as unknown as Record<string, unknown>,
+        before: sanitizeForAudit(before),
+        after: sanitizeForAudit(updated),
       });
 
-      return this.toResponseDto(
-        ageGroup,
-        ageGroup.translations as unknown as AgeGroupTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(updated, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
-      this.logger.error('Failed to update age group', {
-        error: err.message,
-        stack: err.stack,
-        id,
+      this.logger.error(`Failed to update age group: ${id}`, {
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async remove(id: string): Promise<void> {
-    const ageGroup = await this.ageGroupRepository.findOne({ where: { id } });
-    if (!ageGroup) {
-      throw new EntityNotFoundException('Age Group', id);
+    const entity = await this.ageGroupRepository.findOne({ where: { id } });
+    if (!entity) {
+      throw new EntityNotFoundException('AgeGroup', id);
     }
 
     await this.ageGroupRepository.softDelete(id);
@@ -221,35 +160,25 @@ export class AgeGroupsService {
       action: AuditAction.SOFT_DELETE,
       resource: 'age-group',
       resourceId: id,
-      before: ageGroup as unknown as Record<string, unknown>,
+      before: sanitizeForAudit(entity),
     });
   }
 
-  private toResponseDto(
-    entity: AgeGroupEntity,
-    translations: AgeGroupTranslation[],
+  private toResponse(
+    entity: AgeGroup,
     locale: SupportedLocale,
-    withTranslations: boolean,
   ): AgeGroupResponseDto {
-    const response: AgeGroupResponseDto = {
+    return {
       id: entity.id,
+      name: entity.name[locale] ?? entity.name['en'],
       isActive: entity.isActive,
+      locale,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     };
-
-    if (withTranslations) {
-      response.translations = translations.map((t) => ({
-        locale: t.locale,
-        name: t.name,
-      }));
-    } else {
-      const translation = resolveTranslation(translations, locale);
-      response.name = translation?.name;
-    }
-
-    return response;
   }
 
-  private handleDbError(error: unknown): never {
+  private handleDbError(error: any): never {
     const err = error as { code?: string; detail?: string };
     if (err?.code === '23505') {
       throw new BusinessLogicException(`Duplicate entry: ${err.detail}`);

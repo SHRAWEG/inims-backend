@@ -1,22 +1,19 @@
-import {
-  IsBoolean,
-  IsOptional,
-  ValidateNested,
-  ArrayMinSize,
-} from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { AdministrativeLevelTranslationDto } from './administrative-level-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateAdministrativeLevelDto {
-  @ApiPropertyOptional({ default: true })
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Province', ne: 'प्रदेश' },
+  })
+  name: LocalizedFieldDto;
+
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
-
-  @ApiProperty({ type: [AdministrativeLevelTranslationDto] })
-  @ValidateNested({ each: true })
-  @Type(() => AdministrativeLevelTranslationDto)
-  @ArrayMinSize(1)
-  translations: AdministrativeLevelTranslationDto[];
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
 }

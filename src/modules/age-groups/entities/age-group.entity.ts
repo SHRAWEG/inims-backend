@@ -1,18 +1,12 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { AgeGroupTranslation } from './age-group-translation.entity';
+import { LocalizedField } from '../../../common/types/i18n.type';
 
 @Entity('age_groups')
 export class AgeGroup extends BaseEntity {
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany(
-    () => AgeGroupTranslation,
-    (translation: AgeGroupTranslation) => translation.parent,
-    {
-      cascade: true,
-    },
-  )
-  translations: AgeGroupTranslation[];
+  @Column({ type: 'jsonb' })
+  name: LocalizedField;
 }

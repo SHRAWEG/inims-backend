@@ -1,22 +1,19 @@
-import {
-  IsBoolean,
-  IsOptional,
-  ValidateNested,
-  ArrayMinSize,
-} from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { SectorTranslationDto } from './sector-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateSectorDto {
-  @ApiPropertyOptional({ default: true })
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Agriculture', ne: 'कृषि' },
+  })
+  name: LocalizedFieldDto;
+
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
-
-  @ApiProperty({ type: [SectorTranslationDto] })
-  @ValidateNested({ each: true })
-  @Type(() => SectorTranslationDto)
-  @ArrayMinSize(1)
-  translations: SectorTranslationDto[];
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
 }

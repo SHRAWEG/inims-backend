@@ -456,3 +456,168 @@ const items = await this.itemRepository.find({
   relations: ['category'],
 });
 ```
+
+---
+
+## Section 7 — JSONB Bilingual Fields
+
+JSONB bilingual field pattern — used for all translatable entities:
+
+```typescript
+// Entity
+@Column({ type: 'jsonb' })
+name: LocalizedField;
+// stored in DB as: { "en": "Agriculture", "ne": "कृषि" }
+```
+
+DTO pattern — always require both locales:
+
+```typescript
+export class LocalizedFieldDto {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  @ApiProperty({ example: 'Agriculture' })
+  en: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  @ApiProperty({ example: 'कृषि' })
+  ne: string;
+}
+```
+
+Create DTO pattern:
+
+```typescript
+export class CreateSectorDto {
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({ type: LocalizedFieldDto })
+  name: LocalizedFieldDto;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
+}
+```
+
+Response DTO — resolve locale on the way out:
+
+```typescript
+export class SectorResponseDto {
+  id: string;
+  name: string;        // resolved single string for the requested locale
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+Service pattern — resolve locale in the mapper:
+
+```typescript
+private toResponse(entity: Sector, locale: SupportedLocale): SectorResponseDto {
+  return {
+    id: entity.id,
+    name: entity.name[locale] ?? entity.name['en'], // fallback to en
+    isActive: entity.isActive,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+}
+```
+
+Query pattern — search across both locales:
+
+```typescript
+async findAll(query: LocaleQueryDto & PaginationQueryDto) {
+  const qb = this.sectorRepository
+    .createQueryBuilder('sector')
+    .where('sector.deletedAt IS NULL');
+
+  if (query.search) {
+    qb.andWhere(
+      `(sector.name->>'en' ILIKE :search OR sector.name->>'ne' ILIKE :search)`,
+      { search: `%${query.search}%` }
+    );
+  }
+
+  if (query.isActive !== undefined) {
+    qb.andWhere('sector.isActive = :isActive', { isActive: query.isActive });
+  }
+
+  // Sort by name in requested locale
+  qb.orderBy(`sector.name->>'${query.locale}'`, 'ASC')
+    .skip(query.skip)
+    .take(query.limit);
+
+  const [data, total] = await qb.getManyAndCount();
+
+  return {
+    data: data.map(s => this.toResponse(s, query.locale)),
+    meta: buildPaginationMeta(total, query),
+  };
+}
+```
+
+Update pattern — always send both locales:
+
+```typescript
+async update(id: string, dto: UpdateSectorDto): Promise<SectorResponseDto> {
+  try {
+    const existing = await this.sectorRepository.findOneOrFail({ where: { id } });
+    const before = { ...existing };
+
+    // Merge JSONB field — if only one locale sent, preserve the other
+    const updatedName: LocalizedField = {
+      en: dto.name?.en ?? existing.name.en,
+      ne: dto.name?.ne ?? existing.name.ne,
+    };
+
+    const updated = await this.sectorRepository.save({
+      ...existing,
+      ...dto,
+      name: updatedName,
+    });
+
+    await this.auditLogService.log({
+      action: AuditAction.UPDATE,
+      resource: 'sector',
+      resourceId: id,
+      before: sanitizeForAudit(before),
+      after: sanitizeForAudit(updated),
+    });
+
+    return this.toResponse(updated, DEFAULT_LOCALE);
+  } catch (error) {
+    // standard error handling
+  }
+}
+```
+
+Admin detail response — return both locales for edit screens:
+
+```typescript
+// GET /sectors/:id?withTranslations=true
+export class SectorDetailResponseDto {
+  id: string;
+  name: LocalizedField;   // full object: { en: '...', ne: '...' }
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// In service
+getById(id: string, withTranslations: boolean, locale: SupportedLocale) {
+  const entity = await this.sectorRepository.findOneOrFail({ where: { id } });
+  if (withTranslations) {
+    return entity; // return full LocalizedField object
+  }
+  return this.toResponse(entity, locale);
+}
+```
+
+```

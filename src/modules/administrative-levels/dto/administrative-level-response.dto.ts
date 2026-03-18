@@ -1,21 +1,43 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { AdministrativeLevelTranslationDto } from './administrative-level-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  LocalizedField,
+  SupportedLocale,
+} from '../../../common/types/i18n.type';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class AdministrativeLevelResponseDto {
   @ApiProperty()
   id: string;
 
   @ApiProperty()
+  name: string;
+
+  @ApiProperty()
   isActive: boolean;
 
-  @ApiPropertyOptional({
-    description: 'Resolved name for the requested locale',
-  })
-  name?: string;
+  @ApiProperty({ enum: ['en', 'ne'] })
+  locale: SupportedLocale;
 
-  @ApiPropertyOptional({
-    type: [AdministrativeLevelTranslationDto],
-    description: 'All translations if withTranslations is true',
-  })
-  translations?: AdministrativeLevelTranslationDto[];
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+}
+
+export class AdministrativeLevelDetailResponseDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty({ type: LocalizedFieldDto })
+  name: LocalizedField;
+
+  @ApiProperty()
+  isActive: boolean;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

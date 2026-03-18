@@ -1,22 +1,19 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsArray,
-  ValidateNested,
-  IsBoolean,
-  IsOptional,
-} from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { GenderTranslationDto } from './gender-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateGenderDto {
-  @ApiProperty({ type: [GenderTranslationDto] })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => GenderTranslationDto)
-  translations: GenderTranslationDto[];
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Male', ne: 'पुरुष' },
+  })
+  name: LocalizedFieldDto;
 
-  @ApiPropertyOptional({ default: true })
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
 }

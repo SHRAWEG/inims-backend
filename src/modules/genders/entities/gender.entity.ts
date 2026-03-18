@@ -1,18 +1,12 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { GenderTranslation } from './gender-translation.entity';
+import { LocalizedField } from '../../../common/types/i18n.type';
 
 @Entity('genders')
 export class Gender extends BaseEntity {
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany(
-    () => GenderTranslation,
-    (translation: GenderTranslation) => translation.parent,
-    {
-      cascade: true,
-    },
-  )
-  translations: GenderTranslation[];
+  @Column({ type: 'jsonb' })
+  name: LocalizedField;
 }

@@ -1,225 +1,169 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource, FindOptionsWhere } from 'typeorm';
-import { MsnpIndicator as MsnpIndicatorEntity } from './entities/msnp-indicator.entity';
-import { MsnpIndicatorTranslation } from './entities/msnp-indicator-translation.entity';
+import { Repository } from 'typeorm';
+import { MsnpIndicator } from './entities/msnp-indicator.entity';
 import { CreateMsnpIndicatorDto } from './dto/create-msnp-indicator.dto';
 import { UpdateMsnpIndicatorDto } from './dto/update-msnp-indicator.dto';
-import { QueryMsnpIndicatorDto } from './dto/query-msnp-indicator.dto';
-import { MsnpIndicatorResponseDto } from './dto/msnp-indicator-response.dto';
+import {
+  MsnpIndicatorResponseDto,
+  MsnpIndicatorDetailResponseDto,
+} from './dto/msnp-indicator-response.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
-import {
-  validateTranslations,
-  resolveTranslation,
-} from '../../common/utils/translation.util';
-import { SupportedLocale } from '../../common/types/i18n.type';
+import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
+import { sanitizeForAudit } from '../../common/utils/audit.util';
+import { LocalizedField } from '../../common/types/i18n.type';
 
 @Injectable()
 export class MsnpIndicatorsService {
   private readonly logger = new Logger(MsnpIndicatorsService.name);
 
   constructor(
-    @InjectRepository(MsnpIndicatorEntity)
-    private readonly msnpIndicatorRepository: Repository<MsnpIndicatorEntity>,
+    @InjectRepository(MsnpIndicator)
+    private readonly msnpIndicatorRepository: Repository<MsnpIndicator>,
     private readonly auditLogService: AuditLogService,
-    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateMsnpIndicatorDto): Promise<MsnpIndicatorResponseDto> {
-    validateTranslations(dto.translations);
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      const indicator = queryRunner.manager.create(MsnpIndicatorEntity, {
-        code: dto.code,
-        isActive: dto.isActive,
+      const entity = this.msnpIndicatorRepository.create({
+        code: { en: dto.code.en, ne: dto.code.ne },
+        name: { en: dto.name.en, ne: dto.name.ne },
+        isActive: dto.isActive ?? true,
       });
-      const savedIndicator = await queryRunner.manager.save(indicator);
-
-      const translations = dto.translations.map((t) =>
-        queryRunner.manager.create(MsnpIndicatorTranslation, {
-          ...t,
-          msnpIndicatorId: savedIndicator.id,
-        }),
-      );
-      await queryRunner.manager.save(translations);
-
-      await queryRunner.commitTransaction();
+      const saved = await this.msnpIndicatorRepository.save(entity);
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'msnp-indicator',
-        resourceId: savedIndicator.id,
-        after: { ...savedIndicator, translations } as unknown as Record<
-          string,
-          unknown
-        >,
+        resourceId: saved.id,
+        after: sanitizeForAudit(saved),
       });
 
-      return this.toResponseDto(
-        savedIndicator,
-        translations as unknown as MsnpIndicatorTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(saved, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
-      this.logger.error('Failed to create MSNP indicator', {
-        error: err.message,
-        stack: err.stack,
+      this.logger.error('Failed to create msnp indicator', {
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async findAll(
-    query: QueryMsnpIndicatorDto,
-    locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<{ data: MsnpIndicatorResponseDto[]; total: number }> {
-    const where: FindOptionsWhere<MsnpIndicatorEntity> = {};
-    if (query.isActive !== undefined) where.isActive = query.isActive;
-    if (query.code) where.code = query.code;
+    query: LocaleQueryDto &
+      PaginationQueryDto & { search?: string; isActive?: boolean },
+  ) {
+    const qb = this.msnpIndicatorRepository
+      .createQueryBuilder('indicator')
+      .where('indicator.deletedAt IS NULL');
 
-    const [entities, total] = await this.msnpIndicatorRepository.findAndCount({
-      where,
-      relations: ['translations'],
-      skip: (query.page - 1) * query.limit,
-      take: query.limit,
-      order: { createdAt: 'DESC' },
-    });
+    if (query.search) {
+      qb.andWhere(
+        `(indicator.name->>'en' ILIKE :search OR indicator.name->>'ne' ILIKE :search OR indicator.code->>'en' ILIKE :search OR indicator.code->>'ne' ILIKE :search)`,
+        { search: `%${query.search}%` },
+      );
+    }
+
+    if (query.isActive !== undefined) {
+      qb.andWhere('indicator.isActive = :isActive', {
+        isActive: query.isActive,
+      });
+    }
+
+    qb.orderBy(`indicator.name->>'${query.locale}'`, 'ASC')
+      .skip((query.page - 1) * query.limit)
+      .take(query.limit);
+
+    const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: entities.map((e) =>
-        this.toResponseDto(
-          e,
-          e.translations as unknown as MsnpIndicatorTranslation[],
-          locale,
-          withTranslations,
-        ),
-      ),
-      total,
+      data: data.map((i) => this.toResponse(i, query.locale)),
+      meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findOne(
+  async findById(
     id: string,
     locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<MsnpIndicatorResponseDto> {
-    const indicator = await this.msnpIndicatorRepository.findOne({
+    withTranslations?: boolean,
+  ): Promise<MsnpIndicatorResponseDto | MsnpIndicatorDetailResponseDto> {
+    const entity = await this.msnpIndicatorRepository.findOne({
       where: { id },
-      relations: ['translations'],
     });
 
-    if (!indicator) {
-      throw new EntityNotFoundException('MSNP Indicator', id);
+    if (!entity) {
+      throw new EntityNotFoundException('MsnpIndicator', id);
     }
 
-    return this.toResponseDto(
-      indicator,
-      indicator.translations as unknown as MsnpIndicatorTranslation[],
-      locale,
-      withTranslations,
-    );
+    if (withTranslations) {
+      return {
+        id: entity.id,
+        code: entity.code,
+        name: entity.name,
+        isActive: entity.isActive,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      };
+    }
+
+    return this.toResponse(entity, locale);
   }
 
   async update(
     id: string,
     dto: UpdateMsnpIndicatorDto,
   ): Promise<MsnpIndicatorResponseDto> {
-    if (dto.translations) {
-      validateTranslations(dto.translations);
-    }
-
-    const indicator = await this.msnpIndicatorRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
-
-    if (!indicator) {
-      throw new EntityNotFoundException('MSNP Indicator', id);
-    }
-
-    const before = {
-      ...indicator,
-      translations: [
-        ...(indicator.translations as unknown as MsnpIndicatorTranslation[]),
-      ],
-    };
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      if (dto.code !== undefined) {
-        indicator.code = dto.code;
-      }
-      if (dto.isActive !== undefined) {
-        indicator.isActive = dto.isActive;
-      }
-      await queryRunner.manager.save(indicator);
+      const existing = await this.msnpIndicatorRepository.findOneOrFail({
+        where: { id },
+      });
+      const before = { ...existing };
 
-      if (dto.translations) {
-        await queryRunner.manager.delete(MsnpIndicatorTranslation, {
-          msnpIndicatorId: id,
-        });
-        const translations = dto.translations.map((t) =>
-          queryRunner.manager.create(MsnpIndicatorTranslation, {
-            ...t,
-            msnpIndicatorId: id,
-          }),
-        );
-        await queryRunner.manager.save(translations);
-        indicator.translations = translations;
-      }
+      const updatedCode: LocalizedField = {
+        en: dto.code?.en ?? existing.code.en,
+        ne: dto.code?.ne ?? existing.code.ne,
+      };
 
-      await queryRunner.commitTransaction();
+      const updatedName: LocalizedField = {
+        en: dto.name?.en ?? existing.name.en,
+        ne: dto.name?.ne ?? existing.name.ne,
+      };
+
+      const updated = await this.msnpIndicatorRepository.save({
+        ...existing,
+        ...dto,
+        code: updatedCode,
+        name: updatedName,
+      });
 
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'msnp-indicator',
         resourceId: id,
-        before: before as unknown as Record<string, unknown>,
-        after: indicator as unknown as Record<string, unknown>,
+        before: sanitizeForAudit(before),
+        after: sanitizeForAudit(updated),
       });
 
-      return this.toResponseDto(
-        indicator,
-        indicator.translations as unknown as MsnpIndicatorTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(updated, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
-      this.logger.error('Failed to update MSNP indicator', {
-        error: err.message,
-        stack: err.stack,
-        id,
+      this.logger.error(`Failed to update msnp indicator: ${id}`, {
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async remove(id: string): Promise<void> {
-    const indicator = await this.msnpIndicatorRepository.findOne({
+    const entity = await this.msnpIndicatorRepository.findOne({
       where: { id },
     });
-    if (!indicator) {
-      throw new EntityNotFoundException('MSNP Indicator', id);
+    if (!entity) {
+      throw new EntityNotFoundException('MsnpIndicator', id);
     }
 
     await this.msnpIndicatorRepository.softDelete(id);
@@ -228,36 +172,26 @@ export class MsnpIndicatorsService {
       action: AuditAction.SOFT_DELETE,
       resource: 'msnp-indicator',
       resourceId: id,
-      before: indicator as unknown as Record<string, unknown>,
+      before: sanitizeForAudit(entity),
     });
   }
 
-  private toResponseDto(
-    entity: MsnpIndicatorEntity,
-    translations: MsnpIndicatorTranslation[],
+  private toResponse(
+    entity: MsnpIndicator,
     locale: SupportedLocale,
-    withTranslations: boolean,
   ): MsnpIndicatorResponseDto {
-    const response: MsnpIndicatorResponseDto = {
+    return {
       id: entity.id,
-      code: entity.code,
+      code: entity.code[locale] ?? entity.code['en'],
+      name: entity.name[locale] ?? entity.name['en'],
       isActive: entity.isActive,
+      locale,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     };
-
-    if (withTranslations) {
-      response.translations = translations.map((t) => ({
-        locale: t.locale,
-        name: t.name,
-      }));
-    } else {
-      const translation = resolveTranslation(translations, locale);
-      response.name = translation?.name;
-    }
-
-    return response;
   }
 
-  private handleDbError(error: unknown): never {
+  private handleDbError(error: any): never {
     const err = error as { code?: string; detail?: string };
     if (err?.code === '23505') {
       throw new BusinessLogicException(`Duplicate entry: ${err.detail}`);

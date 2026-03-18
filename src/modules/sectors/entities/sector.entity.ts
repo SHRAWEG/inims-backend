@@ -1,14 +1,12 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { SectorTranslation } from './sector-translation.entity';
+import { LocalizedField } from '../../../common/types/i18n.type';
 
 @Entity('sectors')
 export class Sector extends BaseEntity {
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany(() => SectorTranslation, (translation) => translation.sector, {
-    cascade: true,
-  })
-  translations: SectorTranslation[];
+  @Column({ type: 'jsonb' })
+  name: LocalizedField;
 }

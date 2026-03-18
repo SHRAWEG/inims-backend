@@ -256,3 +256,16 @@ import { Product } from './entities/product.entity';
   - The domain entity names (e.g., `Product` vs `Invoice` vs `Order`)
   - Which optional modules exist (e.g., analytics, notifications, payments)
 - When in doubt about naming, apply the patterns from the tables above using your entity name.
+
+---
+
+## JSONB Bilingual Fields
+
+- Always typed as `LocalizedField` — never as `Record<string, string>` or `any`
+- Always named exactly as the field without a locale suffix — `name`, `description`, not `nameEn`, `nameNe`
+- DTO always uses `LocalizedFieldDto` for create — both `en` and `ne` required
+- UpdateDto uses `Partial<LocalizedFieldDto>` — either locale can be omitted, service merges with existing
+- Response always resolves to a single string for end users — never expose raw `LocalizedField` to frontend except on admin edit endpoints
+- Search always queries both locales: `name->>'en' ILIKE :search OR name->>'ne' ILIKE :search`
+- Sort always uses the requested locale: `ORDER BY name->>'en'`
+- Fallback is always `'en'` — if requested locale value is empty, return `en` value

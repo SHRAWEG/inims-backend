@@ -77,7 +77,8 @@ common/
 ├── dto/
 │   ├── pagination-query.dto.ts     # PaginationQueryDto — page, limit
 │   ├── date-range-query.dto.ts     # DateRangeQueryDto — startDate, endDate, granularity
-│   └── id-param.dto.ts             # IdParamDto — validates :id route param as UUID
+│   ├── id-param.dto.ts             # IdParamDto — validates :id route param as UUID
+│   └── localized-field.dto.ts      # LocalizedFieldDto for JSONB bilingual fields
 │
 ├── entities/
 │   └── base.entity.ts              # Abstract BaseEntity: id (UUID PK), createdAt, updatedAt, deletedAt (soft delete)
@@ -112,6 +113,7 @@ common/
 │   ├── api-response.type.ts        # ApiResponse<T>, PaginatedResponse<T>, PaginationMeta
 │   ├── chart.type.ts               # ChartDataset, ChartResponse, ChartApiResponse (if analytics module exists)
 │   ├── error.type.ts               # ErrorDetail, ErrorResponse
+│   ├── i18n.type.ts                # LocalizedField, SupportedLocale — used by every entity with bilingual fields
 │   └── user-context.type.ts        # UserContext (JWT payload shape), UserRole enum
 │
 └── utils/

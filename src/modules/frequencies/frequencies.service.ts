@@ -1,213 +1,156 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
-import { Frequency as FrequencyEntity } from './entities/frequency.entity';
-import { FrequencyTranslation } from './entities/frequency-translation.entity';
+import { Repository } from 'typeorm';
+import { Frequency } from './entities/frequency.entity';
 import { CreateFrequencyDto } from './dto/create-frequency.dto';
 import { UpdateFrequencyDto } from './dto/update-frequency.dto';
-import { QueryFrequencyDto } from './dto/query-frequency.dto';
-import { FrequencyResponseDto } from './dto/frequency-response.dto';
+import {
+  FrequencyResponseDto,
+  FrequencyDetailResponseDto,
+} from './dto/frequency-response.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
-import {
-  validateTranslations,
-  resolveTranslation,
-} from '../../common/utils/translation.util';
-import { SupportedLocale } from '../../common/types/i18n.type';
+import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
+import { sanitizeForAudit } from '../../common/utils/audit.util';
+import { LocalizedField } from '../../common/types/i18n.type';
 
 @Injectable()
 export class FrequenciesService {
   private readonly logger = new Logger(FrequenciesService.name);
 
   constructor(
-    @InjectRepository(FrequencyEntity)
-    private readonly frequencyRepository: Repository<FrequencyEntity>,
+    @InjectRepository(Frequency)
+    private readonly frequencyRepository: Repository<Frequency>,
     private readonly auditLogService: AuditLogService,
-    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateFrequencyDto): Promise<FrequencyResponseDto> {
-    validateTranslations(dto.translations);
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      const frequency = queryRunner.manager.create(FrequencyEntity, {
-        isActive: dto.isActive,
+      const entity = this.frequencyRepository.create({
+        name: { en: dto.name.en, ne: dto.name.ne },
+        isActive: dto.isActive ?? true,
       });
-      const savedFrequency = await queryRunner.manager.save(frequency);
-
-      const translations = dto.translations.map((t) =>
-        queryRunner.manager.create(FrequencyTranslation, {
-          ...t,
-          frequencyId: savedFrequency.id,
-        }),
-      );
-      await queryRunner.manager.save(translations);
-
-      await queryRunner.commitTransaction();
+      const saved = await this.frequencyRepository.save(entity);
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'frequency',
-        resourceId: savedFrequency.id,
-        after: { ...savedFrequency, translations } as unknown as Record<
-          string,
-          unknown
-        >,
+        resourceId: saved.id,
+        after: sanitizeForAudit(saved),
       });
 
-      return this.toResponseDto(savedFrequency, translations, 'en', true);
+      return this.toResponse(saved, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
       this.logger.error('Failed to create frequency', {
-        error: err.message,
-        stack: err.stack,
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async findAll(
-    query: QueryFrequencyDto,
-    locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<{ data: FrequencyResponseDto[]; total: number }> {
-    const [entities, total] = await this.frequencyRepository.findAndCount({
-      where: {
+    query: LocaleQueryDto &
+      PaginationQueryDto & { search?: string; isActive?: boolean },
+  ) {
+    const qb = this.frequencyRepository
+      .createQueryBuilder('frequency')
+      .where('frequency.deletedAt IS NULL');
+
+    if (query.search) {
+      qb.andWhere(
+        `(frequency.name->>'en' ILIKE :search OR frequency.name->>'ne' ILIKE :search)`,
+        { search: `%${query.search}%` },
+      );
+    }
+
+    if (query.isActive !== undefined) {
+      qb.andWhere('frequency.isActive = :isActive', {
         isActive: query.isActive,
-      },
-      relations: ['translations'],
-      skip: (query.page - 1) * query.limit,
-      take: query.limit,
-      order: { createdAt: 'DESC' },
-    });
+      });
+    }
+
+    qb.orderBy(`frequency.name->>'${query.locale}'`, 'ASC')
+      .skip((query.page - 1) * query.limit)
+      .take(query.limit);
+
+    const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: entities.map((e) =>
-        this.toResponseDto(
-          e,
-          e.translations as unknown as FrequencyTranslation[],
-          locale,
-          withTranslations,
-        ),
-      ),
-      total,
+      data: data.map((f) => this.toResponse(f, query.locale)),
+      meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findOne(
+  async findById(
     id: string,
     locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<FrequencyResponseDto> {
-    const frequency = await this.frequencyRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
+    withTranslations?: boolean,
+  ): Promise<FrequencyResponseDto | FrequencyDetailResponseDto> {
+    const entity = await this.frequencyRepository.findOne({ where: { id } });
 
-    if (!frequency) {
+    if (!entity) {
       throw new EntityNotFoundException('Frequency', id);
     }
 
-    return this.toResponseDto(
-      frequency,
-      frequency.translations as unknown as FrequencyTranslation[],
-      locale,
-      withTranslations,
-    );
+    if (withTranslations) {
+      return {
+        id: entity.id,
+        name: entity.name,
+        isActive: entity.isActive,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      };
+    }
+
+    return this.toResponse(entity, locale);
   }
 
   async update(
     id: string,
     dto: UpdateFrequencyDto,
   ): Promise<FrequencyResponseDto> {
-    if (dto.translations) {
-      validateTranslations(dto.translations);
-    }
-
-    const frequency = await this.frequencyRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
-
-    if (!frequency) {
-      throw new EntityNotFoundException('Frequency', id);
-    }
-
-    const before = {
-      ...frequency,
-      translations: [
-        ...(frequency.translations as unknown as FrequencyTranslation[]),
-      ],
-    };
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      if (dto.isActive !== undefined) {
-        frequency.isActive = dto.isActive;
-      }
-      await queryRunner.manager.save(frequency);
+      const existing = await this.frequencyRepository.findOneOrFail({
+        where: { id },
+      });
+      const before = { ...existing };
 
-      if (dto.translations) {
-        await queryRunner.manager.delete(FrequencyTranslation, {
-          frequencyId: id,
-        });
-        const translations = dto.translations.map((t) =>
-          queryRunner.manager.create(FrequencyTranslation, {
-            ...t,
-            frequencyId: id,
-          }),
-        );
-        await queryRunner.manager.save(translations);
-        frequency.translations = translations;
-      }
+      const updatedName: LocalizedField = {
+        en: dto.name?.en ?? existing.name.en,
+        ne: dto.name?.ne ?? existing.name.ne,
+      };
 
-      await queryRunner.commitTransaction();
+      const updated = await this.frequencyRepository.save({
+        ...existing,
+        ...dto,
+        name: updatedName,
+      });
 
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'frequency',
         resourceId: id,
-        before: before as unknown as Record<string, unknown>,
-        after: frequency as unknown as Record<string, unknown>,
+        before: sanitizeForAudit(before),
+        after: sanitizeForAudit(updated),
       });
 
-      return this.toResponseDto(
-        frequency,
-        frequency.translations as unknown as FrequencyTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(updated, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
-      this.logger.error('Failed to update frequency', {
-        error: err.message,
-        stack: err.stack,
-        id,
+      this.logger.error(`Failed to update frequency: ${id}`, {
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async remove(id: string): Promise<void> {
-    const frequency = await this.frequencyRepository.findOne({
-      where: { id },
-    });
-    if (!frequency) {
+    const entity = await this.frequencyRepository.findOne({ where: { id } });
+    if (!entity) {
       throw new EntityNotFoundException('Frequency', id);
     }
 
@@ -217,35 +160,25 @@ export class FrequenciesService {
       action: AuditAction.SOFT_DELETE,
       resource: 'frequency',
       resourceId: id,
-      before: frequency as unknown as Record<string, unknown>,
+      before: sanitizeForAudit(entity),
     });
   }
 
-  private toResponseDto(
-    entity: FrequencyEntity,
-    translations: FrequencyTranslation[],
+  private toResponse(
+    entity: Frequency,
     locale: SupportedLocale,
-    withTranslations: boolean,
   ): FrequencyResponseDto {
-    const response: FrequencyResponseDto = {
+    return {
       id: entity.id,
+      name: entity.name[locale] ?? entity.name['en'],
       isActive: entity.isActive,
+      locale,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     };
-
-    if (withTranslations) {
-      response.translations = translations.map((t) => ({
-        locale: t.locale,
-        name: t.name,
-      }));
-    } else {
-      const translation = resolveTranslation(translations, locale);
-      response.name = translation?.name;
-    }
-
-    return response;
   }
 
-  private handleDbError(error: unknown): never {
+  private handleDbError(error: any): never {
     const err = error as { code?: string; detail?: string };
     if (err?.code === '23505') {
       throw new BusinessLogicException(`Duplicate entry: ${err.detail}`);

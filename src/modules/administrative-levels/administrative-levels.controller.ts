@@ -16,7 +16,6 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { AdministrativeLevelsService } from './administrative-levels.service';
 import { CreateAdministrativeLevelDto } from './dto/create-administrative-level.dto';
@@ -25,7 +24,7 @@ import { QueryAdministrativeLevelDto } from './dto/query-administrative-level.dt
 import { AdministrativeLevelResponseDto } from './dto/administrative-level-response.dto';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UserRole } from '../../common/enums/user-role.enum';
-import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
 @ApiTags('administrative-levels')
@@ -41,48 +40,30 @@ export class AdministrativeLevelsController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new administrative level' })
   @ApiResponse({ status: 201, type: AdministrativeLevelResponseDto })
-  async create(@Body() createDto: CreateAdministrativeLevelDto) {
-    const data = await this.administrativeLevelsService.create(createDto);
+  async create(@Body() dto: CreateAdministrativeLevelDto) {
+    const data = await this.administrativeLevelsService.create(dto);
     return buildResponse(data);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all administrative levels' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
   @ApiResponse({ status: 200, type: [AdministrativeLevelResponseDto] })
-  async findAll(
-    @Query() query: QueryAdministrativeLevelDto,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
-  ) {
-    const { data, total } = await this.administrativeLevelsService.findAll(
-      query,
-      locale,
-      String(withTranslations) === 'true',
-    );
-    return buildResponse(data, {
-      total,
-      page: query.page,
-      limit: query.limit,
-      totalPages: Math.ceil(total / query.limit),
-    });
+  async findAll(@Query() query: QueryAdministrativeLevelDto) {
+    const result = await this.administrativeLevelsService.findAll(query);
+    return buildResponse(result.data, result.meta);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get an administrative level by id' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
   @ApiResponse({ status: 200, type: AdministrativeLevelResponseDto })
   async findOne(
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
+    @Query() query: FindOneQueryDto,
   ) {
-    const data = await this.administrativeLevelsService.findOne(
+    const data = await this.administrativeLevelsService.findById(
       id,
-      locale,
-      String(withTranslations) === 'true',
+      query.locale,
+      query.withTranslations === true,
     );
     return buildResponse(data);
   }
@@ -93,9 +74,9 @@ export class AdministrativeLevelsController {
   @ApiResponse({ status: 200, type: AdministrativeLevelResponseDto })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateDto: UpdateAdministrativeLevelDto,
+    @Body() dto: UpdateAdministrativeLevelDto,
   ) {
-    const data = await this.administrativeLevelsService.update(id, updateDto);
+    const data = await this.administrativeLevelsService.update(id, dto);
     return buildResponse(data);
   }
 

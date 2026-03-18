@@ -1,21 +1,23 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Type as TypeEntity } from './entities/type.entity';
-import { TypeTranslation } from './entities/type-translation.entity';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
-import { QueryTypeDto } from './dto/query-type.dto';
-import { TypeResponseDto } from './dto/type-response.dto';
+import {
+  TypeResponseDto,
+  TypeDetailResponseDto,
+} from './dto/type-response.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
-import {
-  validateTranslations,
-  resolveTranslation,
-} from '../../common/utils/translation.util';
-import { SupportedLocale } from '../../common/types/i18n.type';
+import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
+import { sanitizeForAudit } from '../../common/utils/audit.util';
+import { LocalizedField } from '../../common/types/i18n.type';
 
 @Injectable()
 export class TypesService {
@@ -25,174 +27,119 @@ export class TypesService {
     @InjectRepository(TypeEntity)
     private readonly typeRepository: Repository<TypeEntity>,
     private readonly auditLogService: AuditLogService,
-    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateTypeDto): Promise<TypeResponseDto> {
-    validateTranslations(dto.translations);
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      const typeRecord = queryRunner.manager.create(TypeEntity, {
-        isActive: dto.isActive,
+      const typeRecord = this.typeRepository.create({
+        name: { en: dto.name.en, ne: dto.name.ne },
+        isActive: dto.isActive ?? true,
       });
-      const savedType = await queryRunner.manager.save(typeRecord);
-
-      const translations = dto.translations.map((t) =>
-        queryRunner.manager.create(TypeTranslation, {
-          ...t,
-          typeId: savedType.id,
-        }),
-      );
-      await queryRunner.manager.save(translations);
-
-      await queryRunner.commitTransaction();
+      const saved = await this.typeRepository.save(typeRecord);
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'type',
-        resourceId: savedType.id,
-        after: { ...savedType, translations } as unknown as Record<
-          string,
-          unknown
-        >,
+        resourceId: saved.id,
+        after: sanitizeForAudit(saved),
       });
 
-      return this.toResponseDto(savedType, translations, 'en', true);
+      return this.toResponse(saved, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
       this.logger.error('Failed to create type', {
-        error: err.message,
-        stack: err.stack,
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
   async findAll(
-    query: QueryTypeDto,
-    locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<{ data: TypeResponseDto[]; total: number }> {
-    const [entities, total] = await this.typeRepository.findAndCount({
-      where: {
-        isActive: query.isActive,
-      },
-      relations: ['translations'],
-      skip: (query.page - 1) * query.limit,
-      take: query.limit,
-      order: { createdAt: 'DESC' },
-    });
+    query: LocaleQueryDto &
+      PaginationQueryDto & { search?: string; isActive?: boolean },
+  ) {
+    const qb = this.typeRepository
+      .createQueryBuilder('type')
+      .where('type.deletedAt IS NULL');
+
+    if (query.search) {
+      qb.andWhere(
+        `(type.name->>'en' ILIKE :search OR type.name->>'ne' ILIKE :search)`,
+        { search: `%${query.search}%` },
+      );
+    }
+
+    if (query.isActive !== undefined) {
+      qb.andWhere('type.isActive = :isActive', { isActive: query.isActive });
+    }
+
+    qb.orderBy(`type.name->>'${query.locale}'`, 'ASC')
+      .skip((query.page - 1) * query.limit)
+      .take(query.limit);
+
+    const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: entities.map((e) =>
-        this.toResponseDto(
-          e,
-          e.translations as unknown as TypeTranslation[],
-          locale,
-          withTranslations,
-        ),
-      ),
-      total,
+      data: data.map((t) => this.toResponse(t, query.locale)),
+      meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findOne(
+  async findById(
     id: string,
     locale: SupportedLocale,
-    withTranslations: boolean,
-  ): Promise<TypeResponseDto> {
-    const typeRecord = await this.typeRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
+    withTranslations?: boolean,
+  ): Promise<TypeResponseDto | TypeDetailResponseDto> {
+    const typeRecord = await this.typeRepository.findOne({ where: { id } });
 
     if (!typeRecord) {
       throw new EntityNotFoundException('Type', id);
     }
 
-    return this.toResponseDto(
-      typeRecord,
-      typeRecord.translations as unknown as TypeTranslation[],
-      locale,
-      withTranslations,
-    );
+    if (withTranslations) {
+      return {
+        id: typeRecord.id,
+        name: typeRecord.name,
+        isActive: typeRecord.isActive,
+        createdAt: typeRecord.createdAt,
+        updatedAt: typeRecord.updatedAt,
+      };
+    }
+
+    return this.toResponse(typeRecord, locale);
   }
 
   async update(id: string, dto: UpdateTypeDto): Promise<TypeResponseDto> {
-    if (dto.translations) {
-      validateTranslations(dto.translations);
-    }
-
-    const typeRecord = await this.typeRepository.findOne({
-      where: { id },
-      relations: ['translations'],
-    });
-
-    if (!typeRecord) {
-      throw new EntityNotFoundException('Type', id);
-    }
-
-    const before = {
-      ...typeRecord,
-      translations: [...typeRecord.translations],
-    };
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
     try {
-      if (dto.isActive !== undefined) {
-        typeRecord.isActive = dto.isActive;
-      }
-      await queryRunner.manager.save(typeRecord);
+      const existing = await this.typeRepository.findOneOrFail({
+        where: { id },
+      });
+      const before = { ...existing };
 
-      if (dto.translations) {
-        await queryRunner.manager.delete(TypeTranslation, { typeId: id });
-        const translations = dto.translations.map((t) =>
-          queryRunner.manager.create(TypeTranslation, {
-            ...t,
-            typeId: id,
-          }),
-        );
-        await queryRunner.manager.save(translations);
-        typeRecord.translations = translations;
-      }
+      const updatedName: LocalizedField = {
+        en: dto.name?.en ?? existing.name.en,
+        ne: dto.name?.ne ?? existing.name.ne,
+      };
 
-      await queryRunner.commitTransaction();
+      const updated = await this.typeRepository.save({
+        ...existing,
+        ...dto,
+        name: updatedName,
+      });
 
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'type',
         resourceId: id,
-        before: before as unknown as Record<string, unknown>,
-        after: typeRecord as unknown as Record<string, unknown>,
+        before: sanitizeForAudit(before),
+        after: sanitizeForAudit(updated),
       });
 
-      return this.toResponseDto(
-        typeRecord,
-        typeRecord.translations as unknown as TypeTranslation[],
-        'en',
-        true,
-      );
+      return this.toResponse(updated, DEFAULT_LOCALE);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
-      const err = error as Error;
-      this.logger.error('Failed to update type', {
-        error: err.message,
-        stack: err.stack,
-        id,
+      this.logger.error(`Failed to update type: ${id}`, {
+        error: (error as Error).message,
       });
       this.handleDbError(error);
-    } finally {
-      await queryRunner.release();
     }
   }
 
@@ -208,35 +155,25 @@ export class TypesService {
       action: AuditAction.SOFT_DELETE,
       resource: 'type',
       resourceId: id,
-      before: typeRecord as unknown as Record<string, unknown>,
+      before: sanitizeForAudit(typeRecord),
     });
   }
 
-  private toResponseDto(
+  private toResponse(
     entity: TypeEntity,
-    translations: TypeTranslation[],
     locale: SupportedLocale,
-    withTranslations: boolean,
   ): TypeResponseDto {
-    const response: TypeResponseDto = {
+    return {
       id: entity.id,
+      name: entity.name[locale] ?? entity.name['en'],
       isActive: entity.isActive,
+      locale,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     };
-
-    if (withTranslations) {
-      response.translations = translations.map((t) => ({
-        locale: t.locale,
-        name: t.name,
-      }));
-    } else {
-      const translation = resolveTranslation(translations, locale);
-      response.name = translation?.name;
-    }
-
-    return response;
   }
 
-  private handleDbError(error: unknown): never {
+  private handleDbError(error: any): never {
     const err = error as { code?: string; detail?: string };
     if (err?.code === '23505') {
       throw new BusinessLogicException(`Duplicate entry: ${err.detail}`);

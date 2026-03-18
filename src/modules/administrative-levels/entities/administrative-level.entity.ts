@@ -1,18 +1,12 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { AdministrativeLevelTranslation } from './administrative-level-translation.entity';
+import { LocalizedField } from '../../../common/types/i18n.type';
 
 @Entity('administrative_levels')
 export class AdministrativeLevel extends BaseEntity {
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany(
-    () => AdministrativeLevelTranslation,
-    (translation: AdministrativeLevelTranslation) => translation.parent,
-    {
-      cascade: true,
-    },
-  )
-  translations: AdministrativeLevelTranslation[];
+  @Column({ type: 'jsonb' })
+  name: LocalizedField;
 }

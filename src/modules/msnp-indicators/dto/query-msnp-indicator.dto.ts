@@ -1,17 +1,22 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { IntersectionType } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../../common/dto/pagination-query.dto';
+import { LocaleQueryDto } from '../../../common/dto/locale-query.dto';
 
-export class QueryMsnpIndicatorDto extends PaginationQueryDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  code?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
+export class QueryMsnpIndicatorDto extends IntersectionType(
+  PaginationQueryDto,
+  LocaleQueryDto,
+) {
+  @ApiPropertyOptional({ description: 'Filter by active status' })
   @IsBoolean()
+  @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   isActive?: boolean;
+
+  @ApiPropertyOptional({ description: 'Search by name or code' })
+  @IsString()
+  @IsOptional()
+  search?: string;
 }

@@ -1,22 +1,19 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsArray,
-  ValidateNested,
-  IsBoolean,
-  IsOptional,
-} from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { AgeGroupTranslationDto } from './age-group-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateAgeGroupDto {
-  @ApiProperty({ type: [AgeGroupTranslationDto] })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => AgeGroupTranslationDto)
-  translations: AgeGroupTranslationDto[];
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: '0-5 years', ne: '०-५ वर्ष' },
+  })
+  name: LocalizedFieldDto;
 
-  @ApiPropertyOptional({ default: true })
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
 }

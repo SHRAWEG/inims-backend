@@ -16,7 +16,6 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { MsnpIndicatorsService } from './msnp-indicators.service';
 import { CreateMsnpIndicatorDto } from './dto/create-msnp-indicator.dto';
@@ -25,7 +24,7 @@ import { QueryMsnpIndicatorDto } from './dto/query-msnp-indicator.dto';
 import { MsnpIndicatorResponseDto } from './dto/msnp-indicator-response.dto';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UserRole } from '../../common/enums/user-role.enum';
-import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
 @ApiTags('msnp-indicators')
@@ -37,7 +36,7 @@ export class MsnpIndicatorsController {
   @Post()
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create a new MSNP indicator' })
+  @ApiOperation({ summary: 'Create a new msnp indicator' })
   @ApiResponse({ status: 201, type: MsnpIndicatorResponseDto })
   async create(@Body() createDto: CreateMsnpIndicatorDto) {
     const data = await this.msnpIndicatorsService.create(createDto);
@@ -45,49 +44,31 @@ export class MsnpIndicatorsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all MSNP indicators' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
+  @ApiOperation({ summary: 'Get all msnp indicators' })
   @ApiResponse({ status: 200, type: [MsnpIndicatorResponseDto] })
-  async findAll(
-    @Query() query: QueryMsnpIndicatorDto,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
-  ) {
-    const { data, total } = await this.msnpIndicatorsService.findAll(
-      query,
-      locale,
-      String(withTranslations) === 'true',
-    );
-    return buildResponse(data, {
-      total,
-      page: query.page,
-      limit: query.limit,
-      totalPages: Math.ceil(total / query.limit),
-    });
+  async findAll(@Query() query: QueryMsnpIndicatorDto) {
+    const result = await this.msnpIndicatorsService.findAll(query);
+    return buildResponse(result.data, result.meta);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get an MSNP indicator by id' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
+  @ApiOperation({ summary: 'Get an msnp indicator by id' })
   @ApiResponse({ status: 200, type: MsnpIndicatorResponseDto })
   async findOne(
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
+    @Query() query: FindOneQueryDto,
   ) {
-    const data = await this.msnpIndicatorsService.findOne(
+    const data = await this.msnpIndicatorsService.findById(
       id,
-      locale,
-      String(withTranslations) === 'true',
+      query.locale,
+      query.withTranslations === true,
     );
     return buildResponse(data);
   }
 
   @Patch(':id')
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
-  @ApiOperation({ summary: 'Update an MSNP indicator' })
+  @ApiOperation({ summary: 'Update an msnp indicator' })
   @ApiResponse({ status: 200, type: MsnpIndicatorResponseDto })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
@@ -100,7 +81,7 @@ export class MsnpIndicatorsController {
   @Delete(':id')
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete an MSNP indicator' })
+  @ApiOperation({ summary: 'Delete an msnp indicator' })
   @ApiResponse({ status: 204 })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     await this.msnpIndicatorsService.remove(id);

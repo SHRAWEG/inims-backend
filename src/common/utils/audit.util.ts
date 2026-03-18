@@ -12,10 +12,8 @@ const SENSITIVE_FIELDS = [
  * Strips sensitive fields from an object before storing in audit logs.
  * Replaces values with '[REDACTED]'.
  */
-export function sanitizeForAudit(
-  data: Record<string, unknown>,
-): Record<string, unknown> {
-  const sanitized = { ...data };
+export function sanitizeForAudit(data: any): Record<string, any> {
+  const sanitized = { ...(data as Record<string, any>) };
   for (const field of SENSITIVE_FIELDS) {
     if (field in sanitized) {
       sanitized[field] = '[REDACTED]';

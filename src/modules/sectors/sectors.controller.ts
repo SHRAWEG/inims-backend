@@ -16,7 +16,6 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { SectorsService } from './sectors.service';
 import { CreateSectorDto } from './dto/create-sector.dto';
@@ -25,7 +24,7 @@ import { QuerySectorDto } from './dto/query-sector.dto';
 import { SectorResponseDto } from './dto/sector-response.dto';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UserRole } from '../../common/enums/user-role.enum';
-import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
+import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
 @ApiTags('sectors')
@@ -46,41 +45,23 @@ export class SectorsController {
 
   @Get()
   @ApiOperation({ summary: 'Get all sectors' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
   @ApiResponse({ status: 200, type: [SectorResponseDto] })
-  async findAll(
-    @Query() query: QuerySectorDto,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
-  ) {
-    const { data, total } = await this.sectorsService.findAll(
-      query,
-      locale,
-      String(withTranslations) === 'true',
-    );
-    return buildResponse(data, {
-      total,
-      page: query.page,
-      limit: query.limit,
-      totalPages: Math.ceil(total / query.limit),
-    });
+  async findAll(@Query() query: QuerySectorDto) {
+    const result = await this.sectorsService.findAll(query);
+    return buildResponse(result.data, result.meta);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a sector by id' })
-  @ApiQuery({ name: 'locale', required: false, enum: ['en', 'ne'] })
-  @ApiQuery({ name: 'withTranslations', required: false, type: Boolean })
   @ApiResponse({ status: 200, type: SectorResponseDto })
   async findOne(
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('locale') locale: SupportedLocale = DEFAULT_LOCALE,
-    @Query('withTranslations') withTranslations = false,
+    @Query() query: FindOneQueryDto,
   ) {
-    const data = await this.sectorsService.findOne(
+    const data = await this.sectorsService.findById(
       id,
-      locale,
-      String(withTranslations) === 'true',
+      query.locale,
+      query.withTranslations === true,
     );
     return buildResponse(data);
   }

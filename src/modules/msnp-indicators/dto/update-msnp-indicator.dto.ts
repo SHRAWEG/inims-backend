@@ -1,6 +1,23 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateMsnpIndicatorDto } from './create-msnp-indicator.dto';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { PartialLocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
-export class UpdateMsnpIndicatorDto extends PartialType(
-  CreateMsnpIndicatorDto,
-) {}
+export class UpdateMsnpIndicatorDto {
+  @ValidateNested()
+  @Type(() => PartialLocalizedFieldDto)
+  @IsOptional()
+  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
+  code?: PartialLocalizedFieldDto;
+
+  @ValidateNested()
+  @Type(() => PartialLocalizedFieldDto)
+  @IsOptional()
+  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
+  name?: PartialLocalizedFieldDto;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  isActive?: boolean;
+}

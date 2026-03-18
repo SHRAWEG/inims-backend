@@ -1,29 +1,27 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsArray,
-  ValidateNested,
-  IsBoolean,
-  IsOptional,
-  IsString,
-  IsNotEmpty,
-} from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { MsnpIndicatorTranslationDto } from './msnp-indicator-translation.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateMsnpIndicatorDto {
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  code: string;
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'MI-1', ne: 'एमआई-१' },
+  })
+  code: LocalizedFieldDto;
 
-  @ApiProperty({ type: [MsnpIndicatorTranslationDto] })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => MsnpIndicatorTranslationDto)
-  translations: MsnpIndicatorTranslationDto[];
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Stunting Rate', ne: 'पुड्कोपन दर' },
+  })
+  name: LocalizedFieldDto;
 
-  @ApiPropertyOptional({ default: true })
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
+  @ApiProperty({ default: true })
+  isActive: boolean = true;
 }
