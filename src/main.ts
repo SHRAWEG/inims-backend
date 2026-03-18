@@ -72,7 +72,7 @@ async function bootstrap(): Promise<void> {
 
   // ---------- CORS ----------
   app.enableCors({
-    origin: configService.get<string>('CORS_ORIGIN', 'http://localhost:3000'),
+    origin: ['http://localhost:3000', 'https://inims-dashboard.vercel.app/'],
     credentials: true,
   });
 
