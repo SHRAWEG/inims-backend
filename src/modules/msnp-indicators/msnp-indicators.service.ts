@@ -32,7 +32,7 @@ export class MsnpIndicatorsService {
   async create(dto: CreateMsnpIndicatorDto): Promise<MsnpIndicatorResponseDto> {
     try {
       const entity = this.msnpIndicatorRepository.create({
-        code: { en: dto.code.en, ne: dto.code.ne },
+        code: dto.code,
         name: { en: dto.name.en, ne: dto.name.ne },
         isActive: dto.isActive ?? true,
       });
@@ -64,7 +64,7 @@ export class MsnpIndicatorsService {
 
     if (query.search) {
       qb.andWhere(
-        `(indicator.name->>'en' ILIKE :search OR indicator.name->>'ne' ILIKE :search OR indicator.code->>'en' ILIKE :search OR indicator.code->>'ne' ILIKE :search)`,
+        `(indicator.name->>'en' ILIKE :search OR indicator.name->>'ne' ILIKE :search OR indicator.code ILIKE :search)`,
         { search: `%${query.search}%` },
       );
     }
@@ -124,11 +124,6 @@ export class MsnpIndicatorsService {
       });
       const before = { ...existing };
 
-      const updatedCode: LocalizedField = {
-        en: dto.code?.en ?? existing.code.en,
-        ne: dto.code?.ne ?? existing.code.ne,
-      };
-
       const updatedName: LocalizedField = {
         en: dto.name?.en ?? existing.name.en,
         ne: dto.name?.ne ?? existing.name.ne,
@@ -137,7 +132,7 @@ export class MsnpIndicatorsService {
       const updated = await this.msnpIndicatorRepository.save({
         ...existing,
         ...dto,
-        code: updatedCode,
+        code: dto.code ?? existing.code,
         name: updatedName,
       });
 
@@ -182,7 +177,7 @@ export class MsnpIndicatorsService {
   ): MsnpIndicatorResponseDto {
     return {
       id: entity.id,
-      code: entity.code[locale] ?? entity.code['en'],
+      code: entity.code,
       name: entity.name[locale] ?? entity.name['en'],
       isActive: entity.isActive,
       locale,

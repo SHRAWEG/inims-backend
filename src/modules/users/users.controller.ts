@@ -2,6 +2,8 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
+  Param,
   Body,
   HttpCode,
   HttpStatus,
@@ -11,10 +13,16 @@ import {
   ApiOperation,
   ApiResponse as SwaggerResponse,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
+import { UserFilterDto } from './dto/user-filter.dto';
+import { Query } from '@nestjs/common';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UserContext } from '../../common/types/user-context.type';
 import { buildResponse } from '../../common/utils/response.util';
@@ -75,5 +83,74 @@ export class UsersController {
       undefined,
       'Profile updated successfully',
     );
+  }
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  @Permissions('users:view')
+  @ApiQuery({ type: UserFilterDto, required: false })
+  async findAll(
+    @Query() filter: UserFilterDto,
+    @CurrentUser() userContext: UserContext,
+  ): Promise<ApiResponse<UserResponseDto[]>> {
+    const users = await this.usersService.findAll(filter, userContext);
+    return buildResponse(users.map((u) => this.usersService.toResponseDto(u)));
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @Permissions('users:create')
+  @ApiOperation({ summary: 'Create a new user' })
+  @SwaggerResponse({
+    status: 201,
+    description: 'User created successfully',
+    type: UserResponseDto,
+  })
+  async create(
+    @Body() dto: CreateUserDto,
+  ): Promise<ApiResponse<UserResponseDto>> {
+    const user = await this.usersService.create(dto);
+    return buildResponse(
+      this.usersService.toResponseDto(user),
+      undefined,
+      'User created successfully',
+    );
+  }
+
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  @Permissions('users:update')
+  @ApiOperation({ summary: 'Update a user' })
+  @SwaggerResponse({
+    status: 200,
+    description: 'User updated successfully',
+    type: UserResponseDto,
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateUserDto,
+  ): Promise<ApiResponse<UserResponseDto>> {
+    const user = await this.usersService.update(id, dto);
+    return buildResponse(
+      this.usersService.toResponseDto(user),
+      undefined,
+      'User updated successfully',
+    );
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @Permissions('users:view')
+  @ApiOperation({ summary: 'Get user by ID' })
+  @SwaggerResponse({
+    status: 200,
+    description: 'User retrieved successfully',
+    type: UserResponseDto,
+  })
+  async findOne(
+    @Param('id') id: string,
+  ): Promise<ApiResponse<UserResponseDto>> {
+    const user = await this.usersService.findById(id);
+    return buildResponse(this.usersService.toResponseDto(user));
   }
 }

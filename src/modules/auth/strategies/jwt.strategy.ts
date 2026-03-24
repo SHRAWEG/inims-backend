@@ -24,11 +24,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: {
     sub: string;
     email: string;
-    role: string;
+    systemRole: string | null;
+    roleId: string | null;
   }): Promise<UserContext> {
     const user = await this.userRepository.findOne({
       where: { id: payload.sub },
-      select: ['id', 'email', 'role', 'isActive'],
+      select: ['id', 'email', 'systemRole', 'roleId', 'isActive'],
     });
 
     if (!user) {
@@ -42,7 +43,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return {
       id: user.id,
       email: user.email,
-      role: user.role,
+      systemRole: user.systemRole,
+      roleId: user.roleId,
     };
   }
 }

@@ -22,8 +22,7 @@ import { CreateGenderDto } from './dto/create-gender.dto';
 import { UpdateGenderDto } from './dto/update-gender.dto';
 import { QueryGenderDto } from './dto/query-gender.dto';
 import { GenderResponseDto } from './dto/gender-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -34,7 +33,7 @@ export class GendersController {
   constructor(private readonly gendersService: GendersService) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('genders:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new gender' })
   @ApiResponse({ status: 201, type: GenderResponseDto })
@@ -44,6 +43,7 @@ export class GendersController {
   }
 
   @Get()
+  @Permissions('genders:view')
   @ApiOperation({ summary: 'Get all genders' })
   @ApiResponse({ status: 200, type: [GenderResponseDto] })
   async findAll(@Query() query: QueryGenderDto) {
@@ -52,6 +52,7 @@ export class GendersController {
   }
 
   @Get(':id')
+  @Permissions('genders:view')
   @ApiOperation({ summary: 'Get a gender by id' })
   @ApiResponse({ status: 200, type: GenderResponseDto })
   async findOne(
@@ -67,7 +68,7 @@ export class GendersController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('genders:update')
   @ApiOperation({ summary: 'Update a gender' })
   @ApiResponse({ status: 200, type: GenderResponseDto })
   async update(
@@ -79,7 +80,7 @@ export class GendersController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('genders:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a gender' })
   @ApiResponse({ status: 204 })

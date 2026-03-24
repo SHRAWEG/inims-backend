@@ -4,8 +4,8 @@ import { LocalizedField } from '../../../common/types/i18n.type';
 
 @Entity('msnp_indicators')
 export class MsnpIndicator extends BaseEntity {
-  @Column({ type: 'jsonb' })
-  code: LocalizedField;
+  @Column()
+  code: string;
 
   @Column({ type: 'jsonb' })
   name: LocalizedField;

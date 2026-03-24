@@ -22,8 +22,7 @@ import { CreateSectorDto } from './dto/create-sector.dto';
 import { UpdateSectorDto } from './dto/update-sector.dto';
 import { QuerySectorDto } from './dto/query-sector.dto';
 import { SectorResponseDto } from './dto/sector-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -34,7 +33,7 @@ export class SectorsController {
   constructor(private readonly sectorsService: SectorsService) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('sectors:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new sector' })
   @ApiResponse({ status: 201, type: SectorResponseDto })
@@ -44,6 +43,7 @@ export class SectorsController {
   }
 
   @Get()
+  @Permissions('sectors:view')
   @ApiOperation({ summary: 'Get all sectors' })
   @ApiResponse({ status: 200, type: [SectorResponseDto] })
   async findAll(@Query() query: QuerySectorDto) {
@@ -52,6 +52,7 @@ export class SectorsController {
   }
 
   @Get(':id')
+  @Permissions('sectors:view')
   @ApiOperation({ summary: 'Get a sector by id' })
   @ApiResponse({ status: 200, type: SectorResponseDto })
   async findOne(
@@ -67,7 +68,7 @@ export class SectorsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('sectors:update')
   @ApiOperation({ summary: 'Update a sector' })
   @ApiResponse({ status: 200, type: SectorResponseDto })
   async update(
@@ -79,7 +80,7 @@ export class SectorsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('sectors:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a sector' })
   @ApiResponse({ status: 204 })

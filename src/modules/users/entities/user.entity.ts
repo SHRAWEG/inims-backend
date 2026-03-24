@@ -1,6 +1,7 @@
-import { Entity, Column, Index } from 'typeorm';
+import { Entity, Column, Index, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { UserRole } from '../../../common/enums/user-role.enum';
+import { SystemRole } from '../../../common/enums/system-role.enum';
+import { Role } from '../../roles/entities/role.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -18,12 +19,19 @@ export class User extends BaseEntity {
   lastName: string;
 
   @Column({
-    name: 'role',
+    name: 'system_role',
     type: 'enum',
-    enum: UserRole,
-    default: UserRole.USER,
+    enum: SystemRole,
+    nullable: true,
   })
-  role: UserRole;
+  systemRole: SystemRole | null;
+
+  @Column({ name: 'role_id', type: 'uuid', nullable: true })
+  roleId: string | null;
+
+  @ManyToOne(() => Role, (role) => role.users, { nullable: true, eager: false })
+  @JoinColumn({ name: 'role_id' })
+  role: Role | null;
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;

@@ -32,8 +32,8 @@ export class MsnpIndicatorDetailResponseDto {
   @ApiProperty()
   id: string;
 
-  @ApiProperty({ type: LocalizedFieldDto })
-  code: LocalizedField;
+  @ApiProperty()
+  code: string;
 
   @ApiProperty({ type: LocalizedFieldDto })
   name: LocalizedField;

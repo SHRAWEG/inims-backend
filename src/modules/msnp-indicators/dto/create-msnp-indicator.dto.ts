@@ -1,16 +1,21 @@
-import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateMsnpIndicatorDto {
-  @ValidateNested()
-  @Type(() => LocalizedFieldDto)
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
-    type: LocalizedFieldDto,
-    example: { en: 'MI-1', ne: 'एमआई-१' },
+    example: 'MI-1',
   })
-  code: LocalizedFieldDto;
+  code: string;
 
   @ValidateNested()
   @Type(() => LocalizedFieldDto)

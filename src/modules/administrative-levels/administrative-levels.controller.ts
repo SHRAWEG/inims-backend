@@ -22,8 +22,7 @@ import { CreateAdministrativeLevelDto } from './dto/create-administrative-level.
 import { UpdateAdministrativeLevelDto } from './dto/update-administrative-level.dto';
 import { QueryAdministrativeLevelDto } from './dto/query-administrative-level.dto';
 import { AdministrativeLevelResponseDto } from './dto/administrative-level-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -36,7 +35,7 @@ export class AdministrativeLevelsController {
   ) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('administrative-levels:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new administrative level' })
   @ApiResponse({ status: 201, type: AdministrativeLevelResponseDto })
@@ -46,6 +45,7 @@ export class AdministrativeLevelsController {
   }
 
   @Get()
+  @Permissions('administrative-levels:view')
   @ApiOperation({ summary: 'Get all administrative levels' })
   @ApiResponse({ status: 200, type: [AdministrativeLevelResponseDto] })
   async findAll(@Query() query: QueryAdministrativeLevelDto) {
@@ -54,6 +54,7 @@ export class AdministrativeLevelsController {
   }
 
   @Get(':id')
+  @Permissions('administrative-levels:view')
   @ApiOperation({ summary: 'Get an administrative level by id' })
   @ApiResponse({ status: 200, type: AdministrativeLevelResponseDto })
   async findOne(
@@ -69,7 +70,7 @@ export class AdministrativeLevelsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('administrative-levels:update')
   @ApiOperation({ summary: 'Update an administrative level' })
   @ApiResponse({ status: 200, type: AdministrativeLevelResponseDto })
   async update(
@@ -81,7 +82,7 @@ export class AdministrativeLevelsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('administrative-levels:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete an administrative level' })
   @ApiResponse({ status: 204 })

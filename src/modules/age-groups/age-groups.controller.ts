@@ -22,8 +22,7 @@ import { CreateAgeGroupDto } from './dto/create-age-group.dto';
 import { UpdateAgeGroupDto } from './dto/update-age-group.dto';
 import { QueryAgeGroupDto } from './dto/query-age-group.dto';
 import { AgeGroupResponseDto } from './dto/age-group-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -34,7 +33,7 @@ export class AgeGroupsController {
   constructor(private readonly ageGroupsService: AgeGroupsService) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('age-groups:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new age group' })
   @ApiResponse({ status: 201, type: AgeGroupResponseDto })
@@ -44,6 +43,7 @@ export class AgeGroupsController {
   }
 
   @Get()
+  @Permissions('age-groups:view')
   @ApiOperation({ summary: 'Get all age groups' })
   @ApiResponse({ status: 200, type: [AgeGroupResponseDto] })
   async findAll(@Query() query: QueryAgeGroupDto) {
@@ -52,6 +52,7 @@ export class AgeGroupsController {
   }
 
   @Get(':id')
+  @Permissions('age-groups:view')
   @ApiOperation({ summary: 'Get an age group by id' })
   @ApiResponse({ status: 200, type: AgeGroupResponseDto })
   async findOne(
@@ -67,7 +68,7 @@ export class AgeGroupsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('age-groups:update')
   @ApiOperation({ summary: 'Update an age group' })
   @ApiResponse({ status: 200, type: AgeGroupResponseDto })
   async update(
@@ -79,7 +80,7 @@ export class AgeGroupsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('age-groups:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete an age group' })
   @ApiResponse({ status: 204 })

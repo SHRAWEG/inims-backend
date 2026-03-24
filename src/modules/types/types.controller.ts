@@ -22,8 +22,7 @@ import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
 import { QueryTypeDto } from './dto/query-type.dto';
 import { TypeResponseDto } from './dto/type-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -34,7 +33,7 @@ export class TypesController {
   constructor(private readonly typesService: TypesService) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('types:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new type' })
   @ApiResponse({ status: 201, type: TypeResponseDto })
@@ -44,6 +43,7 @@ export class TypesController {
   }
 
   @Get()
+  @Permissions('types:view')
   @ApiOperation({ summary: 'Get all types' })
   @ApiResponse({ status: 200, type: [TypeResponseDto] })
   async findAll(@Query() query: QueryTypeDto) {
@@ -52,6 +52,7 @@ export class TypesController {
   }
 
   @Get(':id')
+  @Permissions('types:view')
   @ApiOperation({ summary: 'Get a type by id' })
   @ApiResponse({ status: 200, type: TypeResponseDto })
   async findOne(
@@ -67,7 +68,7 @@ export class TypesController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('types:update')
   @ApiOperation({ summary: 'Update a type' })
   @ApiResponse({ status: 200, type: TypeResponseDto })
   async update(
@@ -79,7 +80,7 @@ export class TypesController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('types:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a type' })
   @ApiResponse({ status: 204 })

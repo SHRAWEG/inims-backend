@@ -11,6 +11,7 @@ import jwtConfig from './config/jwt.config';
 import { CommonModule } from './common/common.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
+import { PermissionsGuard } from './common/guards/permissions.guard';
 import { AppController } from './app.controller';
 import { AuditLogModule } from './modules/audit-log/audit-log.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -22,6 +23,7 @@ import { FrequenciesModule } from './modules/frequencies/frequencies.module';
 import { GendersModule } from './modules/genders/genders.module';
 import { AgeGroupsModule } from './modules/age-groups/age-groups.module';
 import { MsnpIndicatorsModule } from './modules/msnp-indicators/msnp-indicators.module';
+import { RolesModule } from './modules/roles/roles.module';
 
 @Module({
   imports: [
@@ -67,12 +69,14 @@ import { MsnpIndicatorsModule } from './modules/msnp-indicators/msnp-indicators.
     GendersModule,
     AgeGroupsModule,
     MsnpIndicatorsModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [
     // Global guards — order matters: JwtAuthGuard runs first
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: PermissionsGuard },
   ],
 })
 export class AppModule {}

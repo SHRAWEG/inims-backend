@@ -22,8 +22,7 @@ import { CreateMsnpIndicatorDto } from './dto/create-msnp-indicator.dto';
 import { UpdateMsnpIndicatorDto } from './dto/update-msnp-indicator.dto';
 import { QueryMsnpIndicatorDto } from './dto/query-msnp-indicator.dto';
 import { MsnpIndicatorResponseDto } from './dto/msnp-indicator-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -34,7 +33,7 @@ export class MsnpIndicatorsController {
   constructor(private readonly msnpIndicatorsService: MsnpIndicatorsService) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('msnp-indicators:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new msnp indicator' })
   @ApiResponse({ status: 201, type: MsnpIndicatorResponseDto })
@@ -44,6 +43,7 @@ export class MsnpIndicatorsController {
   }
 
   @Get()
+  @Permissions('msnp-indicators:view')
   @ApiOperation({ summary: 'Get all msnp indicators' })
   @ApiResponse({ status: 200, type: [MsnpIndicatorResponseDto] })
   async findAll(@Query() query: QueryMsnpIndicatorDto) {
@@ -52,6 +52,7 @@ export class MsnpIndicatorsController {
   }
 
   @Get(':id')
+  @Permissions('msnp-indicators:view')
   @ApiOperation({ summary: 'Get an msnp indicator by id' })
   @ApiResponse({ status: 200, type: MsnpIndicatorResponseDto })
   async findOne(
@@ -67,7 +68,7 @@ export class MsnpIndicatorsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('msnp-indicators:update')
   @ApiOperation({ summary: 'Update an msnp indicator' })
   @ApiResponse({ status: 200, type: MsnpIndicatorResponseDto })
   async update(
@@ -79,7 +80,7 @@ export class MsnpIndicatorsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('msnp-indicators:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete an msnp indicator' })
   @ApiResponse({ status: 204 })

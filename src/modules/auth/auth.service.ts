@@ -71,6 +71,7 @@ export class AuthService {
   ): Promise<{ user: UserResponseDto; tokens: TokenResponseDto }> {
     const user = await this.userRepository.findOne({
       where: { email: dto.email.toLowerCase() },
+      relations: ['role', 'role.permissions'],
     });
 
     if (!user) {
@@ -169,7 +170,8 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
-      role: String(user.role),
+      systemRole: user.systemRole,
+      roleId: user.roleId,
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

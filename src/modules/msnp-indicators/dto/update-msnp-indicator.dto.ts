@@ -1,14 +1,18 @@
-import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import {
+  IsBoolean,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { PartialLocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class UpdateMsnpIndicatorDto {
-  @ValidateNested()
-  @Type(() => PartialLocalizedFieldDto)
+  @IsString()
   @IsOptional()
-  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
-  code?: PartialLocalizedFieldDto;
+  @ApiProperty({ required: false })
+  code?: string;
 
   @ValidateNested()
   @Type(() => PartialLocalizedFieldDto)

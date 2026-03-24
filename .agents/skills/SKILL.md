@@ -332,16 +332,25 @@ export abstract class BaseEntity {
 
 - `ApiResponse<T>` — standard consolidated wrapper (optional `meta` for pagination)
 - `PaginationMeta` — pagination metadata
-- `ChartDataset` — chart dataset shape (if analytics module exists)
-- `ChartResponse` — chart endpoint response (if analytics module exists)
-- `UserContext` — JWT payload shape attached to requests
-- `ErrorDetail` / `ErrorResponse` — error response shapes
+-   `ApiResponse<T>` — standard consolidated wrapper (optional `meta` for pagination)
+-   `PaginationMeta` — pagination metadata
+-   `ChartDataset` — chart dataset shape (if analytics module exists)
+-   `ChartResponse` — chart endpoint response (if analytics module exists)
+-   `UserContext` — JWT payload shape attached to requests
+-   `ErrorDetail` / `ErrorResponse` — error response shapes
 
 > **Domain-specific types** (e.g., types representing your business entities) always live in `modules/<module-name>/types/`, never in `common/types/`.
 
 ---
 
-## 10. Configuration
+## 10. RBAC Routing Table
+
+Any RBAC work — guards, permissions, roles
+→ [references/rbac.md](references/rbac.md)
+
+---
+
+## 11. Configuration
 
 > See [references/environment.md](references/environment.md) for all config files and the Joi validation schema.
 
@@ -354,7 +363,7 @@ export abstract class BaseEntity {
 
 ---
 
-## 11. Swagger / API Docs
+## 12. Swagger / API Docs
 
 > See [references/swagger-standards.md](references/swagger-standards.md) for the complete decorator reference.
 
@@ -367,7 +376,7 @@ export abstract class BaseEntity {
 
 ---
 
-## 12. Testing Standards
+## 13. Testing Standards
 
 > See [references/testing-standards.md](references/testing-standards.md) for the full test setup and mocking patterns.
 
@@ -380,7 +389,7 @@ export abstract class BaseEntity {
 
 ---
 
-## 13. Audit Logging
+## 14. Audit Logging
 
 > See [references/audit-log.md](references/audit-log.md) for the complete implementation.
 
@@ -392,7 +401,7 @@ export abstract class BaseEntity {
 
 ---
 
-## 14. Quick Reference Checklist
+## 15. Quick Reference Checklist
 
 Before submitting any code, verify:
 
@@ -431,6 +440,7 @@ Before submitting any code, verify:
 - [references/conventions.md](references/conventions.md) — File/class/variable/DB/API naming rules, DTO rules, TypeScript rules, import order
 - [references/new-module-checklist.md](references/new-module-checklist.md) — Step-by-step checklist for creating any new feature module
 - [references/project-structure.md](references/project-structure.md) — Exact folder/file structure with one-line responsibility comments, "Where does X go?" rules
+- [references/rbac.md](references/rbac.md) — Role and Permission Based Access Control (RBAC) architecture, guards, decorators, and seeder patterns
 
 ### 🟢 Priority 3 — Read As Needed
 
@@ -445,7 +455,7 @@ Before submitting any code, verify:
 
 ---
 
-## 15. Quality Persistence
+## 16. Quality Persistence
 
 ### Rules
 - **Husky Enforcement**: Pre-commit hooks MUST run `npm run lint && npm run build`.

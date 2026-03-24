@@ -1,8 +1,9 @@
-import { UserRole } from '../enums/user-role.enum';
+import { SystemRole } from '../enums/system-role.enum';
 
 /** Decoded JWT payload attached to req.user on every authenticated request */
 export interface UserContext {
   id: string;
   email: string;
-  role: UserRole;
+  systemRole: SystemRole | null;
+  roleId: string | null;
 }

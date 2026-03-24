@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { SystemRole } from '../../../common/enums/system-role.enum';
 
 export class UserResponseDto {
   @ApiProperty({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
@@ -13,6 +14,21 @@ export class UserResponseDto {
   @ApiProperty({ example: 'Doe' })
   lastName: string;
 
-  @ApiProperty({ example: 'USER', enum: ['USER', 'ADMIN', 'SUPER_ADMIN'] })
-  role: string;
+  @ApiProperty({ enum: SystemRole, nullable: true })
+  systemRole: SystemRole | null;
+
+  @ApiProperty({ nullable: true })
+  roleId: string | null;
+
+  @ApiProperty({ nullable: true })
+  roleName: string | null;
+
+  @ApiProperty({ type: [String] })
+  permissions: string[];
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

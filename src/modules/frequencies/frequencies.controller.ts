@@ -22,8 +22,7 @@ import { CreateFrequencyDto } from './dto/create-frequency.dto';
 import { UpdateFrequencyDto } from './dto/update-frequency.dto';
 import { QueryFrequencyDto } from './dto/query-frequency.dto';
 import { FrequencyResponseDto } from './dto/frequency-response.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRole } from '../../common/enums/user-role.enum';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -34,7 +33,7 @@ export class FrequenciesController {
   constructor(private readonly frequenciesService: FrequenciesService) {}
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('frequencies:create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new frequency' })
   @ApiResponse({ status: 201, type: FrequencyResponseDto })
@@ -44,6 +43,7 @@ export class FrequenciesController {
   }
 
   @Get()
+  @Permissions('frequencies:view')
   @ApiOperation({ summary: 'Get all frequencies' })
   @ApiResponse({ status: 200, type: [FrequencyResponseDto] })
   async findAll(@Query() query: QueryFrequencyDto) {
@@ -52,6 +52,7 @@ export class FrequenciesController {
   }
 
   @Get(':id')
+  @Permissions('frequencies:view')
   @ApiOperation({ summary: 'Get a frequency by id' })
   @ApiResponse({ status: 200, type: FrequencyResponseDto })
   async findOne(
@@ -67,7 +68,7 @@ export class FrequenciesController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('frequencies:update')
   @ApiOperation({ summary: 'Update a frequency' })
   @ApiResponse({ status: 200, type: FrequencyResponseDto })
   async update(
@@ -79,7 +80,7 @@ export class FrequenciesController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Permissions('frequencies:delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a frequency' })
   @ApiResponse({ status: 204 })
