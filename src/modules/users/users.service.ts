@@ -126,6 +126,11 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
+  async remove(id: string): Promise<void> {
+    const user = await this.findById(id);
+    await this.userRepository.remove(user);
+  }
+
   toResponseDto(user: User): UserResponseDto {
     const permissions =
       user.role?.permissions?.map((p) => `${p.resource}:${p.action}`) ?? [];

@@ -122,6 +122,7 @@ export class AuditLogService {
 
     const [items, total] = await this.auditLogRepository.findAndCount({
       where,
+      relations: ['user'],
       take: limit,
       skip: offset,
       order: { [sortBy]: sortOrder } as FindOptionsOrder<AuditLog>,
@@ -136,11 +137,31 @@ export class AuditLogService {
   async findOne(id: string): Promise<AuditLog> {
     const log = await this.auditLogRepository.findOne({
       where: { id } as FindOptionsWhere<AuditLog>,
+      relations: ['user'],
     });
     if (!log) {
       throw new NotFoundException(`Audit log with ID ${id} not found`);
     }
     return log;
+  }
+
+  /**
+   * Get metadata for filtering (unique actions and resources)
+   */
+  async getMetadata(): Promise<{ actions: string[]; resources: string[] }> {
+    const actions = Object.values(AuditAction);
+
+    const resourcesResult = await this.auditLogRepository
+      .createQueryBuilder('log')
+      .select('DISTINCT log.resource', 'resource')
+      .orderBy('resource', 'ASC')
+      .getRawMany();
+
+    const resources = resourcesResult.map(
+      (r: { resource: string }) => r.resource,
+    );
+
+    return { actions, resources };
   }
 
   /**

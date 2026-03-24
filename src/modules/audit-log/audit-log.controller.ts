@@ -15,9 +15,9 @@ import { buildResponse } from '../../common/utils/response.util';
 export class AuditLogController {
   constructor(private readonly auditLogService: AuditLogService) {}
 
-  @Get()
   @Permissions('audit-logs:view')
   @ApiOperation({ summary: 'Get audit logs' })
+  @Get()
   async findAll(
     @Query() query: AuditLogQueryDto,
   ): Promise<ApiResponse<AuditLog[]>> {
@@ -36,5 +36,15 @@ export class AuditLogController {
   ): Promise<ApiResponse<AuditLog>> {
     const log = await this.auditLogService.findOne(id);
     return buildResponse(log);
+  }
+
+  @Get('filters/metadata')
+  @Permissions('audit-logs:view')
+  @ApiOperation({ summary: 'Get unique actions and resources for filters' })
+  async getMetadata(): Promise<
+    ApiResponse<{ actions: string[]; resources: string[] }>
+  > {
+    const metadata = await this.auditLogService.getMetadata();
+    return buildResponse(metadata);
   }
 }

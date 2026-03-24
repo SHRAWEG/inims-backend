@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Index,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { AuditAction } from '../../../common/enums/audit-action.enum';
+import { User } from '../../users/entities/user.entity';
 
 /**
  * Append-only audit log. Does NOT extend BaseEntity:
@@ -21,6 +24,14 @@ export class AuditLog {
   @Index()
   @Column({ name: 'user_id', type: 'uuid', nullable: true })
   userId: string | null;
+
+  @ManyToOne(() => User, {
+    nullable: true,
+    createForeignKeyConstraints: false,
+    eager: false,
+  })
+  @JoinColumn({ name: 'user_id' })
+  user: User | null;
 
   @Index()
   @Column({ name: 'action', type: 'enum', enum: AuditAction })

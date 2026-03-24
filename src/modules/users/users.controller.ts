@@ -5,6 +5,7 @@ import {
   Post,
   Param,
   Body,
+  Delete,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
@@ -108,8 +109,18 @@ export class UsersController {
   })
   async create(
     @Body() dto: CreateUserDto,
+    @CurrentUser() userContext: UserContext,
   ): Promise<ApiResponse<UserResponseDto>> {
     const user = await this.usersService.create(dto);
+
+    await this.auditLogService.log({
+      action: AuditAction.CREATE,
+      resource: 'user',
+      resourceId: user.id,
+      userId: userContext.id,
+      after: user as unknown as Record<string, unknown>,
+    });
+
     return buildResponse(
       this.usersService.toResponseDto(user),
       undefined,
@@ -129,13 +140,49 @@ export class UsersController {
   async update(
     @Param('id') id: string,
     @Body() dto: UpdateUserDto,
+    @CurrentUser() userContext: UserContext,
   ): Promise<ApiResponse<UserResponseDto>> {
+    const oldUser = await this.usersService.findById(id);
     const user = await this.usersService.update(id, dto);
+
+    await this.auditLogService.log({
+      action: AuditAction.UPDATE,
+      resource: 'user',
+      resourceId: user.id,
+      userId: userContext.id,
+      before: oldUser as unknown as Record<string, unknown>,
+      after: user as unknown as Record<string, unknown>,
+    });
+
     return buildResponse(
       this.usersService.toResponseDto(user),
       undefined,
       'User updated successfully',
     );
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Permissions('users:delete')
+  @ApiOperation({ summary: 'Delete a user' })
+  @SwaggerResponse({
+    status: 204,
+    description: 'User deleted successfully',
+  })
+  async remove(
+    @Param('id') id: string,
+    @CurrentUser() userContext: UserContext,
+  ): Promise<void> {
+    const oldUser = await this.usersService.findById(id);
+    await this.usersService.remove(id);
+
+    await this.auditLogService.log({
+      action: AuditAction.DELETE,
+      resource: 'user',
+      resourceId: id,
+      userId: userContext.id,
+      before: oldUser as unknown as Record<string, unknown>,
+    });
   }
 
   @Get(':id')
