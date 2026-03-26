@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Raw, Not } from 'typeorm';
+import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 import { AdministrativeLevel } from './entities/administrative-level.entity';
 import { CreateAdministrativeLevelDto } from './dto/create-administrative-level.dto';
 import { UpdateAdministrativeLevelDto } from './dto/update-administrative-level.dto';
@@ -13,8 +14,8 @@ import { AuditAction } from '../../common/enums/audit-action.enum';
 import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
 import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
-import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
 import { LocalizedField } from '../../common/types/i18n.type';
@@ -32,6 +33,34 @@ export class AdministrativeLevelsService {
   async create(
     dto: CreateAdministrativeLevelDto,
   ): Promise<AdministrativeLevelResponseDto> {
+    const errors: Record<string, string[]> = {};
+
+    const [existingEn, existingNe] = await Promise.all([
+      this.administrativeLevelRepository.findOne({
+        where: {
+          name: Raw(
+            (alias) => `"${alias.replace('.', '"."')}"->>'en' = :nameEn`,
+            { nameEn: dto.name.en },
+          ),
+        },
+      }),
+      this.administrativeLevelRepository.findOne({
+        where: {
+          name: Raw(
+            (alias) => `"${alias.replace('.', '"."')}"->>'ne' = :nameNe`,
+            { nameNe: dto.name.ne },
+          ),
+        },
+      }),
+    ]);
+
+    if (existingEn) errors['name.en'] = ['English name already in use'];
+    if (existingNe) errors['name.ne'] = ['Nepali name already in use'];
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
+
     try {
       const entity = this.administrativeLevelRepository.create({
         name: { en: dto.name.en, ne: dto.name.ne },
@@ -118,10 +147,59 @@ export class AdministrativeLevelsService {
     id: string,
     dto: UpdateAdministrativeLevelDto,
   ): Promise<AdministrativeLevelResponseDto> {
+    const existing = await this.administrativeLevelRepository.findOne({
+      where: { id },
+    });
+    if (!existing) {
+      throw new EntityNotFoundException('AdministrativeLevel', id);
+    }
+
+    const errors: Record<string, string[]> = {};
+    const checks: Promise<any>[] = [];
+
+    if (dto.name?.en && dto.name.en !== existing.name.en) {
+      checks.push(
+        this.administrativeLevelRepository
+          .findOne({
+            where: {
+              name: Raw(
+                (alias) => `"${alias.replace('.', '"."')}"->>'en' = :nameEn`,
+                { nameEn: dto.name.en },
+              ),
+              id: Not(id),
+            },
+          })
+          .then((res) => {
+            if (res) errors['name.en'] = ['English name already in use'];
+          }),
+      );
+    }
+
+    if (dto.name?.ne && dto.name.ne !== existing.name.ne) {
+      checks.push(
+        this.administrativeLevelRepository
+          .findOne({
+            where: {
+              name: Raw(
+                (alias) => `"${alias.replace('.', '"."')}"->>'ne' = :nameNe`,
+                { nameNe: dto.name.ne },
+              ),
+              id: Not(id),
+            },
+          })
+          .then((res) => {
+            if (res) errors['name.ne'] = ['Nepali name already in use'];
+          }),
+      );
+    }
+
+    if (checks.length > 0) await Promise.all(checks);
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
+
     try {
-      const existing = await this.administrativeLevelRepository.findOneOrFail({
-        where: { id },
-      });
       const before = { ...existing };
 
       const updatedName: LocalizedField = {

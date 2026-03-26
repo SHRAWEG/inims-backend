@@ -1,10 +1,6 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository, In, Not } from 'typeorm';
 import { Role } from './entities/role.entity';
 import { Permission } from './entities/permission.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
@@ -12,6 +8,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleResponseDto } from './dto/role-response.dto';
 import { RoleFilterDto } from './dto/role-filter.dto';
 import { FindOptionsWhere, ILike } from 'typeorm';
+import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 
 @Injectable()
 export class RolesService {
@@ -23,13 +20,18 @@ export class RolesService {
   ) {}
 
   async create(dto: CreateRoleDto): Promise<Role> {
-    const existing = await this.roleRepository.findOne({
-      where: { name: dto.name },
-    });
+    const errors: Record<string, string[]> = {};
+
+    const [existing] = await Promise.all([
+      this.roleRepository.findOne({ where: { name: dto.name } }),
+    ]);
+
     if (existing) {
-      throw new ConflictException(
-        `Role with name "${dto.name}" already exists`,
-      );
+      errors.name = [`Role with name "${dto.name}" already exists`];
+    }
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
     }
 
     const role = this.roleRepository.create({
@@ -77,19 +79,22 @@ export class RolesService {
 
   async update(id: string, dto: UpdateRoleDto): Promise<Role> {
     const role = await this.findOne(id);
+    const errors: Record<string, string[]> = {};
 
     if (dto.name && dto.name !== role.name) {
       const existing = await this.roleRepository.findOne({
-        where: { name: dto.name },
+        where: { name: dto.name, id: Not(id) },
       });
       if (existing) {
-        throw new ConflictException(
-          `Role with name "${dto.name}" already exists`,
-        );
+        errors.name = [`Role with name "${dto.name}" already exists`];
       }
-      role.name = dto.name;
     }
 
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
+
+    if (dto.name !== undefined) role.name = dto.name;
     if (dto.description !== undefined) role.description = dto.description;
     if (dto.isActive !== undefined) role.isActive = dto.isActive;
 

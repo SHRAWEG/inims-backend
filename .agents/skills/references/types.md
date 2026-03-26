@@ -37,17 +37,14 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
 ```typescript
 // common/types/error.type.ts
 
-export interface ErrorDetail {
-  code: string | number;
-  message: string;
-  details?: Record<string, any>;
-}
-
 export interface ErrorResponse {
-  success: false;
-  error: ErrorDetail;
-  path: string;
+  type: string;
+  title: string;
+  message: string;
+  statusCode: number;
   timestamp: string;
+  path: string;
+  errors?: Record<string, string[]>;
 }
 ```
 
@@ -131,14 +128,23 @@ import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
 export class PaginationQueryDto {
-  @ApiPropertyOptional({ default: 1, minimum: 1, description: 'Page number (1-indexed)' })
+  @ApiPropertyOptional({
+    default: 1,
+    minimum: 1,
+    description: 'Page number (1-indexed)',
+  })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = 1;
 
-  @ApiPropertyOptional({ default: 20, minimum: 1, maximum: 100, description: 'Items per page' })
+  @ApiPropertyOptional({
+    default: 20,
+    minimum: 1,
+    maximum: 100,
+    description: 'Items per page',
+  })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -161,7 +167,10 @@ export enum Granularity {
 }
 
 export class DateRangeQueryDto {
-  @ApiProperty({ example: '2025-01-01', description: 'Start date (ISO format)' })
+  @ApiProperty({
+    example: '2025-01-01',
+    description: 'Start date (ISO format)',
+  })
   @IsDateString()
   startDate: string;
 
@@ -169,7 +178,11 @@ export class DateRangeQueryDto {
   @IsDateString()
   endDate: string;
 
-  @ApiPropertyOptional({ enum: Granularity, default: Granularity.DAY, description: 'Aggregation granularity' })
+  @ApiPropertyOptional({
+    enum: Granularity,
+    default: Granularity.DAY,
+    description: 'Aggregation granularity',
+  })
   @IsOptional()
   @IsEnum(Granularity)
   granularity: Granularity = Granularity.DAY;

@@ -166,7 +166,7 @@ describe('<ModuleName>Service', () => {
 - [ ] `AuditLogService` mocked
 - [ ] Happy path tested for each service method
 - [ ] `EntityNotFoundException` tested when record not found
-- [ ] `BusinessLogicException` tested for constraint violations
+- [ ] `BusinessValidationException` tested for constraint violations
 - [ ] Audit `log()` verified as called on success, NOT called on failure
 
 ---

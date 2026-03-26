@@ -16,20 +16,20 @@ description: >
 
 ## 1. Project Stack & Libraries
 
-| Layer | Technology |
-|---|---|
-| Runtime | Node.js 20+ |
-| Framework | NestJS with TypeScript **strict mode** (`"strict": true` in `tsconfig.json`) |
-| Database | PostgreSQL via **TypeORM** |
-| Validation | `class-validator` + `class-transformer` |
-| Auth | `@nestjs/passport` + `passport-jwt` + `@nestjs/jwt` |
-| Config | `@nestjs/config` with Joi validation schema |
-| Docs | `@nestjs/swagger` |
-| Security | `helmet` |
-| Compression | `compression` |
-| Logging | `winston` (via `nest-winston`) |
-| Context | `nestjs-cls` (request-scoped context for audit logging) |
-| Testing | Jest (built-in with NestJS) |
+| Layer       | Technology                                                                   |
+| ----------- | ---------------------------------------------------------------------------- |
+| Runtime     | Node.js 20+                                                                  |
+| Framework   | NestJS with TypeScript **strict mode** (`"strict": true` in `tsconfig.json`) |
+| Database    | PostgreSQL via **TypeORM**                                                   |
+| Validation  | `class-validator` + `class-transformer`                                      |
+| Auth        | `@nestjs/passport` + `passport-jwt` + `@nestjs/jwt`                          |
+| Config      | `@nestjs/config` with Joi validation schema                                  |
+| Docs        | `@nestjs/swagger`                                                            |
+| Security    | `helmet`                                                                     |
+| Compression | `compression`                                                                |
+| Logging     | `winston` (via `nest-winston`)                                               |
+| Context     | `nestjs-cls` (request-scoped context for audit logging)                      |
+| Testing     | Jest (built-in with NestJS)                                                  |
 
 > See [references/dependencies.md](references/dependencies.md) for the full package list with install commands.
 
@@ -50,7 +50,11 @@ description: >
     "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": "./",
-    "paths": { "@common/*": ["src/common/*"], "@config/*": ["src/config/*"], "@modules/*": ["src/modules/*"] }
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@config/*": ["src/config/*"],
+      "@modules/*": ["src/modules/*"]
+    }
   }
 }
 ```
@@ -166,18 +170,18 @@ export type ChartApiResponse = ApiResponse<ChartResponse>;
 
 ### HTTP Status Code Usage
 
-| Status | When to Use |
-|---|---|
-| `200 OK` | Successful GET, PUT, PATCH |
-| `201 Created` | Successful POST that creates a resource |
-| `204 No Content` | Successful DELETE |
-| `400 Bad Request` | Validation errors, malformed requests |
-| `401 Unauthorized` | Missing/invalid auth token |
-| `403 Forbidden` | Authenticated but not authorized |
-| `404 Not Found` | Resource does not exist |
-| `409 Conflict` | Duplicate resource / constraint violation |
-| `422 Unprocessable Entity` | Business logic validation failure |
-| `500 Internal Server Error` | Unexpected server errors |
+| Status                      | When to Use                               |
+| --------------------------- | ----------------------------------------- |
+| `200 OK`                    | Successful GET, PUT, PATCH                |
+| `201 Created`               | Successful POST that creates a resource   |
+| `204 No Content`            | Successful DELETE                         |
+| `400 Bad Request`           | Malformed requests, bad syntax           |
+| `401 Unauthorized`          | Missing/invalid auth token                |
+| `403 Forbidden`             | Authenticated but not authorized          |
+| `404 Not Found`             | Resource does not exist                   |
+| `409 Conflict`              | Business logic validation (parallel)      |
+| `422 Unprocessable Entity`  | DTO validation failure (ValidationPipe)   |
+| `500 Internal Server Error` | Unexpected server errors                  |
 
 ---
 
@@ -188,17 +192,20 @@ export type ChartApiResponse = ApiResponse<ChartResponse>;
 ### Custom Exception Classes
 
 ```typescript
-// common/exceptions/validation.exception.ts
-export class ValidationException extends HttpException {
-  constructor(details: Record<string, string[]>) {
-    super({ code: 'VALIDATION_ERROR', message: 'Validation failed', details }, HttpStatus.BAD_REQUEST);
+// common/exceptions/business-validation.exception.ts
+export class BusinessValidationException extends ConflictException {
+  constructor(public readonly errors: Record<string, string[]>) {
+    super({ message: 'Validation failed', errors });
   }
 }
 
 // common/exceptions/not-found.exception.ts
 export class EntityNotFoundException extends HttpException {
   constructor(entity: string, id: string) {
-    super({ code: 'NOT_FOUND', message: `${entity} with id ${id} not found` }, HttpStatus.NOT_FOUND);
+    super(
+      { code: 'NOT_FOUND', message: `${entity} with id ${id} not found` },
+      HttpStatus.NOT_FOUND,
+    );
   }
 }
 
@@ -206,13 +213,6 @@ export class EntityNotFoundException extends HttpException {
 export class UnauthorizedException extends HttpException {
   constructor(message = 'Authentication required') {
     super({ code: 'UNAUTHORIZED', message }, HttpStatus.UNAUTHORIZED);
-  }
-}
-
-// common/exceptions/business-logic.exception.ts
-export class BusinessLogicException extends HttpException {
-  constructor(message: string, details?: any) {
-    super({ code: 'BUSINESS_LOGIC_ERROR', message, details }, HttpStatus.UNPROCESSABLE_ENTITY);
   }
 }
 ```
@@ -313,14 +313,14 @@ export abstract class BaseEntity {
 
 > See [references/conventions.md](references/conventions.md) for the complete reference with examples.
 
-| Element | Convention | Example |
-|---|---|---|
-| Files | `kebab-case` | `order-item.entity.ts`, `create-order.dto.ts` |
-| Classes | `PascalCase` | `OrdersService`, `CreateOrderDto` |
-| Variables / Functions | `camelCase` | `findAllPaginated`, `orderItem` |
-| DB table and column names | `snake_case` | `order_items`, `created_at` |
-| Constants | `UPPER_SNAKE_CASE` | `MAX_PAGE_SIZE`, `BCRYPT_ROUNDS` |
-| Enums | `PascalCase` name, `UPPER_SNAKE_CASE` values | `OrderStatus.PENDING` |
+| Element                   | Convention                                   | Example                                       |
+| ------------------------- | -------------------------------------------- | --------------------------------------------- |
+| Files                     | `kebab-case`                                 | `order-item.entity.ts`, `create-order.dto.ts` |
+| Classes                   | `PascalCase`                                 | `OrdersService`, `CreateOrderDto`             |
+| Variables / Functions     | `camelCase`                                  | `findAllPaginated`, `orderItem`               |
+| DB table and column names | `snake_case`                                 | `order_items`, `created_at`                   |
+| Constants                 | `UPPER_SNAKE_CASE`                           | `MAX_PAGE_SIZE`, `BCRYPT_ROUNDS`              |
+| Enums                     | `PascalCase` name, `UPPER_SNAKE_CASE` values | `OrderStatus.PENDING`                         |
 
 ---
 
@@ -332,12 +332,12 @@ export abstract class BaseEntity {
 
 - `ApiResponse<T>` — standard consolidated wrapper (optional `meta` for pagination)
 - `PaginationMeta` — pagination metadata
--   `ApiResponse<T>` — standard consolidated wrapper (optional `meta` for pagination)
--   `PaginationMeta` — pagination metadata
--   `ChartDataset` — chart dataset shape (if analytics module exists)
--   `ChartResponse` — chart endpoint response (if analytics module exists)
--   `UserContext` — JWT payload shape attached to requests
--   `ErrorDetail` / `ErrorResponse` — error response shapes
+- `ApiResponse<T>` — standard consolidated wrapper (optional `meta` for pagination)
+- `PaginationMeta` — pagination metadata
+- `ChartDataset` — chart dataset shape (if analytics module exists)
+- `ChartResponse` — chart endpoint response (if analytics module exists)
+- `UserContext` — JWT payload shape attached to requests
+- `ErrorDetail` / `ErrorResponse` — error response shapes
 
 > **Domain-specific types** (e.g., types representing your business entities) always live in `modules/<module-name>/types/`, never in `common/types/`.
 
@@ -458,6 +458,7 @@ Before submitting any code, verify:
 ## 16. Quality Persistence
 
 ### Rules
+
 - **Husky Enforcement**: Pre-commit hooks MUST run `npm run lint && npm run build`.
 - **Task Conclusion**: Before considering a task "done", the agent MUST execute a final lint and build check.
 - **Fail Fast**: Never push code that breaks linting or building. If a fix causes a new lint error, it MUST be resolved immediately.

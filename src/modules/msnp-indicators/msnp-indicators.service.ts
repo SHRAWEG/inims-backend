@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Raw, Not } from 'typeorm';
+import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 import { MsnpIndicator } from './entities/msnp-indicator.entity';
 import { CreateMsnpIndicatorDto } from './dto/create-msnp-indicator.dto';
 import { UpdateMsnpIndicatorDto } from './dto/update-msnp-indicator.dto';
@@ -13,8 +14,8 @@ import { AuditAction } from '../../common/enums/audit-action.enum';
 import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
 import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
-import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
 import { LocalizedField } from '../../common/types/i18n.type';
@@ -30,6 +31,36 @@ export class MsnpIndicatorsService {
   ) {}
 
   async create(dto: CreateMsnpIndicatorDto): Promise<MsnpIndicatorResponseDto> {
+    const errors: Record<string, string[]> = {};
+
+    const [existingCode, existingNameEn, existingNameNe] = await Promise.all([
+      this.msnpIndicatorRepository.findOne({ where: { code: dto.code } }),
+      this.msnpIndicatorRepository.findOne({
+        where: {
+          name: Raw(
+            (alias) => `"${alias.replace('.', '"."')}"->>'en' = :nameEn`,
+            { nameEn: dto.name.en },
+          ),
+        },
+      }),
+      this.msnpIndicatorRepository.findOne({
+        where: {
+          name: Raw(
+            (alias) => `"${alias.replace('.', '"."')}"->>'ne' = :nameNe`,
+            { nameNe: dto.name.ne },
+          ),
+        },
+      }),
+    ]);
+
+    if (existingCode) errors.code = ['Code already in use'];
+    if (existingNameEn) errors['name.en'] = ['English name already in use'];
+    if (existingNameNe) errors['name.ne'] = ['Nepali name already in use'];
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
+
     try {
       const entity = this.msnpIndicatorRepository.create({
         code: dto.code,
@@ -118,10 +149,69 @@ export class MsnpIndicatorsService {
     id: string,
     dto: UpdateMsnpIndicatorDto,
   ): Promise<MsnpIndicatorResponseDto> {
+    const existing = await this.msnpIndicatorRepository.findOne({
+      where: { id },
+    });
+    if (!existing) {
+      throw new EntityNotFoundException('MsnpIndicator', id);
+    }
+
+    const errors: Record<string, string[]> = {};
+    const checks: Promise<any>[] = [];
+
+    if (dto.code && dto.code !== existing.code) {
+      checks.push(
+        this.msnpIndicatorRepository
+          .findOne({ where: { code: dto.code, id: Not(id) } })
+          .then((res) => {
+            if (res) errors.code = ['Code already in use'];
+          }),
+      );
+    }
+
+    if (dto.name?.en && dto.name.en !== existing.name.en) {
+      checks.push(
+        this.msnpIndicatorRepository
+          .findOne({
+            where: {
+              name: Raw(
+                (alias) => `"${alias.replace('.', '"."')}"->>'en' = :nameEn`,
+                { nameEn: dto.name.en },
+              ),
+              id: Not(id),
+            },
+          })
+          .then((res) => {
+            if (res) errors['name.en'] = ['English name already in use'];
+          }),
+      );
+    }
+
+    if (dto.name?.ne && dto.name.ne !== existing.name.ne) {
+      checks.push(
+        this.msnpIndicatorRepository
+          .findOne({
+            where: {
+              name: Raw(
+                (alias) => `"${alias.replace('.', '"."')}"->>'ne' = :nameNe`,
+                { nameNe: dto.name.ne },
+              ),
+              id: Not(id),
+            },
+          })
+          .then((res) => {
+            if (res) errors['name.ne'] = ['Nepali name already in use'];
+          }),
+      );
+    }
+
+    if (checks.length > 0) await Promise.all(checks);
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
+
     try {
-      const existing = await this.msnpIndicatorRepository.findOneOrFail({
-        where: { id },
-      });
       const before = { ...existing };
 
       const updatedName: LocalizedField = {

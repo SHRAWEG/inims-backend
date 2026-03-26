@@ -1,12 +1,14 @@
-import { ValidationPipe as NestValidationPipe } from '@nestjs/common';
+import { ValidationPipe, ValidationPipeOptions } from '@nestjs/common';
 
-/**
- * Pre-configured ValidationPipe with project-standard options.
- * Registered globally in main.ts.
- */
-export const AppValidationPipe = new NestValidationPipe({
-  whitelist: true,
-  forbidNonWhitelisted: true,
-  transform: true,
-  transformOptions: { enableImplicitConversion: true },
-});
+export class CustomValidationPipe extends ValidationPipe {
+  constructor(options?: ValidationPipeOptions) {
+    super({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      stopAtFirstError: false,
+      validationError: { target: false, value: false },
+      ...options,
+    });
+  }
+}

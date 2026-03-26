@@ -5,7 +5,8 @@ import { User } from './entities/user.entity';
 import { UserResponseDto } from './dto/user-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { BadRequestException, ConflictException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
+import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 import { UserFilterDto } from './dto/user-filter.dto';
 import { FindOptionsWhere, ILike, Not, IsNull } from 'typeorm';
 import { UserContext } from '../../common/types/user-context.type';
@@ -94,12 +95,25 @@ export class UsersService {
   }
 
   async create(dto: CreateUserDto): Promise<User> {
-    const existing = await this.findByEmail(dto.email);
+    const errors: Record<string, string[]> = {};
+
+    const [existing] = await Promise.all([this.findByEmail(dto.email)]);
+
     if (existing) {
-      throw new ConflictException('Email already in use');
+      errors.email = ['Email already in use'];
     }
 
-    this.validateRoleAssignment(dto.systemRole, dto.roleId);
+    try {
+      this.validateRoleAssignment(dto.systemRole, dto.roleId);
+    } catch (e) {
+      if (e instanceof BadRequestException) {
+        errors.roleId = [e.message];
+      }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
 
     const passwordHash = await bcrypt.hash(dto.password, 12);
 
@@ -115,12 +129,49 @@ export class UsersService {
   async update(id: string, dto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
 
-    this.validateRoleAssignment(
-      dto.systemRole ?? user.systemRole,
-      dto.roleId ?? user.roleId,
-    );
+    console.log(user);
+    const errors: Record<string, string[]> = {};
 
-    Object.assign(user, dto);
+    const [existing] = await Promise.all([
+      dto.email
+        ? this.userRepository.findOne({
+            where: { email: dto.email.toLowerCase(), id: Not(id) },
+          })
+        : null,
+    ]);
+
+    if (existing) {
+      errors.email = ['Email already in use'];
+    }
+
+    try {
+      this.validateRoleAssignment(dto.systemRole, dto.roleId);
+    } catch (e) {
+      if (e instanceof BadRequestException) {
+        errors.roleId = [e.message];
+      }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      throw new BusinessValidationException(errors);
+    }
+
+    // Apply mutually exclusive role switching
+    if (dto.systemRole !== undefined && dto.systemRole !== null) {
+      user.systemRole = dto.systemRole;
+      user.roleId = null;
+      user.role = null;
+    } else if (dto.roleId !== undefined && dto.roleId !== null) {
+      user.roleId = dto.roleId;
+      user.systemRole = null;
+    }
+
+    // Assign other fields manually by creating a shallow copy and removing roles
+    const updateData = { ...dto };
+    delete updateData.systemRole;
+    delete updateData.roleId;
+    Object.assign(user, updateData);
+
     if (dto.email) user.email = dto.email.toLowerCase();
 
     return this.userRepository.save(user);

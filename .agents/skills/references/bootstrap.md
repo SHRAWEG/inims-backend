@@ -16,10 +16,12 @@ import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { AllExceptionFilter } from './common/filters/all-exception.filter';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
+import { CustomValidationPipe } from './common/pipes/validation.pipe';
 import { ResponseTransformInterceptor } from './common/interceptors/response-transform.interceptor';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { useContainer } from 'class-validator';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -55,20 +57,16 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix('api/v1');
 
   // ---------- Global validation pipe ----------
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-    }),
-  );
+  app.useGlobalPipes(new CustomValidationPipe());
 
   // ---------- Global filters (order matters: most specific first) ----------
   app.useGlobalFilters(
-    new AllExceptionFilter(),   // catches everything not caught by HttpExceptionFilter
-    new HttpExceptionFilter(),  // catches HttpException subclasses
+    new AllExceptionsFilter(),
+    new ValidationExceptionFilter(),
   );
+
+  // Allow class-validator to use NestJS DI
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   // ---------- Global interceptors ----------
   app.useGlobalInterceptors(
@@ -89,7 +87,7 @@ async function bootstrap(): Promise<void> {
   // ---------- Swagger (non-production only) ----------
   if (nodeEnv !== 'production') {
     const swaggerConfig = new DocumentBuilder()
-      .setTitle('My API')              // Replace with your project name
+      .setTitle('My API') // Replace with your project name
       .setDescription('API documentation') // Replace with your project description
       .setVersion(require('../package.json').version)
       .addBearerAuth(
@@ -116,15 +114,15 @@ bootstrap();
 
 ### Registration Order — Why It Matters
 
-| Step | What | Why |
-|---|---|---|
-| 1 | `setGlobalPrefix('api/v1')` | All routes scoped before pipes/filters bind |
-| 2 | `useGlobalPipes(ValidationPipe)` | Validates incoming data before controllers run |
-| 3 | `useGlobalFilters(AllExceptionFilter, HttpExceptionFilter)` | NestJS applies filters in reverse order — `HttpExceptionFilter` runs first, `AllExceptionFilter` is the fallback |
-| 4 | `useGlobalInterceptors(ResponseTransformInterceptor, LoggingInterceptor)` | Response wrapping happens before logging captures the final shape |
-| 5 | Helmet + Compression | Security headers + gzip on all responses |
-| 6 | CORS | Must be before `listen()` |
-| 7 | Swagger | Served at `/api/v1/docs` — disabled in production |
+| Step | What                                                                      | Why                                                                                                              |
+| ---- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1    | `setGlobalPrefix('api/v1')`                                               | All routes scoped before pipes/filters bind                                                                      |
+| 2    | `useGlobalPipes(ValidationPipe)`                                          | Validates incoming data before controllers run                                                                   |
+| 3    | `useGlobalFilters(AllExceptionsFilter, ValidationExceptionFilter)`        | NestJS applies filters in reverse order — `ValidationExceptionFilter` runs first, `AllExceptionsFilter` is the fallback |
+| 4    | `useGlobalInterceptors(ResponseTransformInterceptor, LoggingInterceptor)` | Response wrapping happens before logging captures the final shape                                                |
+| 5    | Helmet + Compression                                                      | Security headers + gzip on all responses                                                                         |
+| 6    | CORS                                                                      | Must be before `listen()`                                                                                        |
+| 7    | Swagger                                                                   | Served at `/api/v1/docs` — disabled in production                                                                |
 
 ---
 
@@ -142,9 +140,10 @@ import { map } from 'rxjs/operators';
 import { ApiResponse } from '../types/api-response.type';
 
 @Injectable()
-export class ResponseTransformInterceptor<T>
-  implements NestInterceptor<T, ApiResponse<T>>
-{
+export class ResponseTransformInterceptor<T> implements NestInterceptor<
+  T,
+  ApiResponse<T>
+> {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
@@ -246,7 +245,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
       }
     }
 
-    this.logger.warn(`HTTP ${status} on ${request.method} ${request.url}: ${message}`);
+    this.logger.warn(
+      `HTTP ${status} on ${request.method} ${request.url}: ${message}`,
+    );
 
     response.status(status).json({
       success: false,

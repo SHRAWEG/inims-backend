@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
@@ -7,10 +6,12 @@ import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { AllExceptionFilter } from './common/filters/all-exception.filter';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
+import { CustomValidationPipe } from './common/pipes/validation.pipe';
 import { ResponseTransformInterceptor } from './common/interceptors/response-transform.interceptor';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { useContainer } from 'class-validator';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -47,17 +48,18 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix('api/v1');
 
   // ---------- Global validation pipe ----------
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-    }),
-  );
+  app.useGlobalPipes(new CustomValidationPipe());
 
   // ---------- Global filters (order matters: most specific first) ----------
-  app.useGlobalFilters(new AllExceptionFilter(), new HttpExceptionFilter());
+  // Register AllExceptionsFilter first, then ValidationExceptionFilter second
+  // (specific filters take priority over catch-all in NestJS)
+  app.useGlobalFilters(
+    new AllExceptionsFilter(),
+    new ValidationExceptionFilter(),
+  );
+
+  // Allow class-validator to use NestJS DI
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   // ---------- Global interceptors ----------
   app.useGlobalInterceptors(
