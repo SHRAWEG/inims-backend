@@ -13,6 +13,7 @@ import { UserResponseDto } from '../users/dto/user-response.dto';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
+import { SystemRole } from '@common/enums/system-role.enum';
 
 const BCRYPT_ROUNDS = 12;
 
@@ -46,6 +47,7 @@ export class AuthService {
       passwordHash,
       firstName: dto.firstName,
       lastName: dto.lastName,
+      systemRole: SystemRole.SUPER_ADMIN,
     });
     const saved = await this.userRepository.save(user);
 
