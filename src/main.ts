@@ -78,6 +78,7 @@ async function bootstrap(): Promise<void> {
       'http://localhost:3000',
       'http://localhost:3001',
       'https://inims-dashboard.vercel.app',
+      'http://103.187.8.96:8686',
     ],
     credentials: true,
   });
