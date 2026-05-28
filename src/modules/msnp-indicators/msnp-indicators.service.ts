@@ -268,7 +268,8 @@ export class MsnpIndicatorsService {
     return {
       id: entity.id,
       code: entity.code,
-      name: entity.name[locale] ?? entity.name['en'],
+      name:
+        entity.name[locale] ?? (entity.name['en'] || entity.name['ne'] || ''),
       isActive: entity.isActive,
       locale,
       createdAt: entity.createdAt,

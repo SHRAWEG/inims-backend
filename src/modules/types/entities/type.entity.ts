@@ -9,4 +9,7 @@ export class Type extends BaseEntity {
 
   @Column({ type: 'jsonb' })
   name: LocalizedField;
+
+  @Column({ type: 'jsonb' })
+  description: LocalizedField;
 }

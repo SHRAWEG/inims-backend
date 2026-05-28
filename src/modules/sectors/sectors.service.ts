@@ -251,7 +251,8 @@ export class SectorsService {
   ): SectorResponseDto {
     return {
       id: entity.id,
-      name: entity.name[locale] ?? entity.name['en'], // fallback to en
+      name:
+        entity.name[locale] ?? (entity.name['en'] || entity.name['ne'] || ''), // fallback to en
       isActive: entity.isActive,
       locale,
       createdAt: entity.createdAt,

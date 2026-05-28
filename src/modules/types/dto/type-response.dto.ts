@@ -13,6 +13,9 @@ export class TypeResponseDto {
   name: string;
 
   @ApiProperty()
+  description: string;
+
+  @ApiProperty()
   isActive: boolean;
 
   @ApiProperty({ enum: ['en', 'ne'] })
@@ -31,6 +34,9 @@ export class TypeDetailResponseDto {
 
   @ApiProperty({ type: LocalizedFieldDto })
   name: LocalizedField;
+
+  @ApiProperty({ type: LocalizedFieldDto })
+  description: LocalizedField;
 
   @ApiProperty()
   isActive: boolean;

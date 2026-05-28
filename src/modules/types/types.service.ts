@@ -66,6 +66,7 @@ export class TypesService {
     try {
       const typeRecord = this.typeRepository.create({
         name: { en: dto.name.en, ne: dto.name.ne },
+        description: { en: dto.description.en, ne: dto.description.ne },
         isActive: dto.isActive ?? true,
       });
       const saved = await this.typeRepository.save(typeRecord);
@@ -132,6 +133,7 @@ export class TypesService {
       return {
         id: typeRecord.id,
         name: typeRecord.name,
+        description: typeRecord.description,
         isActive: typeRecord.isActive,
         createdAt: typeRecord.createdAt,
         updatedAt: typeRecord.updatedAt,
@@ -200,10 +202,16 @@ export class TypesService {
         ne: dto.name?.ne ?? existing.name.ne,
       };
 
+      const updatedDescription: LocalizedField = {
+        en: dto.description?.en ?? existing.description?.en,
+        ne: dto.description?.ne ?? existing.description?.ne,
+      };
+
       const updated = await this.typeRepository.save({
         ...existing,
         ...dto,
         name: updatedName,
+        description: updatedDescription,
       });
 
       await this.auditLogService.log({
@@ -245,7 +253,12 @@ export class TypesService {
   ): TypeResponseDto {
     return {
       id: entity.id,
-      name: entity.name[locale] ?? entity.name['en'],
+      name:
+        entity.name[locale] ?? (entity.name['en'] || entity.name['ne'] || ''),
+      description: entity.description
+        ? (entity.description[locale] ??
+          (entity.description['en'] || entity.description['ne'] || ''))
+        : '',
       isActive: entity.isActive,
       locale,
       createdAt: entity.createdAt,

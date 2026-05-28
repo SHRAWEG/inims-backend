@@ -1,12 +1,13 @@
 import { Entity, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
+import { LocalizedField } from '../../../common/types/i18n.type';
 import { Permission } from './permission.entity';
 import { User } from '../../users/entities/user.entity';
 
 @Entity('roles')
 export class Role extends BaseEntity {
-  @Column({ type: 'varchar', length: 100, unique: true })
-  name: string;
+  @Column({ type: 'jsonb' })
+  name: LocalizedField;
 
   @Column({ type: 'text', nullable: true })
   description: string | null;

@@ -10,6 +10,12 @@ export class UpdateTypeDto {
   @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
   name?: PartialLocalizedFieldDto;
 
+  @ValidateNested()
+  @Type(() => PartialLocalizedFieldDto)
+  @IsOptional()
+  @ApiProperty({ type: PartialLocalizedFieldDto, required: false })
+  description?: PartialLocalizedFieldDto;
+
   @IsBoolean()
   @IsOptional()
   @ApiProperty({ required: false })

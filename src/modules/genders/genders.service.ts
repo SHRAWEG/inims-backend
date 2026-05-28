@@ -241,7 +241,8 @@ export class GendersService {
   ): GenderResponseDto {
     return {
       id: entity.id,
-      name: entity.name[locale] ?? entity.name['en'],
+      name:
+        entity.name[locale] ?? (entity.name['en'] || entity.name['ne'] || ''),
       isActive: entity.isActive,
       locale,
       createdAt: entity.createdAt,

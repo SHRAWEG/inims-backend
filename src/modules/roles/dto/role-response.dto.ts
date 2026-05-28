@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { SupportedLocale } from '../../../common/types/i18n.type';
 
 export class PermissionResponseDto {
   @ApiProperty()
@@ -24,11 +25,14 @@ export class RoleResponseDto {
   @ApiProperty()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description: string | null;
 
   @ApiProperty()
   isActive: boolean;
+
+  @ApiProperty({ enum: ['en', 'ne'] })
+  locale: SupportedLocale;
 
   @ApiProperty({ type: [PermissionResponseDto] })
   permissions: PermissionResponseDto[];

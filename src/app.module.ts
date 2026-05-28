@@ -24,6 +24,10 @@ import { GendersModule } from './modules/genders/genders.module';
 import { AgeGroupsModule } from './modules/age-groups/age-groups.module';
 import { MsnpIndicatorsModule } from './modules/msnp-indicators/msnp-indicators.module';
 import { RolesModule } from './modules/roles/roles.module';
+import { FiscalYearsModule } from './modules/fiscal-years/fiscal-years.module';
+import { MsnpIndicatorConfigurationsModule } from './modules/msnp-indicator-configurations/msnp-indicator-configurations.module';
+import { MsnpIndicatorDataModule } from './modules/msnp-indicator-data/msnp-indicator-data.module';
+import { MsnpIndicatorTargetsModule } from './modules/msnp-indicator-targets/msnp-indicator-targets.module';
 
 @Module({
   imports: [
@@ -70,6 +74,10 @@ import { RolesModule } from './modules/roles/roles.module';
     AgeGroupsModule,
     MsnpIndicatorsModule,
     RolesModule,
+    FiscalYearsModule,
+    MsnpIndicatorConfigurationsModule,
+    MsnpIndicatorDataModule,
+    MsnpIndicatorTargetsModule,
   ],
   controllers: [AppController],
   providers: [

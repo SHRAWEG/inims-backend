@@ -25,10 +25,12 @@ import { RoleResponseDto } from './dto/role-response.dto';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { ParseUuidPipe } from '../../common/pipes/parse-uuid.pipe';
 import { buildResponse } from '../../common/utils/response.util';
+import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UserContext } from '../../common/types/user-context.type';
+import { DEFAULT_LOCALE } from '../../common/types/i18n.type';
 
 @ApiTags('roles-permissions')
 @ApiBearerAuth('access-token')
@@ -57,7 +59,7 @@ export class RolesController {
       after: data as unknown as Record<string, unknown>,
     });
 
-    return buildResponse(this.rolesService.toResponseDto(data));
+    return buildResponse(this.rolesService.toResponseDto(data, DEFAULT_LOCALE));
   }
 
   @Get()
@@ -67,16 +69,21 @@ export class RolesController {
   @ApiQuery({ type: RoleFilterDto, required: false })
   async findAll(@Query() filter: RoleFilterDto) {
     const data = await this.rolesService.findAll(filter);
-    return buildResponse(data.map((r) => this.rolesService.toResponseDto(r)));
+    return buildResponse(
+      data.map((r) => this.rolesService.toResponseDto(r, filter.locale)),
+    );
   }
 
   @Get(':id')
   @Permissions('roles:view')
   @ApiOperation({ summary: 'Get a custom role by ID' })
   @ApiResponse({ status: 200, type: RoleResponseDto })
-  async findOne(@Param('id', ParseUuidPipe) id: string) {
+  async findOne(
+    @Param('id', ParseUuidPipe) id: string,
+    @Query() query: FindOneQueryDto,
+  ) {
     const data = await this.rolesService.findOne(id);
-    return buildResponse(this.rolesService.toResponseDto(data));
+    return buildResponse(this.rolesService.toResponseDto(data, query.locale));
   }
 
   @Patch(':id')
@@ -100,7 +107,7 @@ export class RolesController {
       after: data as unknown as Record<string, unknown>,
     });
 
-    return buildResponse(this.rolesService.toResponseDto(data));
+    return buildResponse(this.rolesService.toResponseDto(data, DEFAULT_LOCALE));
   }
 
   @Delete(':id')

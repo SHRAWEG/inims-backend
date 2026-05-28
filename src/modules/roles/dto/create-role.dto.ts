@@ -1,18 +1,23 @@
 import {
-  IsString,
-  IsNotEmpty,
   IsOptional,
   IsBoolean,
   IsArray,
   IsUUID,
+  ValidateNested,
+  IsString,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateRoleDto {
-  @ApiProperty({ example: 'Program Manager' })
-  @IsString()
-  @IsNotEmpty()
-  name: string;
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Program Manager', ne: 'कार्यक्रम प्रबन्धक' },
+  })
+  name: LocalizedFieldDto;
 
   @ApiProperty({ example: 'Manages indicators and users' })
   @IsString()

@@ -193,7 +193,8 @@ export class UsersService {
       lastName: user.lastName,
       systemRole: user.systemRole,
       roleId: user.roleId,
-      roleName: user.role?.name || user.systemRole || null,
+      roleName:
+        user.role?.name?.en || user.role?.name?.ne || user.systemRole || null,
       permissions,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

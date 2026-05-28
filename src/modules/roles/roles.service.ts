@@ -9,6 +9,7 @@ import { RoleResponseDto } from './dto/role-response.dto';
 import { RoleFilterDto } from './dto/role-filter.dto';
 import { FindOptionsWhere, ILike } from 'typeorm';
 import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
+import { SupportedLocale } from '../../common/types/i18n.type';
 
 @Injectable()
 export class RolesService {
@@ -27,7 +28,9 @@ export class RolesService {
     ]);
 
     if (existing) {
-      errors.name = [`Role with name "${dto.name}" already exists`];
+      errors.name = [
+        `Role with name "${dto.name.en || dto.name.ne || 'unknown'}" already exists`,
+      ];
     }
 
     if (Object.keys(errors).length > 0) {
@@ -86,7 +89,9 @@ export class RolesService {
         where: { name: dto.name, id: Not(id) },
       });
       if (existing) {
-        errors.name = [`Role with name "${dto.name}" already exists`];
+        errors.name = [
+          `Role with name "${dto.name.en || dto.name.ne || 'unknown'}" already exists`,
+        ];
       }
     }
 
@@ -131,12 +136,15 @@ export class RolesService {
     return permissions.every((p) => userPermissions.includes(p));
   }
 
-  toResponseDto(role: Role): RoleResponseDto {
+  toResponseDto(role: Role, locale: SupportedLocale): RoleResponseDto {
     return {
       id: role.id,
-      name: role.name,
+      name: role.name
+        ? (role.name[locale] ?? (role.name['en'] || role.name['ne'] || ''))
+        : '',
       description: role.description,
       isActive: role.isActive,
+      locale,
       permissions: role.permissions.map((p) => ({
         id: p.id,
         resource: p.resource,

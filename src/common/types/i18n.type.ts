@@ -10,6 +10,6 @@ export const LOCALE_LABELS: Record<SupportedLocale, string> = {
 
 // This is the standard shape for every bilingual field in the entire app
 export interface LocalizedField {
-  en: string;
+  en?: string;
   ne: string;
 }

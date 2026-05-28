@@ -12,6 +12,14 @@ export class CreateTypeDto {
   })
   name: LocalizedFieldDto;
 
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  @ApiProperty({
+    type: LocalizedFieldDto,
+    example: { en: 'Description in english', ne: 'नेपालीमा विवरण' },
+  })
+  description: LocalizedFieldDto;
+
   @IsBoolean()
   @IsOptional()
   @ApiProperty({ default: true })

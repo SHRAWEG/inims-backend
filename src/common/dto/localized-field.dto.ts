@@ -4,10 +4,10 @@ import { ApiProperty } from '@nestjs/swagger';
 // src/common/dto/localized-field.dto.ts
 export class LocalizedFieldDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @MaxLength(255)
-  @ApiProperty({ example: 'English value' })
-  en: string;
+  @ApiProperty({ example: 'English value', required: false })
+  en?: string;
 
   @IsString()
   @IsNotEmpty()
