@@ -5,12 +5,12 @@ import * as bcrypt from 'bcrypt';
 
 export const seedSuperAdmin = async (dataSource: DataSource) => {
   const userRepository = dataSource.getRepository(User);
-  const email = 'superadmin@example.com';
+  const email = 'admin@inims.com.np';
 
   const existingAdmin = await userRepository.findOne({ where: { email } });
 
   if (!existingAdmin) {
-    const passwordHash = await bcrypt.hash('superadmin123', 10);
+    const passwordHash = await bcrypt.hash('Admin123', 10);
     
     const superAdmin = userRepository.create({
       firstName: 'Super',
