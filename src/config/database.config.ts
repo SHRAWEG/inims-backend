@@ -19,7 +19,7 @@ export default registerAs(
     synchronize: true,
 
     // Migrations run manually via CLI — never auto-run on boot
-    migrationsRun: true,
+    migrationsRun: false,
 
     // SQL query logging — development only
     logging: process.env.NODE_ENV === 'development',

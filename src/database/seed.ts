@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../app.module';
 import { seedPermissions } from './seeders/permissions.seeder';
+import { seedSuperAdmin } from './seeders/superadmin.seeder';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -11,6 +12,7 @@ async function bootstrap() {
 
   try {
     await seedPermissions(dataSource);
+    await seedSuperAdmin(dataSource);
     console.log('--- Seeding Completed Successfully ---');
   } catch (error) {
     console.error('--- Seeding Failed ---');
