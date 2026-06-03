@@ -74,10 +74,19 @@ export class MsnpIndicatorDataController {
   @Get()
   @Permissions('msnp_indicator_data:read')
   @ApiOperation({ summary: 'Get data entry form configurations' })
-  @ApiResponse({ status: 200, description: 'Return array of form configurations' })
-  async findAll(@Query() query: QueryMsnpIndicatorDataDto, @Req() req: Request) {
+  @ApiResponse({
+    status: 200,
+    description: 'Return array of form configurations',
+  })
+  async findAll(
+    @Query() query: QueryMsnpIndicatorDataDto,
+    @Req() req: Request,
+  ) {
     const user = req.user as { sub?: string; id?: string; roleId?: string };
-    const result = await this.msnpIndicatorDataService.findAll(query, user.roleId);
+    const result = await this.msnpIndicatorDataService.findAll(
+      query,
+      user.roleId,
+    );
     return buildResponse(result);
   }
 

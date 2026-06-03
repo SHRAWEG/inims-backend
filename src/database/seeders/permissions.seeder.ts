@@ -131,7 +131,6 @@ const permissions = [
     category: 'MSNP Indicators',
   },
 
-
   // Frequencies
   {
     resource: 'frequencies',

@@ -17,8 +17,6 @@ import { EntityNotFoundException } from '../../common/exceptions/not-found.excep
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
-import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
-import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
 import { BulkUpsertMsnpIndicatorDataDto } from './dto/bulk-upsert-msnp-indicator-data.dto';
 
@@ -354,18 +352,21 @@ export class MsnpIndicatorDataService {
       return nameObj[locale] ?? (nameObj['en'] || nameObj['ne'] || '');
     };
 
-    const configs = await this.dataSource.manager.find(MsnpIndicatorConfiguration, {
-      where: { roleId, isActive: true },
-      relations: [
-        'indicator',
-        'disaggregations',
-        'disaggregations.disaggregationType',
-        'disaggregations.disaggregationType.options',
-        'disaggregations.options',
-        'disaggregations.options.disaggregationOption',
-      ],
-      order: { createdAt: 'ASC' },
-    });
+    const configs = await this.dataSource.manager.find(
+      MsnpIndicatorConfiguration,
+      {
+        where: { roleId, isActive: true },
+        relations: [
+          'indicator',
+          'disaggregations',
+          'disaggregations.disaggregationType',
+          'disaggregations.disaggregationType.options',
+          'disaggregations.options',
+          'disaggregations.options.disaggregationOption',
+        ],
+        order: { createdAt: 'ASC' },
+      },
+    );
 
     if (configs.length === 0) return [];
 
@@ -390,7 +391,9 @@ export class MsnpIndicatorDataService {
         let optionsList = [];
 
         if (type.isSelective) {
-          optionsList = (disagg.options || []).map((o) => o.disaggregationOption);
+          optionsList = (disagg.options || []).map(
+            (o) => o.disaggregationOption,
+          );
         } else {
           optionsList = type.options || [];
         }
