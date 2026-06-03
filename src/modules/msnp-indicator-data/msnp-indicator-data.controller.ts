@@ -26,6 +26,7 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../../common/guards/permissions.guard';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { QueryMsnpIndicatorDataDto } from './dto/query-msnp-indicator-data.dto';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
 import { Request } from 'express';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -72,19 +73,20 @@ export class MsnpIndicatorDataController {
 
   @Get()
   @Permissions('msnp_indicator_data:read')
-  @ApiOperation({ summary: 'Get all indicator data with pagination' })
-  @ApiResponse({ status: 200, description: 'Return paginated list' })
-  async findAll(@Query() query: QueryMsnpIndicatorDataDto) {
-    const result = await this.msnpIndicatorDataService.findAll(query);
-    return buildResponse(result.data, result.meta);
+  @ApiOperation({ summary: 'Get data entry form configurations' })
+  @ApiResponse({ status: 200, description: 'Return array of form configurations' })
+  async findAll(@Query() query: QueryMsnpIndicatorDataDto, @Req() req: Request) {
+    const user = req.user as { sub?: string; id?: string; roleId?: string };
+    const result = await this.msnpIndicatorDataService.findAll(query, user.roleId);
+    return buildResponse(result);
   }
 
   @Get(':id')
   @Permissions('msnp_indicator_data:read')
   @ApiOperation({ summary: 'Get indicator data by ID' })
   @ApiResponse({ status: 200, description: 'Return detail' })
-  async findOne(@Param('id') id: string) {
-    const data = await this.msnpIndicatorDataService.findById(id);
+  async findOne(@Param('id') id: string, @Query() query: LocaleQueryDto) {
+    const data = await this.msnpIndicatorDataService.findById(id, query.locale);
     return buildResponse(data);
   }
 

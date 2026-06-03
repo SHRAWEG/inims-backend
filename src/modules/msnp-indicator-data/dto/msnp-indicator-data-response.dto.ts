@@ -1,11 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export class DisaggregationDataResponseDto {
+  @ApiProperty({ example: 'uuid-string' })
+  disaggregationOptionId: string;
+
+  @ApiProperty()
+  disaggregationOptionName: string;
+
+  @ApiProperty({ example: '50' })
+  value: string;
+}
+
 export class MsnpIndicatorDataResponseDto {
   @ApiProperty({ example: 'uuid-string' })
   id: string;
 
   @ApiProperty({ example: 'uuid-string' })
   indicatorConfigId: string;
+
+  @ApiProperty({ example: 'uuid-string', required: false })
+  indicatorId?: string;
 
   @ApiProperty({ example: 'uuid-string' })
   fiscalYearId: string;
@@ -27,4 +41,7 @@ export class MsnpIndicatorDataResponseDto {
 
   @ApiProperty()
   updatedAt: Date;
+
+  @ApiProperty({ type: [DisaggregationDataResponseDto], required: false })
+  disaggregations?: DisaggregationDataResponseDto[];
 }

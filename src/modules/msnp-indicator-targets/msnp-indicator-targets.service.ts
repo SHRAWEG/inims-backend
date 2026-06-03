@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MsnpIndicatorTarget } from './entities/msnp-indicator-target.entity';
+import { MsnpIndicatorConfiguration } from '../msnp-indicator-configurations/entities/msnp-indicator-configuration.entity';
 import { CreateMsnpIndicatorTargetDto } from './dto/create-msnp-indicator-target.dto';
 import { UpdateMsnpIndicatorTargetDto } from './dto/update-msnp-indicator-target.dto';
 import { MsnpIndicatorTargetResponseDto } from './dto/msnp-indicator-target-response.dto';
@@ -30,7 +31,22 @@ export class MsnpIndicatorTargetsService {
     dto: CreateMsnpIndicatorTargetDto,
   ): Promise<MsnpIndicatorTargetResponseDto> {
     try {
-      const target = this.targetRepository.create(dto);
+      const config = await this.targetRepository.manager.findOne(
+        MsnpIndicatorConfiguration,
+        {
+          where: { id: dto.indicatorConfigId },
+        },
+      );
+      if (!config)
+        throw new EntityNotFoundException(
+          'MsnpIndicatorConfiguration',
+          dto.indicatorConfigId,
+        );
+
+      const target = this.targetRepository.create({
+        ...dto,
+        indicatorId: config.indicatorId,
+      });
       const saved = await this.targetRepository.save(target);
 
       await this.auditLogService.log({
@@ -54,8 +70,24 @@ export class MsnpIndicatorTargetsService {
   ): Promise<MsnpIndicatorTargetResponseDto[]> {
     const responses: MsnpIndicatorTargetResponseDto[] = [];
 
+    const configIds = [...new Set(dto.entries.map((e) => e.indicatorConfigId))];
+    const configs = await this.targetRepository.manager.find(
+      MsnpIndicatorConfiguration,
+      {
+        where: configIds.map((id) => ({ id })),
+      },
+    );
+    const configMap = new Map(configs.map((c) => [c.id, c.indicatorId]));
+
     for (const entry of dto.entries) {
       try {
+        const indicatorId = configMap.get(entry.indicatorConfigId);
+        if (!indicatorId)
+          throw new EntityNotFoundException(
+            'MsnpIndicatorConfiguration',
+            entry.indicatorConfigId,
+          );
+
         const existing = await this.targetRepository.findOne({
           where: {
             fiscalYearId: dto.fiscalYearId,
@@ -82,6 +114,7 @@ export class MsnpIndicatorTargetsService {
         } else {
           const newTarget = this.targetRepository.create({
             indicatorConfigId: entry.indicatorConfigId,
+            indicatorId,
             fiscalYearId: dto.fiscalYearId,
             targetValue: entry.targetValue,
             remarks: entry.remarks,
@@ -224,6 +257,7 @@ export class MsnpIndicatorTargetsService {
     return {
       id: entity.id,
       indicatorConfigId: entity.indicatorConfigId,
+      indicatorId: entity.indicatorId,
       indicatorName,
       fiscalYearId: entity.fiscalYearId,
       targetValue: entity.targetValue,

@@ -53,6 +53,84 @@ const permissions = [
     description: 'Delete MSNP indicators',
     category: 'Masters',
   },
+  // MSNP Indicator Configurations
+  {
+    resource: 'msnp_indicator_configurations',
+    action: 'read',
+    description: 'View MSNP indicator configurations',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_configurations',
+    action: 'create',
+    description: 'Create MSNP indicator configurations',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_configurations',
+    action: 'update',
+    description: 'Update MSNP indicator configurations',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_configurations',
+    action: 'delete',
+    description: 'Delete MSNP indicator configurations',
+    category: 'MSNP Indicators',
+  },
+
+  // MSNP Indicator Targets
+  {
+    resource: 'msnp_indicator_targets',
+    action: 'read',
+    description: 'View MSNP indicator targets',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_targets',
+    action: 'create',
+    description: 'Create MSNP indicator targets',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_targets',
+    action: 'update',
+    description: 'Update MSNP indicator targets',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_targets',
+    action: 'delete',
+    description: 'Delete MSNP indicator targets',
+    category: 'MSNP Indicators',
+  },
+
+  // MSNP Indicator Data
+  {
+    resource: 'msnp_indicator_data',
+    action: 'read',
+    description: 'View MSNP indicator data',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_data',
+    action: 'create',
+    description: 'Create MSNP indicator data',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_data',
+    action: 'update',
+    description: 'Update MSNP indicator data',
+    category: 'MSNP Indicators',
+  },
+  {
+    resource: 'msnp_indicator_data',
+    action: 'delete',
+    description: 'Delete MSNP indicator data',
+    category: 'MSNP Indicators',
+  },
+
 
   // Frequencies
   {
@@ -184,12 +262,90 @@ const permissions = [
     category: 'Masters',
   },
 
+  // Disaggregation Types
+  {
+    resource: 'disaggregation-types',
+    action: 'view',
+    description: 'View disaggregation types',
+    category: 'Masters',
+  },
+  {
+    resource: 'disaggregation-types',
+    action: 'create',
+    description: 'Create disaggregation types',
+    category: 'Masters',
+  },
+  {
+    resource: 'disaggregation-types',
+    action: 'update',
+    description: 'Update disaggregation types',
+    category: 'Masters',
+  },
+  {
+    resource: 'disaggregation-types',
+    action: 'delete',
+    description: 'Delete disaggregation types',
+    category: 'Masters',
+  },
+
+  // Disaggregation Options
+  {
+    resource: 'disaggregation-options',
+    action: 'view',
+    description: 'View disaggregation options',
+    category: 'Masters',
+  },
+  {
+    resource: 'disaggregation-options',
+    action: 'create',
+    description: 'Create disaggregation options',
+    category: 'Masters',
+  },
+  {
+    resource: 'disaggregation-options',
+    action: 'update',
+    description: 'Update disaggregation options',
+    category: 'Masters',
+  },
+  {
+    resource: 'disaggregation-options',
+    action: 'delete',
+    description: 'Delete disaggregation options',
+    category: 'Masters',
+  },
+
   // Audit Logs
   {
     resource: 'audit-logs',
     action: 'view',
     description: 'View audit logs',
     category: 'Audit',
+  },
+
+  // Fiscal Years
+  {
+    resource: 'fiscal_years',
+    action: 'read',
+    description: 'View fiscal years',
+    category: 'Masters',
+  },
+  {
+    resource: 'fiscal_years',
+    action: 'create',
+    description: 'Create fiscal years',
+    category: 'Masters',
+  },
+  {
+    resource: 'fiscal_years',
+    action: 'update',
+    description: 'Update fiscal years',
+    category: 'Masters',
+  },
+  {
+    resource: 'fiscal_years',
+    action: 'delete',
+    description: 'Delete fiscal years',
+    category: 'Masters',
   },
 
   // Users

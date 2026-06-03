@@ -1,9 +1,10 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { MsnpIndicator } from '../../msnp-indicators/entities/msnp-indicator.entity';
 import { Sector } from '../../sectors/entities/sector.entity';
 import { Type } from '../../types/entities/type.entity';
 import { Role } from '../../roles/entities/role.entity';
+import { MsnpIndicatorDisaggregation } from './msnp-indicator-disaggregation.entity';
 
 @Entity('msnp_indicator_configurations')
 export class MsnpIndicatorConfiguration extends BaseEntity {
@@ -18,6 +19,9 @@ export class MsnpIndicatorConfiguration extends BaseEntity {
 
   @Column({ name: 'role_id', type: 'uuid', nullable: true })
   roleId: string | null;
+
+  @Column({ name: 'unit', type: 'varchar', nullable: true })
+  unit: string | null;
 
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
@@ -37,4 +41,11 @@ export class MsnpIndicatorConfiguration extends BaseEntity {
   @ManyToOne(() => Role)
   @JoinColumn({ name: 'role_id' })
   role: Role;
+
+  @OneToMany(
+    () => MsnpIndicatorDisaggregation,
+    (disaggregation) => disaggregation.configuration,
+    { cascade: true },
+  )
+  disaggregations: MsnpIndicatorDisaggregation[];
 }

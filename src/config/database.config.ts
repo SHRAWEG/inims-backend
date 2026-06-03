@@ -15,8 +15,7 @@ export default registerAs(
     autoLoadEntities: true,
 
     // ⚠️ CRITICAL: synchronize is ALWAYS false — use migrations
-    // Setting to true temporarily to create initial tables
-    synchronize: true,
+    synchronize: false,
 
     // Migrations run manually via CLI — never auto-run on boot
     migrationsRun: false,

@@ -227,6 +227,7 @@ export class UnauthorizedException extends HttpException {
 2. **Every** DTO field must have `@ApiProperty()` for Swagger docs.
 3. Use `@Type(() => Number)` from `class-transformer` for query params that arrive as strings.
 4. Use `@ValidateNested()` + `@Type()` for nested objects.
+5. **Never use `limit` greater than 100 for any GET API request (both frontend and backend).** The absolute maximum limit allowed is 100.
 
 ### Shared Base DTOs
 

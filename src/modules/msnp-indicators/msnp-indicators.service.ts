@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Raw, Not } from 'typeorm';
+import { Repository, Raw, Not, DataSource } from 'typeorm';
 import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 import { MsnpIndicator } from './entities/msnp-indicator.entity';
 import { CreateMsnpIndicatorDto } from './dto/create-msnp-indicator.dto';
@@ -28,60 +28,74 @@ export class MsnpIndicatorsService {
     @InjectRepository(MsnpIndicator)
     private readonly msnpIndicatorRepository: Repository<MsnpIndicator>,
     private readonly auditLogService: AuditLogService,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateMsnpIndicatorDto): Promise<MsnpIndicatorResponseDto> {
-    const errors: Record<string, string[]> = {};
-
-    const [existingCode, existingNameEn, existingNameNe] = await Promise.all([
-      this.msnpIndicatorRepository.findOne({ where: { code: dto.code } }),
-      this.msnpIndicatorRepository.findOne({
-        where: {
-          name: Raw(
-            (alias) => `"${alias.replace('.', '"."')}"->>'en' = :nameEn`,
-            { nameEn: dto.name.en },
-          ),
-        },
-      }),
-      this.msnpIndicatorRepository.findOne({
-        where: {
-          name: Raw(
-            (alias) => `"${alias.replace('.', '"."')}"->>'ne' = :nameNe`,
-            { nameNe: dto.name.ne },
-          ),
-        },
-      }),
-    ]);
-
-    if (existingCode) errors.code = ['Code already in use'];
-    if (existingNameEn) errors['name.en'] = ['English name already in use'];
-    if (existingNameNe) errors['name.ne'] = ['Nepali name already in use'];
-
-    if (Object.keys(errors).length > 0) {
-      throw new BusinessValidationException(errors);
-    }
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
     try {
-      const entity = this.msnpIndicatorRepository.create({
+      const errors: Record<string, string[]> = {};
+
+      const [existingCode, existingNameEn, existingNameNe] = await Promise.all([
+        queryRunner.manager.findOne(MsnpIndicator, {
+          where: { code: dto.code },
+        }),
+        queryRunner.manager.findOne(MsnpIndicator, {
+          where: {
+            name: Raw(
+              (alias) => `"${alias.replace('.', '"."')}"->>'en' = :nameEn`,
+              { nameEn: dto.name.en },
+            ),
+          },
+        }),
+        queryRunner.manager.findOne(MsnpIndicator, {
+          where: {
+            name: Raw(
+              (alias) => `"${alias.replace('.', '"."')}"->>'ne' = :nameNe`,
+              { nameNe: dto.name.ne },
+            ),
+          },
+        }),
+      ]);
+
+      if (existingCode) errors.code = ['Code already in use'];
+      if (existingNameEn) errors['name.en'] = ['English name already in use'];
+      if (existingNameNe) errors['name.ne'] = ['Nepali name already in use'];
+
+      if (Object.keys(errors).length > 0) {
+        throw new BusinessValidationException(errors);
+      }
+
+      const entity = queryRunner.manager.create(MsnpIndicator, {
         code: dto.code,
         name: { en: dto.name.en, ne: dto.name.ne },
         isActive: dto.isActive ?? true,
       });
-      const saved = await this.msnpIndicatorRepository.save(entity);
+      const saved = await queryRunner.manager.save(entity);
+
+      await queryRunner.commitTransaction();
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'msnp-indicator',
         resourceId: saved.id,
-        after: sanitizeForAudit(saved),
+        after: {
+          ...sanitizeForAudit(saved),
+        },
       });
 
       return this.toResponse(saved, DEFAULT_LOCALE);
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       this.logger.error('Failed to create msnp indicator', {
         error: (error as Error).message,
       });
       this.handleDbError(error);
+    } finally {
+      await queryRunner.release();
     }
   }
 

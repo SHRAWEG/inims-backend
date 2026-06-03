@@ -1,20 +1,10 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, IsUUID } from 'class-validator';
-import { PaginationQueryDto } from '../../../common/dto/pagination-query.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsUUID } from 'class-validator';
+import { LocaleQueryDto } from '../../../common/dto/locale-query.dto';
 
-export class QueryMsnpIndicatorDataDto extends PaginationQueryDto {
-  @ApiPropertyOptional({ description: 'Search by remarks or data source' })
-  @IsString()
-  @IsOptional()
-  search?: string;
-
-  @ApiPropertyOptional({ description: 'Filter by indicator config ID' })
+export class QueryMsnpIndicatorDataDto extends LocaleQueryDto {
+  @ApiProperty({ description: 'Filter by fiscal year ID', required: true })
   @IsUUID('4')
-  @IsOptional()
-  indicatorConfigId?: string;
-
-  @ApiPropertyOptional({ description: 'Filter by fiscal year ID' })
-  @IsUUID('4')
-  @IsOptional()
-  fiscalYearId?: string;
+  @IsNotEmpty()
+  fiscalYearId: string;
 }

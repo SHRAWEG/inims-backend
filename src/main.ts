@@ -72,14 +72,21 @@ async function bootstrap(): Promise<void> {
 
   app.use(compression());
 
+  const corsOriginEnv = configService.get<string>('CORS_ORIGIN', '');
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:6061', // The new dashboard port
+    'https://inims-dashboard.vercel.app',
+    'http://103.187.8.96:8686',
+  ];
+  if (corsOriginEnv && !allowedOrigins.includes(corsOriginEnv)) {
+    allowedOrigins.push(corsOriginEnv);
+  }
+
   // ---------- CORS ----------
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://inims-dashboard.vercel.app',
-      'http://103.187.8.96:8686',
-    ],
+    origin: allowedOrigins,
     credentials: true,
   });
 

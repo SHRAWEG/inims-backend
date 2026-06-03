@@ -1,5 +1,25 @@
-import { IsUUID, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsUUID,
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+
+export class DisaggregationDataInputDto {
+  @ApiProperty({ example: 'uuid-string' })
+  @IsUUID('4')
+  @IsNotEmpty()
+  disaggregationOptionId: string;
+
+  @ApiProperty({ example: '50' })
+  @IsString()
+  @IsNotEmpty()
+  value: string;
+}
 
 export class CreateMsnpIndicatorDataDto {
   @ApiProperty({
@@ -29,6 +49,17 @@ export class CreateMsnpIndicatorDataDto {
   @IsString()
   @IsOptional()
   remarks?: string;
+
+  @ApiProperty({
+    type: [DisaggregationDataInputDto],
+    required: false,
+    description: 'Values for specific disaggregation options',
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => DisaggregationDataInputDto)
+  disaggregations?: DisaggregationDataInputDto[];
 
   // Note: submittedBy will typically be extracted from the authenticated user token in the controller/service
 }

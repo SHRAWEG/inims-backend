@@ -11,7 +11,7 @@ export const seedSuperAdmin = async (dataSource: DataSource) => {
 
   if (!existingAdmin) {
     const passwordHash = await bcrypt.hash('Admin123', 10);
-    
+
     const superAdmin = userRepository.create({
       firstName: 'Super',
       lastName: 'Admin',
@@ -22,7 +22,9 @@ export const seedSuperAdmin = async (dataSource: DataSource) => {
     });
 
     await userRepository.save(superAdmin);
-    console.log(`[SuperAdmin Seeder] Created superadmin with email: ${email} and password: superadmin123`);
+    console.log(
+      `[SuperAdmin Seeder] Created superadmin with email: ${email} and password: superadmin123`,
+    );
   } else {
     console.log('[SuperAdmin Seeder] Superadmin already exists. Skipping...');
   }

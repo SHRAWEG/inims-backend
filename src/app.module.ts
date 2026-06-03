@@ -28,6 +28,8 @@ import { FiscalYearsModule } from './modules/fiscal-years/fiscal-years.module';
 import { MsnpIndicatorConfigurationsModule } from './modules/msnp-indicator-configurations/msnp-indicator-configurations.module';
 import { MsnpIndicatorDataModule } from './modules/msnp-indicator-data/msnp-indicator-data.module';
 import { MsnpIndicatorTargetsModule } from './modules/msnp-indicator-targets/msnp-indicator-targets.module';
+import { DisaggregationTypesModule } from './modules/disaggregation-types/disaggregation-types.module';
+import { DisaggregationOptionsModule } from './modules/disaggregation-options/disaggregation-options.module';
 
 @Module({
   imports: [
@@ -78,6 +80,8 @@ import { MsnpIndicatorTargetsModule } from './modules/msnp-indicator-targets/msn
     MsnpIndicatorConfigurationsModule,
     MsnpIndicatorDataModule,
     MsnpIndicatorTargetsModule,
+    DisaggregationTypesModule,
+    DisaggregationOptionsModule,
   ],
   controllers: [AppController],
   providers: [

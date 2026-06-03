@@ -3,12 +3,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MsnpIndicatorConfigurationsController } from './msnp-indicator-configurations.controller';
 import { MsnpIndicatorConfigurationsService } from './msnp-indicator-configurations.service';
 import { MsnpIndicatorConfiguration } from './entities/msnp-indicator-configuration.entity';
+import { MsnpIndicatorDisaggregation } from './entities/msnp-indicator-disaggregation.entity';
+import { MsnpIndicatorDisaggregationOption } from './entities/msnp-indicator-disaggregation-option.entity';
 import { AuditLogModule } from '../audit-log/audit-log.module';
 import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([MsnpIndicatorConfiguration]),
+    TypeOrmModule.forFeature([
+      MsnpIndicatorConfiguration,
+      MsnpIndicatorDisaggregation,
+      MsnpIndicatorDisaggregationOption,
+    ]),
     AuditLogModule,
     UsersModule,
   ],

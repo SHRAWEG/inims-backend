@@ -7,6 +7,9 @@ export class MsnpIndicatorTargetResponseDto {
   @ApiProperty({ example: 'uuid-string' })
   indicatorConfigId: string;
 
+  @ApiProperty({ example: 'uuid-string', required: false })
+  indicatorId?: string;
+
   @ApiProperty({ example: 'Indicator 1 Name', required: false })
   indicatorName?: string;
 

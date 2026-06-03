@@ -12,6 +12,11 @@ export class QueryMsnpIndicatorConfigurationDto extends IntersectionType(
   @IsOptional()
   indicatorId?: string;
 
+  @ApiPropertyOptional({ description: 'Filter by role ID' })
+  @IsUUID('4')
+  @IsOptional()
+  roleId?: string;
+
   @ApiPropertyOptional({ description: 'Search by indicator name' })
   @IsString()
   @IsOptional()

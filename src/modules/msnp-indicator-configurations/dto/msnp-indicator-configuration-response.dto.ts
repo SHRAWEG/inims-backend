@@ -1,6 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { SupportedLocale } from '../../../common/types/i18n.type';
 
+export class DisaggregationConfigResponseDto {
+  @ApiProperty()
+  disaggregationTypeId: string;
+
+  @ApiProperty()
+  disaggregationTypeName: string;
+
+  @ApiProperty({ required: false, type: [String] })
+  optionIds?: string[];
+}
+
 export class MsnpIndicatorConfigurationResponseDto {
   @ApiProperty({ example: 'uuid-string' })
   id: string;
@@ -16,6 +27,9 @@ export class MsnpIndicatorConfigurationResponseDto {
 
   @ApiProperty({ example: 'uuid-string', required: false })
   roleId: string | null;
+
+  @ApiProperty({ required: false, example: 'percentage' })
+  unit: string | null;
 
   @ApiProperty()
   indicatorName: string;
@@ -40,4 +54,7 @@ export class MsnpIndicatorConfigurationResponseDto {
 
   @ApiProperty()
   updatedAt: Date;
+
+  @ApiProperty({ type: [DisaggregationConfigResponseDto], required: false })
+  disaggregations?: DisaggregationConfigResponseDto[];
 }

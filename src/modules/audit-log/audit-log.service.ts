@@ -6,7 +6,6 @@ import {
   LessThanOrEqual,
   MoreThanOrEqual,
   FindOptionsWhere,
-  FindOptionsOrder,
 } from 'typeorm';
 import { ClsService } from 'nestjs-cls';
 import diff from 'microdiff';
@@ -125,7 +124,7 @@ export class AuditLogService {
       relations: ['user'],
       take: limit,
       skip: offset,
-      order: { [sortBy]: sortOrder } as FindOptionsOrder<AuditLog>,
+      order: { [sortBy]: sortOrder },
     });
 
     return { items, total };
@@ -136,7 +135,7 @@ export class AuditLogService {
    */
   async findOne(id: string): Promise<AuditLog> {
     const log = await this.auditLogRepository.findOne({
-      where: { id } as FindOptionsWhere<AuditLog>,
+      where: { id },
       relations: ['user'],
     });
     if (!log) {

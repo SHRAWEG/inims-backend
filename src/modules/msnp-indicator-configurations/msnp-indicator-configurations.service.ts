@@ -1,13 +1,17 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { MsnpIndicatorConfiguration } from './entities/msnp-indicator-configuration.entity';
+import { MsnpIndicatorDisaggregation } from './entities/msnp-indicator-disaggregation.entity';
+import { MsnpIndicatorDisaggregationOption } from './entities/msnp-indicator-disaggregation-option.entity';
+import { DisaggregationType } from '../disaggregation-types/entities/disaggregation-type.entity';
 import { CreateMsnpIndicatorConfigurationDto } from './dto/create-msnp-indicator-configuration.dto';
 import { UpdateMsnpIndicatorConfigurationDto } from './dto/update-msnp-indicator-configuration.dto';
 import { MsnpIndicatorConfigurationResponseDto } from './dto/msnp-indicator-configuration-response.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
 import { EntityNotFoundException } from '../../common/exceptions/not-found.exception';
+import { BusinessValidationException } from '../../common/exceptions/business-validation.exception';
 import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
 import { QueryMsnpIndicatorConfigurationDto } from './dto/query-msnp-indicator-configuration.dto';
@@ -21,28 +25,102 @@ export class MsnpIndicatorConfigurationsService {
     @InjectRepository(MsnpIndicatorConfiguration)
     private readonly configRepository: Repository<MsnpIndicatorConfiguration>,
     private readonly auditLogService: AuditLogService,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(
     dto: CreateMsnpIndicatorConfigurationDto,
   ): Promise<MsnpIndicatorConfigurationResponseDto> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try {
-      const config = this.configRepository.create(dto);
-      const saved = await this.configRepository.save(config);
+      const config = queryRunner.manager.create(MsnpIndicatorConfiguration, {
+        indicatorId: dto.indicatorId,
+        sectorId: dto.sectorId,
+        typeId: dto.typeId,
+        roleId: dto.roleId,
+        unit: dto.unit,
+        isActive: dto.isActive,
+      });
+
+      const saved = await queryRunner.manager.save(config);
+
+      if (dto.disaggregations && dto.disaggregations.length > 0) {
+        for (let i = 0; i < dto.disaggregations.length; i++) {
+          const item = dto.disaggregations[i];
+          const dtype = await queryRunner.manager.findOne(DisaggregationType, {
+            where: { id: item.disaggregationTypeId },
+          });
+
+          if (!dtype) {
+            throw new BusinessValidationException({
+              [`disaggregations.${i}.disaggregationTypeId`]: [
+                'Disaggregation type not found',
+              ],
+            });
+          }
+
+          if (
+            item.optionIds &&
+            item.optionIds.length > 0 &&
+            !dtype.isSelective
+          ) {
+            throw new BusinessValidationException({
+              [`disaggregations.${i}.optionIds`]: [
+                'Cannot provide specific options for a non-selective disaggregation type',
+              ],
+            });
+          }
+
+          const disag = queryRunner.manager.create(
+            MsnpIndicatorDisaggregation,
+            {
+              configurationId: saved.id,
+              disaggregationTypeId: item.disaggregationTypeId,
+            },
+          );
+
+          const savedDisag = await queryRunner.manager.save(disag);
+
+          if (
+            dtype.isSelective &&
+            item.optionIds &&
+            item.optionIds.length > 0
+          ) {
+            const optionsToSave = item.optionIds.map((optId) =>
+              queryRunner.manager.create(MsnpIndicatorDisaggregationOption, {
+                indicatorDisaggregationId: savedDisag.id,
+                disaggregationOptionId: optId,
+              }),
+            );
+            await queryRunner.manager.save(optionsToSave);
+          }
+        }
+      }
+
+      await queryRunner.commitTransaction();
+
+      // Fetch the full record with relations for audit and response
+      const fullSaved = await this.findById(saved.id, DEFAULT_LOCALE);
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
         resource: 'msnp_indicator_configuration',
         resourceId: saved.id,
-        after: sanitizeForAudit(saved),
+        after: sanitizeForAudit(fullSaved),
       });
 
-      return this.findById(saved.id, DEFAULT_LOCALE);
+      return fullSaved;
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       this.logger.error('Failed to create config', {
         error: (error as Error).message,
       });
       throw error;
+    } finally {
+      await queryRunner.release();
     }
   }
 
@@ -53,11 +131,21 @@ export class MsnpIndicatorConfigurationsService {
       .leftJoinAndSelect('c.sector', 'sector')
       .leftJoinAndSelect('c.type', 'type')
       .leftJoinAndSelect('c.role', 'role')
+      .leftJoinAndSelect('c.disaggregations', 'disagg')
+      .leftJoinAndSelect('disagg.disaggregationType', 'dtype')
+      .leftJoinAndSelect('disagg.options', 'dopts')
+      .leftJoinAndSelect('dopts.disaggregationOption', 'dopt')
       .where('c.deletedAt IS NULL');
 
     if (query.indicatorId) {
       qb.andWhere('c.indicatorId = :indicatorId', {
         indicatorId: query.indicatorId,
+      });
+    }
+
+    if (query.roleId) {
+      qb.andWhere('c.roleId = :roleId', {
+        roleId: query.roleId,
       });
     }
 
@@ -86,7 +174,16 @@ export class MsnpIndicatorConfigurationsService {
   ): Promise<MsnpIndicatorConfigurationResponseDto> {
     const record = await this.configRepository.findOne({
       where: { id },
-      relations: ['indicator', 'sector', 'type', 'role'],
+      relations: [
+        'indicator',
+        'sector',
+        'type',
+        'role',
+        'disaggregations',
+        'disaggregations.disaggregationType',
+        'disaggregations.options',
+        'disaggregations.options.disaggregationOption',
+      ],
     });
 
     if (!record) {
@@ -104,27 +201,115 @@ export class MsnpIndicatorConfigurationsService {
       throw new EntityNotFoundException('MsnpIndicatorConfiguration', id);
     }
 
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try {
       const before = { ...existing };
-      const updated = await this.configRepository.save({
-        ...existing,
-        ...dto,
-      });
+
+      const configUpdate = {
+        indicatorId: dto.indicatorId ?? existing.indicatorId,
+        sectorId: dto.sectorId !== undefined ? dto.sectorId : existing.sectorId,
+        typeId: dto.typeId !== undefined ? dto.typeId : existing.typeId,
+        roleId: dto.roleId !== undefined ? dto.roleId : existing.roleId,
+        unit: dto.unit !== undefined ? dto.unit : existing.unit,
+        isActive: dto.isActive ?? existing.isActive,
+      };
+
+      await queryRunner.manager.update(
+        MsnpIndicatorConfiguration,
+        id,
+        configUpdate,
+      );
+
+      if (dto.disaggregations) {
+        // Find existing disaggregations to remove them
+        const existingDisags = await queryRunner.manager.find(
+          MsnpIndicatorDisaggregation,
+          {
+            where: { configurationId: id },
+          },
+        );
+
+        if (existingDisags.length > 0) {
+          await queryRunner.manager.softRemove(existingDisags);
+        }
+
+        // Recreate them
+        for (let i = 0; i < dto.disaggregations.length; i++) {
+          const item = dto.disaggregations[i];
+          const dtype = await queryRunner.manager.findOne(DisaggregationType, {
+            where: { id: item.disaggregationTypeId },
+          });
+
+          if (!dtype) {
+            throw new BusinessValidationException({
+              [`disaggregations.${i}.disaggregationTypeId`]: [
+                'Disaggregation type not found',
+              ],
+            });
+          }
+
+          if (
+            item.optionIds &&
+            item.optionIds.length > 0 &&
+            !dtype.isSelective
+          ) {
+            throw new BusinessValidationException({
+              [`disaggregations.${i}.optionIds`]: [
+                'Cannot provide specific options for a non-selective disaggregation type',
+              ],
+            });
+          }
+
+          const disag = queryRunner.manager.create(
+            MsnpIndicatorDisaggregation,
+            {
+              configurationId: id,
+              disaggregationTypeId: item.disaggregationTypeId,
+            },
+          );
+
+          const savedDisag = await queryRunner.manager.save(disag);
+
+          if (
+            dtype.isSelective &&
+            item.optionIds &&
+            item.optionIds.length > 0
+          ) {
+            const optionsToSave = item.optionIds.map((optId) =>
+              queryRunner.manager.create(MsnpIndicatorDisaggregationOption, {
+                indicatorDisaggregationId: savedDisag.id,
+                disaggregationOptionId: optId,
+              }),
+            );
+            await queryRunner.manager.save(optionsToSave);
+          }
+        }
+      }
+
+      await queryRunner.commitTransaction();
+
+      const fullUpdated = await this.findById(id, DEFAULT_LOCALE);
 
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'msnp_indicator_configuration',
         resourceId: id,
         before: sanitizeForAudit(before),
-        after: sanitizeForAudit(updated),
+        after: sanitizeForAudit(fullUpdated),
       });
 
-      return this.findById(updated.id, DEFAULT_LOCALE);
+      return fullUpdated;
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       this.logger.error(`Failed to update config: ${id}`, {
         error: (error as Error).message,
       });
       throw error;
+    } finally {
+      await queryRunner.release();
     }
   }
 
@@ -134,14 +319,36 @@ export class MsnpIndicatorConfigurationsService {
       throw new EntityNotFoundException('MsnpIndicatorConfiguration', id);
     }
 
-    await this.configRepository.softDelete(id);
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
-    await this.auditLogService.log({
-      action: AuditAction.SOFT_DELETE,
-      resource: 'msnp_indicator_configuration',
-      resourceId: id,
-      before: sanitizeForAudit(record),
-    });
+    try {
+      const existingDisags = await queryRunner.manager.find(
+        MsnpIndicatorDisaggregation,
+        {
+          where: { configurationId: id },
+        },
+      );
+      if (existingDisags.length > 0) {
+        await queryRunner.manager.softRemove(existingDisags);
+      }
+      await queryRunner.manager.softDelete(MsnpIndicatorConfiguration, id);
+
+      await queryRunner.commitTransaction();
+
+      await this.auditLogService.log({
+        action: AuditAction.SOFT_DELETE,
+        resource: 'msnp_indicator_configuration',
+        resourceId: id,
+        before: sanitizeForAudit(record),
+      });
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   private toResponse(
@@ -164,10 +371,16 @@ export class MsnpIndicatorConfigurationsService {
       typeName: resolveName(entity.type?.name),
       roleId: entity.roleId,
       roleName: resolveName(entity.role?.name),
+      unit: entity.unit,
       isActive: entity.isActive,
       locale,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      disaggregations: entity.disaggregations?.map((d) => ({
+        disaggregationTypeId: d.disaggregationTypeId,
+        disaggregationTypeName: resolveName(d.disaggregationType?.name),
+        optionIds: d.options?.map((o) => o.disaggregationOptionId),
+      })),
     };
   }
 }

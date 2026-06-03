@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { DisaggregationDataInputDto } from './create-msnp-indicator-data.dto';
 
 export class MsnpIndicatorDataEntryDto {
   @ApiProperty({ example: 'uuid-string' })
@@ -29,6 +30,17 @@ export class MsnpIndicatorDataEntryDto {
   @IsString()
   @IsOptional()
   remarks?: string;
+
+  @ApiProperty({
+    type: [DisaggregationDataInputDto],
+    required: false,
+    description: 'Values for specific disaggregation options',
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => DisaggregationDataInputDto)
+  disaggregations?: DisaggregationDataInputDto[];
 }
 
 export class BulkUpsertMsnpIndicatorDataDto {
