@@ -140,8 +140,12 @@ export class FiscalYearsService {
     await queryRunner.startTransaction();
 
     try {
-      // Set all fiscal years to inactive
-      await queryRunner.manager.update(FiscalYear, {}, { isActive: false });
+      // Set the currently active fiscal year(s) to inactive
+      await queryRunner.manager.update(
+        FiscalYear,
+        { isActive: true },
+        { isActive: false },
+      );
 
       // Set the target fiscal year to active
       await queryRunner.manager.update(FiscalYear, id, { isActive: true });
