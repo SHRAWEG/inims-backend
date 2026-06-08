@@ -46,6 +46,33 @@ export class MsnpIndicatorConfigurationResponseDto {
   @ApiProperty({ example: true })
   isActive: boolean;
 
+  @ApiProperty({ required: false })
+  dataCollectionMethod: string | null;
+
+  @ApiProperty({ required: false })
+  responsibleAuthority: string | null;
+
+  @ApiProperty({ required: false })
+  supportingAuthority: string | null;
+
+  @ApiProperty({ required: false })
+  frequency: string | null;
+
+  @ApiProperty({ required: false })
+  reportPreparationAndUtility: string | null;
+
+  @ApiProperty({ required: false })
+  disseminationAndDistribution: string | null;
+
+  @ApiProperty({ example: false })
+  isMandEFramework: boolean;
+
+  @ApiProperty({ example: false })
+  isResultFramework: boolean;
+
+  @ApiProperty({ required: false })
+  baseYear: string | null;
+
   @ApiProperty({ enum: ['en', 'ne'] })
   locale: SupportedLocale;
 

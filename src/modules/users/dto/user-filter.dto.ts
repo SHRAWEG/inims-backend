@@ -8,8 +8,9 @@ import {
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { SystemRole } from '../../../common/enums/system-role.enum';
+import { PaginationQueryDto } from '../../../common/dto/pagination-query.dto';
 
-export class UserFilterDto {
+export class UserFilterDto extends PaginationQueryDto {
   @ApiPropertyOptional({ description: 'Search term for name or email' })
   @IsOptional()
   @IsString()

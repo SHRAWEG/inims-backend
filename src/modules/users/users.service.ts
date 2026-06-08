@@ -34,7 +34,7 @@ export class UsersService {
   async findAll(
     filter?: UserFilterDto,
     requester?: UserContext,
-  ): Promise<User[]> {
+  ): Promise<[User[], number]> {
     const where: FindOptionsWhere<User>[] = [];
     const visibilityFilter: FindOptionsWhere<User> = {};
 
@@ -70,10 +70,15 @@ export class UsersService {
       where.push(visibilityFilter);
     }
 
-    return this.userRepository.find({
+    const page = filter?.page || 1;
+    const limit = filter?.limit || 20;
+
+    return this.userRepository.findAndCount({
       where: where.length > 0 ? where : undefined,
       relations: ['role', 'role.permissions'],
       order: { createdAt: 'DESC' },
+      skip: (page - 1) * limit,
+      take: limit,
     });
   }
 

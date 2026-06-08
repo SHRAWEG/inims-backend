@@ -43,6 +43,15 @@ export class MsnpIndicatorConfigurationsService {
         roleId: dto.roleId,
         unit: dto.unit,
         isActive: dto.isActive,
+        dataCollectionMethod: dto.dataCollectionMethod,
+        responsibleAuthority: dto.responsibleAuthority,
+        supportingAuthority: dto.supportingAuthority,
+        frequency: dto.frequency,
+        reportPreparationAndUtility: dto.reportPreparationAndUtility,
+        disseminationAndDistribution: dto.disseminationAndDistribution,
+        isMandEFramework: dto.isMandEFramework,
+        isResultFramework: dto.isResultFramework,
+        baseYear: dto.baseYear,
       });
 
       const saved = await queryRunner.manager.save(config);
@@ -156,7 +165,8 @@ export class MsnpIndicatorConfigurationsService {
       );
     }
 
-    qb.orderBy('c.createdAt', 'DESC')
+    qb.orderBy('indicator.code', 'ASC')
+      .addOrderBy('c.createdAt', 'DESC')
       .skip((query.page - 1) * query.limit)
       .take(query.limit);
 
@@ -215,6 +225,31 @@ export class MsnpIndicatorConfigurationsService {
         roleId: dto.roleId !== undefined ? dto.roleId : existing.roleId,
         unit: dto.unit !== undefined ? dto.unit : existing.unit,
         isActive: dto.isActive ?? existing.isActive,
+        dataCollectionMethod:
+          dto.dataCollectionMethod !== undefined
+            ? dto.dataCollectionMethod
+            : existing.dataCollectionMethod,
+        responsibleAuthority:
+          dto.responsibleAuthority !== undefined
+            ? dto.responsibleAuthority
+            : existing.responsibleAuthority,
+        supportingAuthority:
+          dto.supportingAuthority !== undefined
+            ? dto.supportingAuthority
+            : existing.supportingAuthority,
+        frequency:
+          dto.frequency !== undefined ? dto.frequency : existing.frequency,
+        reportPreparationAndUtility:
+          dto.reportPreparationAndUtility !== undefined
+            ? dto.reportPreparationAndUtility
+            : existing.reportPreparationAndUtility,
+        disseminationAndDistribution:
+          dto.disseminationAndDistribution !== undefined
+            ? dto.disseminationAndDistribution
+            : existing.disseminationAndDistribution,
+        isMandEFramework: dto.isMandEFramework ?? existing.isMandEFramework,
+        isResultFramework: dto.isResultFramework ?? existing.isResultFramework,
+        baseYear: dto.baseYear !== undefined ? dto.baseYear : existing.baseYear,
       };
 
       await queryRunner.manager.update(
@@ -373,6 +408,15 @@ export class MsnpIndicatorConfigurationsService {
       roleName: resolveName(entity.role?.name),
       unit: entity.unit,
       isActive: entity.isActive,
+      dataCollectionMethod: entity.dataCollectionMethod,
+      responsibleAuthority: entity.responsibleAuthority,
+      supportingAuthority: entity.supportingAuthority,
+      frequency: entity.frequency,
+      reportPreparationAndUtility: entity.reportPreparationAndUtility,
+      disseminationAndDistribution: entity.disseminationAndDistribution,
+      isMandEFramework: entity.isMandEFramework,
+      isResultFramework: entity.isResultFramework,
+      baseYear: entity.baseYear,
       locale,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

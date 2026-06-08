@@ -57,6 +57,51 @@ export class CreateMsnpIndicatorConfigurationDto {
   @IsOptional()
   isActive?: boolean;
 
+  @ApiProperty({ required: false, example: 'Household survey' })
+  @IsString()
+  @IsOptional()
+  dataCollectionMethod?: string;
+
+  @ApiProperty({ required: false, example: 'Ministry of Health' })
+  @IsString()
+  @IsOptional()
+  responsibleAuthority?: string;
+
+  @ApiProperty({ required: false, example: 'Local Government' })
+  @IsString()
+  @IsOptional()
+  supportingAuthority?: string;
+
+  @ApiProperty({ required: false, example: 'Annually' })
+  @IsString()
+  @IsOptional()
+  frequency?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  reportPreparationAndUtility?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  disseminationAndDistribution?: string;
+
+  @ApiProperty({ required: false, default: false })
+  @IsBoolean()
+  @IsOptional()
+  isMandEFramework?: boolean;
+
+  @ApiProperty({ required: false, default: false })
+  @IsBoolean()
+  @IsOptional()
+  isResultFramework?: boolean;
+
+  @ApiProperty({ required: false, example: '2023' })
+  @IsString()
+  @IsOptional()
+  baseYear?: string;
+
   @ApiProperty({
     type: [DisaggregationConfigInputDto],
     required: false,

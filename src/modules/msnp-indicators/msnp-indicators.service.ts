@@ -120,7 +120,7 @@ export class MsnpIndicatorsService {
       });
     }
 
-    qb.orderBy(`indicator.name->>'${query.locale}'`, 'ASC')
+    qb.orderBy('CAST(indicator.code AS INTEGER)', 'ASC')
       .skip((query.page - 1) * query.limit)
       .take(query.limit);
 

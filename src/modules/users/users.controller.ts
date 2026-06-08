@@ -27,6 +27,7 @@ import { Permissions } from '../../common/decorators/permissions.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UserContext } from '../../common/types/user-context.type';
 import { buildResponse } from '../../common/utils/response.util';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { ApiResponse } from '../../common/types/api-response.type';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
@@ -94,8 +95,16 @@ export class UsersController {
     @Query() filter: UserFilterDto,
     @CurrentUser() userContext: UserContext,
   ): Promise<ApiResponse<UserResponseDto[]>> {
-    const users = await this.usersService.findAll(filter, userContext);
-    return buildResponse(users.map((u) => this.usersService.toResponseDto(u)));
+    const [users, total] = await this.usersService.findAll(filter, userContext);
+    const meta = buildPaginationMeta(
+      total,
+      filter.page || 1,
+      filter.limit || 20,
+    );
+    return buildResponse(
+      users.map((u) => this.usersService.toResponseDto(u)),
+      meta,
+    );
   }
 
   @Post()
