@@ -406,6 +406,26 @@ const permissions = [
     description: 'List available permissions',
     category: 'User Management',
   },
+
+  // Content
+  {
+    resource: 'contents',
+    action: 'create',
+    description: 'Create content entries',
+    category: 'Content',
+  },
+  {
+    resource: 'contents',
+    action: 'update',
+    description: 'Update content entries',
+    category: 'Content',
+  },
+  {
+    resource: 'contents',
+    action: 'delete',
+    description: 'Delete content entries',
+    category: 'Content',
+  },
 ];
 
 export const seedPermissions = async (dataSource: DataSource) => {
