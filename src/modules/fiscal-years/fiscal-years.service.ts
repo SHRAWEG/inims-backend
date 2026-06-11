@@ -179,6 +179,7 @@ export class FiscalYearsService {
     return {
       id: entity.id,
       year: entity.year,
+      dateInAd: entity.dateInAd,
       startDateAd: entity.startDateAd,
       endDateAd: entity.endDateAd,
       isActive: entity.isActive,

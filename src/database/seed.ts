@@ -6,6 +6,8 @@ import { seedPermissions } from './seeders/permissions.seeder';
 import { seedSuperAdmin } from './seeders/superadmin.seeder';
 import { seedMsnpData } from './seeders/msnp-data.seeder';
 import { seedDisaggregations } from './seeders/disaggregations.seeder';
+import { seedMsnpIndicatorConfigurations } from './seeders/msnp-indicator-configurations.seeder';
+import { seedTargets } from './seeders/targets.seeder';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -22,6 +24,12 @@ async function bootstrap() {
 
     logger.log('Seeding Disaggregations Data...');
     await seedDisaggregations(dataSource);
+
+    logger.log('Seeding MSNP Indicator Configurations...');
+    await seedMsnpIndicatorConfigurations(dataSource);
+
+    logger.log('Seeding Targets...');
+    await seedTargets(dataSource);
 
     logger.log('All seeders executed successfully.');
   } catch (error) {

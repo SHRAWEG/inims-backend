@@ -7,6 +7,9 @@ export class FiscalYearResponseDto {
   @ApiProperty({ example: '2081/82' })
   year: string;
 
+  @ApiProperty({ example: '2024/25', required: false })
+  dateInAd: string | null;
+
   @ApiProperty({ example: '2024-07-16', required: false })
   startDateAd: Date | null;
 

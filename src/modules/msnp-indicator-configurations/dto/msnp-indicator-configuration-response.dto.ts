@@ -19,6 +19,9 @@ export class MsnpIndicatorConfigurationResponseDto {
   @ApiProperty({ example: 'uuid-string' })
   indicatorId: string;
 
+  @ApiProperty({ example: '1.1' })
+  indicatorCode: string;
+
   @ApiProperty({ example: 'uuid-string', required: false })
   sectorId: string | null;
 

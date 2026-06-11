@@ -6,6 +6,9 @@ export class FiscalYear extends BaseEntity {
   @Column({ type: 'varchar', length: 7, unique: true })
   year: string;
 
+  @Column({ name: 'date_in_ad', type: 'varchar', length: 15, nullable: true })
+  dateInAd: string | null;
+
   @Column({ name: 'start_date_ad', type: 'date', nullable: true })
   startDateAd: Date | null;
 

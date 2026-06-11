@@ -15,6 +15,11 @@ export class CreateFiscalYearDto {
   @Length(7, 7)
   year: string;
 
+  @ApiProperty({ example: '2024/25', required: false, description: 'AD Fiscal Year' })
+  @IsString()
+  @IsOptional()
+  dateInAd?: string;
+
   @ApiProperty({ example: '2024-07-16', required: false })
   @IsDateString()
   @IsOptional()

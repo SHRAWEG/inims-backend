@@ -30,6 +30,9 @@ export class DataEntryFormResponseDto {
   indicatorId: string;
 
   @ApiProperty()
+  indicatorCode: string;
+
+  @ApiProperty()
   indicatorName: string;
 
   @ApiProperty({ nullable: true, type: 'string' })

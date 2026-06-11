@@ -445,6 +445,7 @@ export class MsnpIndicatorDataService {
       return {
         indicatorConfigId: config.id,
         indicatorId: config.indicatorId,
+        indicatorCode: config.indicator?.code,
         indicatorName: getLocalizedName(
           config.indicator?.name as unknown as Record<string, string>,
         ),

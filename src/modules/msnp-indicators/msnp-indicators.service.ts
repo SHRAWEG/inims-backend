@@ -29,7 +29,7 @@ export class MsnpIndicatorsService {
     private readonly msnpIndicatorRepository: Repository<MsnpIndicator>,
     private readonly auditLogService: AuditLogService,
     private readonly dataSource: DataSource,
-  ) {}
+  ) { }
 
   async create(dto: CreateMsnpIndicatorDto): Promise<MsnpIndicatorResponseDto> {
     const queryRunner = this.dataSource.createQueryRunner();

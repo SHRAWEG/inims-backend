@@ -399,6 +399,7 @@ export class MsnpIndicatorConfigurationsService {
     return {
       id: entity.id,
       indicatorId: entity.indicatorId,
+      indicatorCode: entity.indicator?.code || '',
       indicatorName: resolveName(entity.indicator?.name),
       sectorId: entity.sectorId,
       sectorName: resolveName(entity.sector?.name),
