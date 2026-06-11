@@ -25,6 +25,21 @@ const DISAGGREGATION_MAP: Record<string, string> = {
   'School Education Level': 'School Education Level',
 };
 
+interface MsnpIndicatorConfigRow {
+  Code?: string | number;
+  Types?: string;
+  Sector?: string;
+  'M&E_Framework'?: string;
+  Result_Framework?: string;
+  'Data Collection Method'?: string;
+  'Responsible Authority'?: string;
+  'Supporting Authority'?: string;
+  Frequency?: string;
+  'Report Preparation and Utility'?: string;
+  Unit?: string;
+  [key: string]: string | number | undefined | null;
+}
+
 export async function seedMsnpIndicatorConfigurations(
   dataSource: DataSource,
 ): Promise<void> {
@@ -42,14 +57,20 @@ export async function seedMsnpIndicatorConfigurations(
     );
 
     if (!fs.existsSync(dataPath)) {
-      logger.warn('Seed data file not found. Skipping seeding of MSNP Indicator Configurations.');
+      logger.warn(
+        'Seed data file not found. Skipping seeding of MSNP Indicator Configurations.',
+      );
       return;
     }
 
     const rawData = fs.readFileSync(dataPath, 'utf8');
-    const data: any[] = JSON.parse(rawData);
+    const data: MsnpIndicatorConfigRow[] = JSON.parse(
+      rawData,
+    ) as MsnpIndicatorConfigRow[];
 
-    logger.log(`Found ${data.length} rows in msnp-indicator-configurations-seed-data.json`);
+    logger.log(
+      `Found ${data.length} rows in msnp-indicator-configurations-seed-data.json`,
+    );
 
     for (const row of data) {
       const code = String(row['Code']);
@@ -90,20 +111,33 @@ export async function seedMsnpIndicatorConfigurations(
           .getOne();
       }
 
-      const isMandEFramework = String(row['M&E_Framework']).toLowerCase() === 'yes';
-      const isResultFramework = String(row['Result_Framework']).toLowerCase() === 'yes';
-      const dataCollectionMethod = row['Data Collection Method'] || null;
-      const responsibleAuthority = row['Responsible Authority'] || null;
-      const supportingAuthority = row['Supporting Authority'] || null;
-      const frequency = row['Frequency'] || null;
-      const reportPreparationAndUtility = row['Report Preparation and Utility'] || null;
-      const unit = row['Unit'] || null;
-      
+      const isMandEFramework =
+        String(row['M&E_Framework']).toLowerCase() === 'yes';
+      const isResultFramework =
+        String(row['Result_Framework']).toLowerCase() === 'yes';
+      const dataCollectionMethod = row['Data Collection Method']
+        ? String(row['Data Collection Method'])
+        : null;
+      const responsibleAuthority = row['Responsible Authority']
+        ? String(row['Responsible Authority'])
+        : null;
+      const supportingAuthority = row['Supporting Authority']
+        ? String(row['Supporting Authority'])
+        : null;
+      const frequency = row['Frequency'] ? String(row['Frequency']) : null;
+      const reportPreparationAndUtility = row['Report Preparation and Utility']
+        ? String(row['Report Preparation and Utility'])
+        : null;
+      const unit = row['Unit'] ? String(row['Unit']) : null;
+
       // Handle possible variations of the column name due to spaces
-      let disseminationAndDistribution = null;
+      let disseminationAndDistribution: string | null = null;
       for (const key of Object.keys(row)) {
-        if (key.trim() === 'Dissemination and Distribution of Monitoring and Evaluation Reports') {
-          disseminationAndDistribution = row[key];
+        if (
+          key.trim() ===
+          'Dissemination and Distribution of Monitoring and Evaluation Reports'
+        ) {
+          disseminationAndDistribution = row[key] ? String(row[key]) : null;
           break;
         }
       }
@@ -177,7 +211,9 @@ export async function seedMsnpIndicatorConfigurations(
             );
             await queryRunner.manager.save(msnpDisagg);
           } else {
-            logger.warn(`DisaggregationType mapping "${dbName}" not found in DB`);
+            logger.warn(
+              `DisaggregationType mapping "${dbName}" not found in DB`,
+            );
           }
         }
       }

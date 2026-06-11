@@ -6,6 +6,11 @@ import { MsnpIndicatorTarget } from '../../modules/msnp-indicator-targets/entiti
 import * as fs from 'fs';
 import * as path from 'path';
 
+interface TargetRow {
+  code?: string;
+  targets: Record<string, string>;
+}
+
 export async function seedTargets(dataSource: DataSource) {
   const fiscalYearRepo = dataSource.getRepository(FiscalYear);
   const indicatorRepo = dataSource.getRepository(MsnpIndicator);
@@ -34,7 +39,9 @@ export async function seedTargets(dataSource: DataSource) {
     fiscalYearsMap[fyData.year] = fy.id;
   }
 
-  const targetsData = require('./data/targets-seed-data.json');
+  const dataPath = path.join(__dirname, 'data', 'targets-seed-data.json');
+  const rawData = fs.readFileSync(dataPath, 'utf8');
+  const targetsData: TargetRow[] = JSON.parse(rawData) as TargetRow[];
 
   // Process rows
   for (const item of targetsData) {
@@ -42,16 +49,24 @@ export async function seedTargets(dataSource: DataSource) {
     if (!indicatorCode) continue;
 
     // Find indicator
-    const indicator = await indicatorRepo.findOne({ where: { code: indicatorCode } });
+    const indicator = await indicatorRepo.findOne({
+      where: { code: indicatorCode },
+    });
     if (!indicator) {
-      console.warn(`Indicator with code ${indicatorCode} not found, skipping targets.`);
+      console.warn(
+        `Indicator with code ${indicatorCode} not found, skipping targets.`,
+      );
       continue;
     }
 
     // Find config
-    const config = await configRepo.findOne({ where: { indicatorId: indicator.id } });
+    const config = await configRepo.findOne({
+      where: { indicatorId: indicator.id },
+    });
     if (!config) {
-      console.warn(`Configuration for indicator code ${indicatorCode} not found, skipping targets.`);
+      console.warn(
+        `Configuration for indicator code ${indicatorCode} not found, skipping targets.`,
+      );
       continue;
     }
 
@@ -66,11 +81,15 @@ export async function seedTargets(dataSource: DataSource) {
     ];
 
     for (const target of targets) {
-      if (target.val !== undefined && target.val !== null && target.val.trim() !== '') {
+      if (
+        target.val !== undefined &&
+        target.val !== null &&
+        String(target.val).trim() !== ''
+      ) {
         const fyId = fiscalYearsMap[target.fy];
-        const val = target.val.trim();
+        const val = String(target.val).trim();
 
-        let existingTarget = await targetRepo.findOne({
+        const existingTarget = await targetRepo.findOne({
           where: {
             indicatorConfigId: config.id,
             fiscalYearId: fyId,
