@@ -24,6 +24,7 @@ import { UpdateChildContentDto } from './dto/update-child-content.dto';
 import { QueryChildContentDto } from './dto/query-child-content.dto';
 import { ChildContentResponseDto } from './dto/child-content-response.dto';
 import { ChildContentSummaryResponseDto } from './dto/child-content-summary-response.dto';
+import { Public } from '../../common/decorators/public.decorator';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { buildResponse } from '../../common/utils/response.util';
 
@@ -44,8 +45,8 @@ export class ChildContentsController {
   }
 
   @Get()
-  @Permissions('child-contents:view')
-  @ApiOperation({ summary: 'List root-level child contents (paginated)' })
+  @Public()
+  @ApiOperation({ summary: 'List all child contents (paginated)' })
   @ApiResponse({ status: 200, type: ChildContentSummaryResponseDto })
   async findAll(@Query() query: QueryChildContentDto) {
     const result = await this.childContentsService.findAll(query);
@@ -53,7 +54,7 @@ export class ChildContentsController {
   }
 
   @Get(':id')
-  @Permissions('child-contents:view')
+  @Public()
   @ApiOperation({ summary: 'Get a child content by id' })
   @ApiParam({ name: 'id', type: 'string', format: 'uuid' })
   @ApiResponse({ status: 200, type: ChildContentResponseDto })

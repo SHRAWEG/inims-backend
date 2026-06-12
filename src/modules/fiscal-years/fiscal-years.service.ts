@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { FiscalYear } from './entities/fiscal-year.entity';
 import { CreateFiscalYearDto } from './dto/create-fiscal-year.dto';
 import { UpdateFiscalYearDto } from './dto/update-fiscal-year.dto';
@@ -21,6 +21,7 @@ export class FiscalYearsService {
     @InjectRepository(FiscalYear)
     private readonly fiscalYearRepository: Repository<FiscalYear>,
     private readonly auditLogService: AuditLogService,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(dto: CreateFiscalYearDto): Promise<FiscalYearResponseDto> {
@@ -128,10 +129,57 @@ export class FiscalYearsService {
     });
   }
 
+  async setActive(id: string): Promise<FiscalYearResponseDto> {
+    const record = await this.fiscalYearRepository.findOne({ where: { id } });
+    if (!record) {
+      throw new EntityNotFoundException('FiscalYear', id);
+    }
+
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      // Set the currently active fiscal year(s) to inactive
+      await queryRunner.manager.update(
+        FiscalYear,
+        { isActive: true },
+        { isActive: false },
+      );
+
+      // Set the target fiscal year to active
+      await queryRunner.manager.update(FiscalYear, id, { isActive: true });
+
+      await queryRunner.commitTransaction();
+
+      const updated = await this.fiscalYearRepository.findOneOrFail({
+        where: { id },
+      });
+
+      await this.auditLogService.log({
+        action: AuditAction.UPDATE,
+        resource: 'fiscal_year',
+        resourceId: id,
+        after: sanitizeForAudit(updated),
+      });
+
+      return this.toResponse(updated);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      this.logger.error(`Failed to set fiscal year active: ${id}`, {
+        error: (error as Error).message,
+      });
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
   private toResponse(entity: FiscalYear): FiscalYearResponseDto {
     return {
       id: entity.id,
       year: entity.year,
+      dateInAd: entity.dateInAd,
       startDateAd: entity.startDateAd,
       endDateAd: entity.endDateAd,
       isActive: entity.isActive,

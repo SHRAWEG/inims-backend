@@ -26,6 +26,41 @@ export class MsnpIndicatorConfiguration extends BaseEntity {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
+  @Column({ name: 'data_collection_method', type: 'varchar', nullable: true })
+  dataCollectionMethod: string | null;
+
+  @Column({ name: 'responsible_authority', type: 'varchar', nullable: true })
+  responsibleAuthority: string | null;
+
+  @Column({ name: 'supporting_authority', type: 'varchar', nullable: true })
+  supportingAuthority: string | null;
+
+  @Column({ name: 'frequency', type: 'varchar', nullable: true })
+  frequency: string | null;
+
+  @Column({
+    name: 'report_preparation_and_utility',
+    type: 'text',
+    nullable: true,
+  })
+  reportPreparationAndUtility: string | null;
+
+  @Column({
+    name: 'dissemination_and_distribution',
+    type: 'text',
+    nullable: true,
+  })
+  disseminationAndDistribution: string | null;
+
+  @Column({ name: 'is_m_and_e_framework', type: 'boolean', default: false })
+  isMandEFramework: boolean;
+
+  @Column({ name: 'is_result_framework', type: 'boolean', default: false })
+  isResultFramework: boolean;
+
+  @Column({ name: 'base_year', type: 'varchar', nullable: true })
+  baseYear: string | null;
+
   @ManyToOne(() => MsnpIndicator)
   @JoinColumn({ name: 'indicator_id' })
   indicator: MsnpIndicator;

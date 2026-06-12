@@ -52,7 +52,7 @@ export class RolesService {
     return this.roleRepository.save(role);
   }
 
-  async findAll(filter?: RoleFilterDto): Promise<Role[]> {
+  async findAll(filter?: RoleFilterDto): Promise<[Role[], number]> {
     const where: FindOptionsWhere<Role> = {};
 
     if (filter) {
@@ -62,10 +62,15 @@ export class RolesService {
       }
     }
 
-    return this.roleRepository.find({
+    const page = filter?.page || 1;
+    const limit = filter?.limit || 20;
+
+    return this.roleRepository.findAndCount({
       where,
       relations: ['permissions'],
       order: { name: 'ASC' },
+      skip: (page - 1) * limit,
+      take: limit,
     });
   }
 

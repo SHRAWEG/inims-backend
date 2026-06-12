@@ -4,6 +4,7 @@ import { Repository, DataSource, QueryRunner, In } from 'typeorm';
 import { MsnpIndicatorData } from './entities/msnp-indicator-data.entity';
 import { MsnpIndicatorDisaggregationData } from './entities/msnp-indicator-disaggregation-data.entity';
 import { MsnpIndicatorConfiguration } from '../msnp-indicator-configurations/entities/msnp-indicator-configuration.entity';
+import { FiscalYear } from '../fiscal-years/entities/fiscal-year.entity';
 import {
   CreateMsnpIndicatorDataDto,
   DisaggregationDataInputDto,
@@ -110,6 +111,14 @@ export class MsnpIndicatorDataService {
     await queryRunner.startTransaction();
 
     try {
+      const fiscalYear = await queryRunner.manager.findOne(FiscalYear, {
+        where: { id: dto.fiscalYearId },
+      });
+      if (!fiscalYear?.isActive) {
+        throw new BusinessLogicException(
+          'Data entry is only permitted for the active fiscal year.',
+        );
+      }
       const config = await queryRunner.manager.findOne(
         MsnpIndicatorConfiguration,
         {
@@ -184,6 +193,14 @@ export class MsnpIndicatorDataService {
     await queryRunner.startTransaction();
 
     try {
+      const fiscalYear = await queryRunner.manager.findOne(FiscalYear, {
+        where: { id: dto.fiscalYearId },
+      });
+      if (!fiscalYear?.isActive) {
+        throw new BusinessLogicException(
+          'Data entry is only permitted for the active fiscal year.',
+        );
+      }
       const configIds = [
         ...new Set(dto.entries.map((e) => e.indicatorConfigId)),
       ];
@@ -428,6 +445,7 @@ export class MsnpIndicatorDataService {
       return {
         indicatorConfigId: config.id,
         indicatorId: config.indicatorId,
+        indicatorCode: config.indicator?.code,
         indicatorName: getLocalizedName(
           config.indicator?.name as unknown as Record<string, string>,
         ),
@@ -471,6 +489,14 @@ export class MsnpIndicatorDataService {
     await queryRunner.startTransaction();
 
     try {
+      const fiscalYear = await queryRunner.manager.findOne(FiscalYear, {
+        where: { id: existing.fiscalYearId },
+      });
+      if (!fiscalYear?.isActive) {
+        throw new BusinessLogicException(
+          'Data entry is only permitted for the active fiscal year.',
+        );
+      }
       const before = { ...existing };
 
       const updatedData = {

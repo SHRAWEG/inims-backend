@@ -89,6 +89,7 @@ export class ContentsService {
   async findBySlug(slug: string): Promise<ContentResponseDto> {
     const entity = await this.repository.findOne({
       where: { slug },
+      relations: ['children'],
     });
     if (!entity) {
       throw new EntityNotFoundException('Content', slug);
@@ -178,6 +179,13 @@ export class ContentsService {
       title: entity.title,
       slug: entity.slug,
       htmlContent: entity.htmlContent,
+      children: entity.children?.map((child) => ({
+        id: child.id,
+        title: child.title,
+        slug: child.slug,
+        createdAt: child.createdAt,
+        updatedAt: child.updatedAt,
+      })),
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };

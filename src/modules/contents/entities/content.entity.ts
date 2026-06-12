@@ -1,5 +1,6 @@
-import { Entity, Column, Index } from 'typeorm';
+import { Entity, Column, Index, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
+import { ChildContent } from '../../child-contents/entities/child-content.entity';
 
 @Entity('contents')
 export class Content extends BaseEntity {
@@ -13,4 +14,7 @@ export class Content extends BaseEntity {
 
   @Column({ name: 'html_content', type: 'text' })
   htmlContent: string;
+
+  @OneToMany(() => ChildContent, (child) => child.parent)
+  children: ChildContent[];
 }

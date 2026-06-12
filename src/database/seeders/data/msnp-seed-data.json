@@ -1,0 +1,2052 @@
+{
+  "sectors": [
+    {
+      "name": {
+        "en": "Health",
+        "ne": "स्वास्थ्य"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Agriculture and Livestock",
+        "ne": "कृषि र पशुपन्छी"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Water supply, sanitation and hygiene",
+        "ne": "खानेपानी, सरसफाइ र स्वच्छता "
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Women and Children",
+        "ne": "महिला तथा बालबालिका"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Education",
+        "ne": "शिक्षा"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Government management",
+        "ne": "शासकीय प्रबन्ध "
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "social behavior change",
+        "ne": "सामाजिक व्यवहार परिवर्तन"
+      },
+      "isActive": true
+    }
+  ],
+  "types": [
+    {
+      "name": {
+        "en": "Impact",
+        "ne": "प्रभाव"
+      },
+      "description": {
+        "en": "Improving the nutritional status of the human life cycle by ensuring the availability and accessibility of quality nutrition services.",
+        "ne": "गुणस्तरीय पोषण सेवाको उपलब्धता र पहुँच सुनिश्चतता गर्दै मानव जीवनचक्रमा पोषणको अवस्था सुधार गर्ने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Outcome 1",
+        "ne": "उपलब्धि १"
+      },
+      "description": {
+        "en": "Access to quality nutrition special services and equitable consumption will be improved",
+        "ne": "गुणस्तरीय पोषण विशेष सेवामा पहुँच र समतामूलक उपभोगमा सुधार भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Outcome 2",
+        "ne": "उपलब्धि २"
+      },
+      "description": {
+        "en": "Access to quality nutrition sensitive services and equitable consumption will be improved and adequate consumption of safe, healthy and nutritious food will be achieved.",
+        "ne": "गुणस्तरीय पोषण संवेदनशील सेवामा पहुँच र समतामूलक उपभोगमा सुधार भएको हुने र सुरक्षित, स्वस्थ र पोसिलो खानाको पर्याप्त उपभोग भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Outcome 3",
+        "ne": "उपलब्धि ३"
+      },
+      "description": {
+        "en": "The nutrition-friendly system will be institutionalized in three levels of government",
+        "ne": "तीन तहका सरकारमा पोषणमैत्री पद्धति संस्थागत भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Outcome 4",
+        "ne": "उपलब्धि ४"
+      },
+      "description": {
+        "en": "Positive knowledge, behavior and practices related to health, good nutrition, drinking water, sanitation and hygiene will be improved and harmful practices will be eliminated.",
+        "ne": "स्वास्थ्य, असल पोषणका साथै खानेपानी, सरसफाइ तथा स्वच्छतासम्बन्धी सकारात्मक ज्ञान, व्यवहार र अभ्यासमा सुधार भइ हानिकारक अभ्यासको उन्मुलन भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 1",
+        "ne": "प्रतिफल १.१"
+      },
+      "description": {
+        "en": "Maternal, infant, childhood and adolescent eating practices will be improved",
+        "ne": "मातृ, शिशु, बाल्यावस्था र किशोरावस्थामा खानपानको अभ्यासमा सुधार भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 2",
+        "ne": "प्रतिफल १.२"
+      },
+      "description": {
+        "en": "Increased access to health and nutrition services in maternal, infant, childhood, adolescence and old age",
+        "ne": "मातृ, शिशु, बाल्यावस्था, किशोरावस्था र वृद्धावस्थामा स्वास्थ्य तथा पोषण सेवाको पहुँचमा वृद्धि भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 3",
+        "ne": "प्रतिफल १.३"
+      },
+      "description": {
+        "en": "Prevention, control and management of all forms of malnutrition will be improved",
+        "ne": "सबै प्रकारका कुपोषणको रोकथाम, नियन्त्रण र व्यवस्थापनमा सुधार भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 4",
+        "ne": "प्रतिफल १.४"
+      },
+      "description": {
+        "en": "The resilience of governmental, non-governmental, private and community-based organizations will be strengthened to address the nutritional needs during disaster-induced crises.",
+        "ne": " विपद् सिर्जित सङ्कटको समयमा हुने पोषणको आवश्यकतालाई सम्बोधन गर्न सरकारी, गैरसरकारी, निजी तथा समुदायमा आधारित सङ्घ संस्थाको उत्थानशीलता सुदृढ भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 5",
+        "ne": "प्रतिफल २.१"
+      },
+      "description": {
+        "en": "The availability, equitable access and consumption of nutritionally free, healthy and safe food items will be improved in every household throughout the year.",
+        "ne": "हरेक घर परिवारमा वर्षभरि पोषणमुक्त, स्वस्थ तथा सुरक्षित खाद्यवस्तुको उपलब्धता, समतामूलक पहुँच तथा उपभोगमा सुधार भएको हुने |"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 6",
+        "ne": "प्रतिफल २.२"
+      },
+      "description": {
+        "en": "Sustainability in nutrition and food security would have increased.",
+        "ne": "पोषण तथा खाद्य सुरक्षामा उत्थानशीलता वृद्धि भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 7",
+        "ne": "प्रतिफल २.३"
+      },
+      "description": {
+        "en": "Systematically increased access to and use of safe drinking water.",
+        "ne": "व्यवस्थित रूपमा सुरक्षित खानेपानीको पहुँच र उपयोगमा वृद्धि भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 8",
+        "ne": "प्रतिफल २.४"
+      },
+      "description": {
+        "en": "Systematically increased access to and use of safe sanitation services.",
+        "ne": "व्यवस्थित रूपमा सुरक्षित सरसफाइ सेवाको पहुँच र उपयोगमा वृद्धि भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 9",
+        "ne": "प्रतिफल २.५"
+      },
+      "description": {
+        "en": "Empowerment of women and girls through income earning activities.",
+        "ne": "आय आर्जनका क्रियाकलापमार्फत महिला तथा किशोरीको सशक्तीकरण भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 10",
+        "ne": "प्रतिफल २.६"
+      },
+      "description": {
+        "en": "The scope of the social security scheme would have been expanded.",
+        "ne": "सामाजिक सरुक्षा योजनाको दायरामा विस्तार भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 11",
+        "ne": "प्रतिफल २.७"
+      },
+      "description": {
+        "en": "Improved mental and psychosocial health.",
+        "ne": "मानसिक तथा मनोसामाजिक स्वास्थ्यमा सुधार भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 12",
+        "ne": "प्रतिफल २.८"
+      },
+      "description": {
+        "en": "Children's school participation and learning outcomes will improve.",
+        "ne": "बालबालिकाको विद्यालयमा सहभागिता र सिकाइको नतिजामा सुधार भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 12",
+        "ne": "प्रतिफल २.९"
+      },
+      "description": {
+        "en": "Increased access to early childhood development and education.",
+        "ne": "प्रारम्भिक बालविकास र शिक्षाको पहुँचमा वृद्धि भएको हुने।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 13",
+        "ne": "प्रतिफल ३.१"
+      },
+      "description": {
+        "en": "The government structure related to nutrition should be active at all levels.",
+        "ne": "सबै तहमा पोषणसम्बन्धी शासकीय संरचना क्रियाशील भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 14",
+        "ne": "प्रतिफल ३.२"
+      },
+      "description": {
+        "en": "Monitoring and evaluation system should be strengthened at all levels",
+        "ne": "सबै तहमा अनुगमन तथा मूल्याङ्कन प्रणाली सुदृढ भएको हुने"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 15",
+        "ne": "प्रतिफल ३.३"
+      },
+      "description": {
+        "en": "The capacity of the federal, state and local governments to provide nutrition-specific and nutrition-sensitive services would have been enhanced.",
+        "ne": "पोषण विशेष र पोषण संवेदनशील सेवा प्रवाह गर्न सङ्घीय, प्रदेश र स्थानीय सरकारको क्षमता अभिवृद्धि भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 16",
+        "ne": "प्रतिफल ३.४"
+      },
+      "description": {
+        "en": "The capacity of the federal, state and local governments to provide nutrition-specific and nutrition-sensitive services would have been enhanced.",
+        "ne": "पोषण विशेष र पोषण संवेदनशील सेवा प्रवाह गर्न सङ्घीय, प्रदेश र स्थानीय सरकारको क्षमता अभिवृद्धि भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 17",
+        "ne": "प्रतिफल ४.१"
+      },
+      "description": {
+        "en": "School-age children's nutritional education, behavior and water and sanitation practices would have improved.",
+        "ne": "विद्यालय जाने उमेरका बालबालिकाको पोषण शिक्षा, व्यवहार र खानेपानी तथा सरसफाइ अभ्यासमा सुधार भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 18",
+        "ne": "प्रतिफल ४.२"
+      },
+      "description": {
+        "en": "Mothers, children under five and caregivers and service providers will have increased knowledge about good food, nutrition and drinking water and sanitation practices.",
+        "ne": " आमा, पाँच वर्षमुनिका बालबालिका तथा हेरचाहकर्ता र सेवा प्रदायकमा असल खानपान, पोषण र खानेपानी तथा सरसफाइका अभ्यास सम्बन्धमा ज्ञान वृद्धि भएको हुने ।"
+      },
+      "isActive": true
+    },
+    {
+      "name": {
+        "en": "Output 19",
+        "ne": "प्रतिफल ४.३"
+      },
+      "description": {
+        "en": "Women and girls will be empowered to prevent harmful social practices.",
+        "ne": "हानिकारक सामाजिक अभ्यासको रोकथामको लागि महिला तथा किशोरी सशक्त भएको हुने ।"
+      },
+      "isActive": true
+    }
+  ],
+  "indicators": [
+    {
+      "code": "1",
+      "name": {
+        "en": "Percent stunting (height for age) in children under five years of age (D.V.L. 2.2.1)",
+        "ne": "पाँच वर्षमुनिका बालबालिकामा रहेको पुड्कोपन (उमेरको अनुसारको उचाई) को प्रतिशत (दि.वि.ल. २.२.१)"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "2",
+      "name": {
+        "en": "Percent stunting (weight for height) in children under five years of age (D.V.L. 2.2.2)",
+        "ne": "पाँच वर्षमुनिका बालबालिकामा रहेको ख्याउटेपन (उचाइ अनुसारको तौल) को प्रतिशत (दि.वि.ल. २.२.२)"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "3",
+      "name": {
+        "en": "Percentage of babies born below average weight",
+        "ne": "औसत भन्दा कम तौलमा जन्मेका बच्चाको प्रतिशत"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "4",
+      "name": {
+        "en": "Percent of underweight (weight-for-age) among children under five years of age (DVI 2.2.2.1)",
+        "ne": "पाँच वर्षमुनिका बालबालिकामा रहेको कम तौल (उमेर अनुसारको तौल) को प्रतिशत (दि.वि.ल. २.२.२.१)"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "5",
+      "name": {
+        "en": "Percent of overweight/obesity among children under five years of age",
+        "ne": "पाँच वर्षमुनिका बालबालिकामा रहेको अधिक तौल/मोटोपन को प्रतिशत"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "6",
+      "name": {
+        "en": "Percentage of overweight/obesity among adolescents (10 to 19 years).",
+        "ne": "किशोर/किशोरी (१० देखि १९ वर्ष) मा रहेको अधिक तौल/मोटोपनको प्रतिशत"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "7",
+      "name": {
+        "en": "Percent of Overweight/Obesity in the 15- to 69-year-old age group",
+        "ne": "१५ देखि ६९ वर्षको उमेर समूहमा अधिक तौल/मोटोपना को प्रतिशत"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "8",
+      "name": {
+        "en": "Below average V.M.I. Percentage of women of reproductive age with BMI (less than 18.5).",
+        "ne": "औसतभन्दा कम वि.एम.आई. (BMI) (१८.५ भन्दा कम) भएका प्रजनन उमेर समूहका महिलाको प्रतिशत"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "9",
+      "name": {
+        "en": "Anemia status in children under five years of age (percentage) (DVI 2.2.5)",
+        "ne": "पाँच वर्षमुनिका बालबालिकामा रहेको रक्त अल्पताको स्थिति (प्रतिशत) (दि.वि.ल. २.२.५)"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "10",
+      "name": {
+        "en": "Percentage of Anemia in Women of Reproductive Age (DVI 2.2.4)",
+        "ne": "प्रजनन उमेर समूहका महिलामा हुने रक्तअल्पताको प्रतिशत (दि.वि.ल. २.२.४)"
+      },
+      "typeNp": "प्रभाव",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "11",
+      "name": {
+        "en": "Percentage of children in the 6- to 23-month age group consuming the Minimum Acceptable Diet",
+        "ne": "न्यूनतम स्वीकार्य आहार उपभोग गर्ने ६ देखि २३ महिना उमेर समूहका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "12",
+      "name": {
+        "en": "Percentage of 10- to 19-year-old adolescents consuming the least varied diet",
+        "ne": "न्यूनतम विविधतायुक्त आहार उपभोग गर्ने १० देखि १९ वर्ष उमेरका किशोरकिशोरीको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "13",
+      "name": {
+        "en": "Minimal dietary diversity among women of reproductive age (15–49 years).",
+        "ne": "प्रजनन उमेर (१५-४९ वर्ष) का महिलाहरूमा न्यूनतम आहार विविधता"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "14",
+      "name": {
+        "en": "Percentage of infants who were exclusively breastfed from birth to 6 months",
+        "ne": "जन्मेदेखि ६ महिनासम्म पूर्ण स्तनपान गरेका शिशुको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "15",
+      "name": {
+        "en": "Average number of times growth was monitored for children aged 0-23 months registered for growth monitoring",
+        "ne": "वृद्धि अनुगमनका लागि दर्ता भएका ०-२३ महिना उमेरका बालबालिकाको औसत वृद्धि अनुगमन गरिएको पटक"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "16",
+      "name": {
+        "en": "Percentage of pregnant women taking IFA pills for 180 days",
+        "ne": "१८० दिन आई.एफ.ए चक्की सेवन गरेका गर्भवती महिलाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "17",
+      "name": {
+        "en": "Percentage of postpartum women receiving 45-day IFA pills",
+        "ne": "४५ दिन आई.एफ.ए चक्की प्राप्त गरेका सुत्केरी महिलाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "18",
+      "name": {
+        "en": "Percentage of 10- to 19-year-old girls using IFA pills for 26 days a year",
+        "ne": "१० देखि १९ वर्षका किशोरीमध्ये वार्षिक २६ दिनसम्म आई.एफ.ए चक्की सेवन गरेका किशोरीको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "19",
+      "name": {
+        "en": "Percentage of children under five years of age with diarrhea treated with zinc tablets and vital water",
+        "ne": "झाडापखाला लागेका पाँच वर्षभन्दा मुनिका बालबालिकामध्ये जिङ्क चक्की र जीवनजल प्रयोग गरी निको भएको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "20",
+      "name": {
+        "en": "Percentage of 6- to 23-month-old children receiving a three-phase multinutrient supplement (BalVita).",
+        "ne": "तीन चरण बहुसूक्ष्मपोषक तत्त्व (बालभिटा) प्राप्त गरेका ६ देखि २३ महिनाका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "21",
+      "name": {
+        "en": "Percentage of children under five with diarrhea in the past 2 weeks",
+        "ne": "पाँच वर्षमुनिका बालबालिकामध्ये विगत २ हप्ताभित्र झाडापखाला लागेको बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि १",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "22",
+      "name": {
+        "en": "Percentage of population consuming less than minimum amount of calories",
+        "ne": "क्यालोरीको न्यूनतम मात्राभन्दाकम उपभोग गर्ने जनसङ्ख्याको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "23",
+      "name": {
+        "en": "Worldwide Food Security Indicator (Score) (DVIL 2.1.2.3)",
+        "ne": "विश्वव्यापी खाद्य सुरक्षा सूचक (प्राप्तांक) (दि.वि.ल. २.१.२.३)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "24",
+      "name": {
+        "en": "Percentage of households with food security",
+        "ne": "खाद्य सुरक्षा भएका घरधुरीको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "25",
+      "name": {
+        "en": "Use safe drinking water\nPercent of Population (D.V.L. 6.1.1.1)",
+        "ne": "सुरक्षित खानेपानी प्रयोग गर्ने\nजनसङ्ख्या को प्रति शत (दि.वि .ल. ६.१.१.१)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "26",
+      "name": {
+        "en": "Population using improved sanitation facilities (shared with others\n(Do not do) ratio (D.V.L.6.2.1.1)",
+        "ne": "सुधारिएका सरसफाइ सुविध ा प्रयोग गर्ने जनसङ्ख्या (अरूसँग साझा\nगर्नु नपर्ने) को अनुपात (दि.वि .ल.६.२.१.१)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "27",
+      "name": {
+        "en": "Gender Empowerment Index (GDI 5.1.1.3)",
+        "ne": "लैङ्गिक सशक्तीकरण सूचकाङ्क (दि.वि.ल. ५.१.१.३)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "28",
+      "name": {
+        "en": "Proportion of women aged 20-24 who are married or cohabiting before the age of 18 (DVIL 5.3.1.1)",
+        "ne": "१८ वर्षको उमेरभन्दा पहिला विवाह गरी वा नगरी सँगै बसेका २०-२४ वर्ष उमेर समूहका महिलाको अनुपात (दि.वि.ल. ५.३.१.१)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "29",
+      "name": {
+        "en": "Proportion of women aged 15-49 who have experienced gender-based violence (physical abuse) (DVI 5.2.2.1)",
+        "ne": "लैङ्गिक हिंसा (शारीरिक दुर्व्यवहार) भोगेका १५-४९ वर्षका महिलाको अनुपात (दि.वि.ल. ५.२.२.१)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "30",
+      "name": {
+        "en": "Total Enrollment Rate in Early Childhood Education and Development/Pre-Primary Schools (D.V.L. 4.2.2.2)",
+        "ne": "प्रारम्भिक बाल शिक्षा र विकास/पूर्वप्राथमिक विद्यालयमा कुल भर्नादर (दि.वि.ल. ४.२.२.२)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "31",
+      "name": {
+        "en": "Basic Education Completion Rate (D.V.L. 4.1.1.3)",
+        "ne": "आधारभूत शिक्षा पूरा गर्नेको दर (दि.वि.ल. ४.१.१.३)"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "32",
+      "name": {
+        "en": "Percentage of children aged five to 12 who are out of basic school",
+        "ne": "पाँचदेखि १२ वर्षसम्मका आधारभूत विद्यालय बाहिर रहेका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि २",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "33",
+      "name": {
+        "en": "Percentage of rural municipalities/municipalities that approve integrated plans that include multi-sectoral nutrition programs based on the recommendation of the Local Level Nutrition and Food Security Steering Committee",
+        "ne": "स्थानीय तह पोषण तथा खाद्य सुरक्षा निर्देशक समितिको सिफारिसको आधारमा बहुक्षेत्रीय पोषण कार्यक्रम समावेश भएको एकीकृत योजनाको अनुमोदन गर्ने गाउँपालिका/नगरपालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि ३",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "34",
+      "name": {
+        "en": "Budget (N.R.) to be increased every year from the local level for the implementation of multi-sectoral nutrition plan (percentage)",
+        "ne": "बहुक्षेत्रीय पोषण योजना कार्यान्वयनको लागि स्थानीय तहबाट प्रत्येक वर्ष बजेट (ने.रु.) वृद्धि भएको हुने (प्रतिशत)"
+      },
+      "typeNp": "उपलब्धि ३",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "35",
+      "name": {
+        "en": "Percentage of villages/municipalities to allocate 15% of the social sector program budget for implementation of multi-sectoral nutrition plans",
+        "ne": "बहुक्षेत्रीय पोषण योजना कार्यान्वयनको लागि सामाजिक क्षेत्र कार्यक्रम बजेटको १५% छुट्याउने गाउँ/नगरपालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि ३",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "36",
+      "name": {
+        "en": "Percentage of villages/municipalities declared nutrition friendly",
+        "ne": "पोषणमैत्री घोषणा गरिएका गाउँ/नगरपालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि ३",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "37",
+      "name": {
+        "en": "Population Practicing Appropriate Handwashing in Risk Situations (Percentage)",
+        "ne": "जोखिमपूर्ण अवस्थामा उपयुक्त तरिकाले हातधुने अभ्यास गर्ने जनसङ्ख्या (प्रतिशत)"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "38",
+      "name": {
+        "en": "Mothers and caregivers of children under five practicing appropriate handwashing in risky situations (percentage)",
+        "ne": "जोखिमपूर्ण अवस्थामा उपयुक्त तरिकाले हात धुने अभ्यास गर्ने पाँच वर्ष मुनीका बालबालिकाको आमा तथा हेरचाहकर्ता (प्रतिशत)"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "39",
+      "name": {
+        "en": "Percentage of waterborne/foodborne diseases among children",
+        "ne": "बालबालिका हुने रोगमध्ये पानीजन्य/खानाजन्य रोगको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "40",
+      "name": {
+        "en": "Percentage of 6- to 23-month-old breastfed and non-breastfed children who consumed a minimally varied diet on the previous day",
+        "ne": "६ देखि २३ महिना सम्मका स्तनपान गर्ने र नगर्ने बालबालिकामध्ये अघिल्लो दिन न्यूनतम विविधतायुक्त आहार उपभोग गरेका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "41",
+      "name": {
+        "en": "Married or unmarried cohabiting women and men aged 15-19 years (percentage)",
+        "ne": "विवाह गरी वा नगरी सँगै बसेका १५-१९ वर्ष उमेर समूहका महिला र पुरूष (प्रतिशत)"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "42",
+      "name": {
+        "en": "Proportion of women aged 20-24 who are married or cohabiting before age 18 (DVI)",
+        "ne": "१८ वर्षको उमेरभन्दा पहिला विवाह गरी वा नगरी सँगै बसेका २०-२४ वर्ष उमेर समूहका महिलाको अनुपात (दि.वि.ल.)"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "43",
+      "name": {
+        "en": "Women and adolescents aged 15-49 years who used hygiene products during menstruation during the last 12 months at home and had access to a separate place to wash hands and change hygiene products (percentage)",
+        "ne": "पछिल्लो १२ महिनाको अवधिमा घरमा भएको बेला महिनावारी हुँदा स्वच्छतासम्बन्धी सामाग्री प्रयोग गरेका तथा हात धुन र स्वच्छतासम्बन्धी सामाग्री फेर्ने छुट्टै ठाउँको उपलब्धता भएका १५-४९ वर्षका महिला तथा किशोरी (प्रतिशत)"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "44",
+      "name": {
+        "en": "Women and Adolescents Living in Chhaupadi/Chapro/Goth During Menstruation in Last 12 Months (Percentage)",
+        "ne": "पछिल्लो १२ महिनामा महिनावारी भएको समयमा छाउपडी/छाप्रो/गोठमा बस्ने गरेका महिला तथा किशोरी (प्रतिशत)"
+      },
+      "typeNp": "उपलब्धि ४",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "45",
+      "name": {
+        "en": "Newborns initiated breastfeeding within one hour of birth (per cent)",
+        "ne": "जन्मेको एक घण्टाभित्र स्तनपान सुरु गर्ने नवजात शिशु (प्रति शत)"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "46",
+      "name": {
+        "en": "Children aged 12-23 months who were breastfed on the day before the survey (percentage)",
+        "ne": "सर् वेक्षणको अघिल्लो दिनमा स्तनपान गराइएका १२-२३ महिनाका बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "47",
+      "name": {
+        "en": "Proportion of 6- to 8-month-old infants fed solid or soft foods and registered for growth monitoring",
+        "ne": "ठोस वा नरम खाना खुवाइने गरिएका तथा वृद्धि अनुगमनका लागि दर्ता भएका ६ देखि ८ महिनाका शिशुको अनुपात"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "48",
+      "name": {
+        "en": "Percentage of children aged 6 to 23 months who were fed foods and beverages prepared from at least 5 of the 8 food groups on the day before the survey",
+        "ne": "सर्वेक्षणको अघिल्लो दिनमा ८ मध्ये कम्तीमा ५ वटा खाद्य समूहबाट तयार गरिएको खाना तथा पेय पदार्थ खुवाईएका ६ देखि २३ महिना सम्मका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "49",
+      "name": {
+        "en": "Children aged 6 to 23 months who were fed unhealthy food on the day before the survey (percentage)",
+        "ne": "सर्वेक्षणको अघिल्लो दिनमा अस्वस्थ्यकर खाना खुवाईएका ६ देखि २३ महिना उमेरका बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "50",
+      "name": {
+        "en": "Children from birth to 23 months of age who are bottle fed formula (percentage)",
+        "ne": "बोतलबाट फर्मूला दुध खुवाइएका जन्मेदेखि २३ महिना उमेर समूहका बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "51",
+      "name": {
+        "en": "Proportion of health institutions that have initiated maternal-child friendly health services",
+        "ne": "मातृ-शिशुमैत्री स्वास्थ्य सेवाको पहल गरेका स्वास्थ्य संस्था को अनुपात"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "52",
+      "name": {
+        "en": "More breastfeeding and appropriate feeding than usual during diarrhoea\nPercentage of children from birth to 59 months who ate",
+        "ne": "झाडापखाला लागेको समयमा सामान्य अवस्थामा भन्दा थप स्तनपान र उपयुक्त खाना\nखाने गरेका जन्मे देखि ५९ महिनाका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "53",
+      "name": {
+        "en": "Number of health facilities providing comprehensive breastfeeding management services",
+        "ne": "बृहत् स्तनपान व्यवस्थापन सम्बन्धी सेवा उपलब्ध भएका स्वास्थ्य संस्थाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल १.१",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "54",
+      "name": {
+        "en": "Children aged 6-59 months receiving vitamin A in the last 6 months (percentage)",
+        "ne": "पछिल्लो ६ महिनामा भिटामिन ए प्राप्त गरेका ६-५९ महिना का बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "55",
+      "name": {
+        "en": "Percentage of children aged 12-59 months who received an anti-worm pill in the past 6 months",
+        "ne": "विगत ६ महिनामा जुकाको चक्की प्राप्त गरेका १२-५९ महिनाका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "56",
+      "name": {
+        "en": "School-Age Children Taking Anti-Zuka Medicine (Percentage)",
+        "ne": "जुकाको औषधी खाने गरेका विद्यालय उमेरका बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "57",
+      "name": {
+        "en": "Pregnant women taking anti-worm medication (percentage)",
+        "ne": "जुकाको औषधी खाने गरेका गर्भवती महिला (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "58",
+      "name": {
+        "en": "Households consuming iodized salt (percentage)",
+        "ne": "आयोडिनयुक्त नुन उपभोग गर्ने घरधुरी (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "59",
+      "name": {
+        "en": "Children aged 6-23 months consuming multi-micronutrient supplements (BalVita) (percentage)",
+        "ne": "बहुसूक्ष्मपोषक तत्त्वको समिश्रण (बालभिटा) उपभोग गर्ने ६-२३ महिनाका बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "60",
+      "name": {
+        "en": "Average salt intake per day (in grams) (based on spot urine test)",
+        "ne": "नुनको औसत सेवन प्रति दिन (ग्राममा) (स्थलगत पिसाब परिक्षणको आधारमा)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "61",
+      "name": {
+        "en": "Average age at which women in the reproductive age group (15–49 years) have their first child",
+        "ne": "प्रजनन उमेर (१५–४९ वर्ष) समूहका महिलले पहिलो बच्चा जन्माउने औसत उमेर"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "62",
+      "name": {
+        "en": "Number of women who underwent standard pregnancy tests (percentage)",
+        "ne": "मापदण्डअनुसार गर्भजाँच गरेका महिला (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "63",
+      "name": {
+        "en": "Percentage of deliveries in health facilities",
+        "ne": "स्वास्थ्य संस्थामा बच्चा जन्माउने प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "64",
+      "name": {
+        "en": "Percentage of women receiving postnatal check-up for urgent newborn care and services within 24 hours of delivery",
+        "ne": "सुत्केरी भएको २४ घण्टाभित्र नवजात शिशुको अत्यावश्यक हेरचाह तथा सेवाको लागि प्रसवोत्तर जाँच गर्ने महिलाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "65",
+      "name": {
+        "en": "Percentage of women who had 3 postpartum check-ups according to criteria",
+        "ne": "मापदण्डअनुसार सुत्केरीपछि ३ पटक जाँच गरेका महिलाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "66",
+      "name": {
+        "en": "Percentage of women of reproductive age (15-49 years) using modern means of family planning",
+        "ne": "परिवार योजनाका आधुनिक साधन प्रयोग गरिरहेका प्रजनन उमेरका (१५-४९ वर्ष) महिलाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "67",
+      "name": {
+        "en": "Number of health institutions providing noise-friendly services",
+        "ne": "कि शोरीमैत्री सेवा प्रदान गर्ने स्वा स्थ्य संस्था को सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "68",
+      "name": {
+        "en": "Percentage of children fully vaccinated within 1 year of birth (more)",
+        "ne": "जन्मेको १ वर्ष भित्र पूर्ण खोप प्राप्त गरेका बालबालिकाको प्रतिशत (थप)"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "69",
+      "name": {
+        "en": "Number of health facilities providing nutritional services to the elderly population",
+        "ne": "वृद्धजनसङ्ख्यालाई पोषण सेवा प्रदान गर्ने स्वास्थ्य संस्थाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल १.२",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "70",
+      "name": {
+        "en": "Number of Malnourished Children Enrolled in Deaf Treatment Programs (000)",
+        "ne": "वहिरङ्ग उपचारात्मक कार्यक्रममा भर्ना भएका कुपोषित बालबालिकाको सङ्ख्या (000)"
+      },
+      "typeNp": "प्रतिफल १.३",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "71",
+      "name": {
+        "en": "Children aged 0 to 59 months screened for moderate acute malnutrition (percentage)",
+        "ne": "मध्यम शिघ्र कुपोषणको लागि जाँच गरिएका ० देखि ५९ महिनाका बालबालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.३",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "72",
+      "name": {
+        "en": "Number of Nutrition Friendly Health Institutions",
+        "ne": "पोषणमैत्री स्वास्थ्य संस्थाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल १.३",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "73",
+      "name": {
+        "en": "Local governments with preparedness and contingency plans for emergency nutrition services (percentage)",
+        "ne": "आपतकालीन अवस्थामा पोषणसम्बन्धी सेवाको लागि पूर्वतयारी तथा आकस्मिक योजना भएका स्थानीय सरकार (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.४",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "74",
+      "name": {
+        "en": "Number of health and nutrition clusters at the state level for preparedness and response to emergency nutrition services",
+        "ne": "प्रदेश तहमा आपतकालीन अवस्था पोषणसम्बन्धी सेवाको लागि तयारी र प्रतिक्रियाका लागि रहेका स्वास्थ्य तथा पोषण क्लस्टरको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल १.४",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "75",
+      "name": {
+        "en": "Villages/Municipalities that have stockpiled sufficient food items needed to manage humanitarian crises (percentage)",
+        "ne": "मानवीय सङ्कटको व्यवस्थापन गर्न आवश्यक पर्ने पर्याप्त पोषण सामाग्रीको भण्डारण गरेका गाउँ/नगरपालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल १.४",
+      "sectorNp": "स्वास्थ्य",
+      "isActive": true
+    },
+    {
+      "code": "76",
+      "name": {
+        "en": "Increase in nutritious food produced from crop and animal sources",
+        "ne": "बाली तथा पशुपन्छी स्रोतबाट उत्पादन हुने पोषणयुक्त खाद्यान्नमा वृद्धि"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "77",
+      "name": {
+        "en": "Grain production (1,000 metric tons)",
+        "ne": "अन्न उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "78",
+      "name": {
+        "en": "Pulses Production (1,000 MT)",
+        "ne": "दाल उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "79",
+      "name": {
+        "en": "Vegetable production (1,000 metric tons)",
+        "ne": "तरकारी उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "80",
+      "name": {
+        "en": "Potato Production (1,000 MT)",
+        "ne": "आलु उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "81",
+      "name": {
+        "en": "Fruit Production (1,000 MT)",
+        "ne": "फलफूल उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "82",
+      "name": {
+        "en": "Milk production (1,000 metric tons)",
+        "ne": "दुध उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "83",
+      "name": {
+        "en": "Egg production (1 crore)",
+        "ne": "अण्डा उत्पादन (१ करोड)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "84",
+      "name": {
+        "en": "Fish production (1,000 metric tons)",
+        "ne": "माछा उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "85",
+      "name": {
+        "en": "Meat production (1,000 metric tons)",
+        "ne": "मासु उत्पादन (१,000 मेट्रिक टन)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "86",
+      "name": {
+        "en": "Per capita food grain production (kg) (D.V.L., 2.1.2.2.)",
+        "ne": "प्रतिव्यक्ति खाद्यान्न उत्पादन (के.जी.) (दि.वि.ल., २.१.२.२.)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "87",
+      "name": {
+        "en": "Number of biofortified crops",
+        "ne": "जैविक सुदृढ बालीको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "88",
+      "name": {
+        "en": "Industrially produced nutrient-enhanced foods (foodfortification) (food-based)",
+        "ne": "औद्योगिक स्तरमा उत्त्पादित पौष्टिक तत्त्वस्तरोन्नति गरिएको खाद्य पदार्थ (फुडफोर्टिफिकेसन) (खाद्यान्नको आधारमा)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "89",
+      "name": {
+        "en": "Proportion of safe pesticide consumption [Ingredient (AI) g/ha].",
+        "ne": "सुरक्षित कीटनाशकको खपत [समाग्री (ए.आई) ग्राम/हेक्टर] को अनुपात"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "90",
+      "name": {
+        "en": "Number of farmers trained through Krishak Poshan School",
+        "ne": "कृषक पोषण पाठशालामार्फत प्रशिक्षित किसानको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "91",
+      "name": {
+        "en": "Percentage of cultivated land with year-round irrigation facilities (D.V.L. 2.4.1.3.)",
+        "ne": "खेतीभएका जमिनमध्ये वर्षैभरि सिँचाइ सुविधा उपलब्ध भएको जमिनको प्रतिशत (दि.वि.ल. २.४.१.३.)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "92",
+      "name": {
+        "en": "Amount of organic matter in the soil (percentage) of the cultivated land (D.V.L. 2.4.1.4.)",
+        "ne": "बाली लगाइरहेको जमिन मध्ये माटोमा प्राङ्गारिक पदार्थको मात्रा (प्रतिशत) (दि.वि.ल. २.४.१.४.)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "93",
+      "name": {
+        "en": "Number of food market inspections and monitoring",
+        "ne": "खाद्य बजार निरीक्षण र अनुगमनको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "94",
+      "name": {
+        "en": "Percentage of population that spends more than two-thirds of total consumption on food (D.V.L. 2.1.2.1)",
+        "ne": "कुल उपभोगको दुई-तिहाइभन्दा बढी खानामा खर्च गर्ने जनसङ्ख्याको प्रतिशत (दि.वि.ल. २.१.२.१)"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "95",
+      "name": {
+        "en": "Number of farms implementing good agricultural practices",
+        "ne": "असल कृषि अभ्यास लागु गरिएका फार्मको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "96",
+      "name": {
+        "en": "Number of food industries implementing good manufacturing practices",
+        "ne": "असल उत्पादन अभ्यास लागु भएको खाद्य उद्योगको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "97",
+      "name": {
+        "en": "Number of farms implementing good veterinary practices and hygiene practices",
+        "ne": "असल पशु चिकित्सा अभ्यास र सरसफाइ अभ्यास लागु गर्ने फार्मको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.१",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "98",
+      "name": {
+        "en": "Number of food banks in food-risk and food-insecure areas",
+        "ne": "खाद्य जोखिम तथा खाद्य–असुरक्षा भएका क्षेत्रमा खाद्य बैङ्कको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.२",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "99",
+      "name": {
+        "en": "Number of Community Seedbanks (DVI 2.5.2.4)",
+        "ne": "सामुदायिक बीउबैङ्कको सङ्ख्या (दि.वि.ल. २.५.२.४)"
+      },
+      "typeNp": "प्रतिफल २.२",
+      "sectorNp": "कृषि र पशुपन्छी",
+      "isActive": true
+    },
+    {
+      "code": "100",
+      "name": {
+        "en": "Households using improved water sources (percentage)",
+        "ne": "सुधारिएको खानेपानीको स्रोत प्रयोग गर्ने घरधुरी (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल २.३",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "101",
+      "name": {
+        "en": "Households with access to piped water (percentage) (D.V.L. 6.1.1.2)",
+        "ne": "पाइपबाट वितरण गरिएको पानीमा पहुँच भएका घरधुरी (प्रतिशत) (दि.वि.ल. ६.१.१.२)"
+      },
+      "typeNp": "प्रतिफल २.३",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "102",
+      "name": {
+        "en": "E-coli risk level in drinking water used by households (households with 1 CFU per 100 milliliters or less (percentage) (DVIL 6.1.1.4)",
+        "ne": "घरपरिवारले प्रयोग गर्ने खानेपानीमा ई-कोली जोखिमस्तर (प्रति १०० मिलिलिटरमा १ सी.एफ.यू बराबर वा सो भन्दा कम भएका घरधुरी (प्रतिशत) (दि.वि.ल. ६.१.१.४)"
+      },
+      "typeNp": "प्रतिफल २.३",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "103",
+      "name": {
+        "en": "E. coli risk level in source water (households with 1 CFU per 100 milliliters or less (percentage)) (DVIL 6.1.1.4)",
+        "ne": "मुहान स्रोतको पानीमा ई-कोली जोखिमस्तर (प्रति १०० मिलिलिटरमा १ सी.एफ.यू बराबर वा सो भन्दा कम भएका घरधुरी (प्रतिशत) (दि.वि.ल. ६.१.१.४)"
+      },
+      "typeNp": "प्रतिफल २.३",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "104",
+      "name": {
+        "en": "Proportion of population using safely managed drinking water services",
+        "ne": "सुरक्षित रूपमा व्यवस्थित पिउने पानीको सेवा उपयोग गर्ने जनसङ्ख्याको अनुपात"
+      },
+      "typeNp": "प्रतिफल २.३",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "105",
+      "name": {
+        "en": "Households Adopting Appropriate Water Treatment Measures (Percentage)",
+        "ne": "पानी प्रशोधन गर्ने उपयुक्त उपायको अवलम्बन गर्ने घरधुरी (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल २.३",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "106",
+      "name": {
+        "en": "Percentage of households with toilets",
+        "ne": "शौचालय भएका घरधुरीको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "107",
+      "name": {
+        "en": "Proportion of population using toilets (%) (D.V.L. 6.2.1.2)",
+        "ne": "शौचालयको प्रयोग गर्ने जनसङ्ख्याको अनुपात (%) (दि.वि.ल. ६.२.१.२)"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "108",
+      "name": {
+        "en": "Children's last stool safely disposed of (percentage)",
+        "ne": "बालबालिकाको पछिल्लोपटककोदिसा सुरक्षित तरिकाले विसर्जन गरीएको (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "109",
+      "name": {
+        "en": "Households Using Safe Sanitation Services Systematically (Percentage)",
+        "ne": "व्यवस्थित रूपमा सुरक्षित सरसफाइ सेवाको प्रयोग गर्ने घरधुरी (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "110",
+      "name": {
+        "en": "Percentage of households/population with facilities for hand washing with soap and water",
+        "ne": "साबुन पानीले हात धुने सुविधा भएको घरधुरी/जनसङ्ख्याको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "111",
+      "name": {
+        "en": "Proportion of establishments with facilities for hand washing with soapy water available",
+        "ne": "साबुन पानीले हात धुने सुविधासहितको सरसफाइ सेवा उपलब्ध भएका संस्थाको अनुपात"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "112",
+      "name": {
+        "en": "of the population using safe and organized sanitation services such as hand washing with soap and water\nRatio",
+        "ne": "साबुनपानीले हात धुने सुरक्षित तथा व्यवस्थित सरसफाइ सेवा उपभोग गर्ने जनसङ्ख्याको\nअनुपात"
+      },
+      "typeNp": "प्रतिफल २.४",
+      "sectorNp": "खानेपानी, सरसफाइ र स्वच्छता ",
+      "isActive": true
+    },
+    {
+      "code": "113",
+      "name": {
+        "en": "Households with female head of household (percentage)",
+        "ne": "घरपरिवारमा महिला प्रधान सदस्य भएको घरधुरी (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल २.५",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "114",
+      "name": {
+        "en": "Number of Women-Owned Enterprises (DVLA 5.A.1)",
+        "ne": "महिलाको स्वामित्व भएका उद्यमको सङ्ख्या (दि.वि.ल. ५.क.१)"
+      },
+      "typeNp": "प्रतिफल २.५",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "115",
+      "name": {
+        "en": "Number of women trained through skill development programmes",
+        "ne": "सिप विकास कार्यक्रममार्फत तालिम प्राप्त महिलाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.५",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "116",
+      "name": {
+        "en": "Number of women's groups/cooperatives receiving grants for livelihood improvement",
+        "ne": "जीविकोपार्जनमा सुधारका लागि अनुदान प्राप्त गरेका महिला समूह/सहकारीको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.५",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "117",
+      "name": {
+        "en": "Number of members of women's groups, committees and co-operatives with self-established enterprises from start-up grants",
+        "ne": "सुरुवाती अनुदानबाट आफैँले स्थापना गरेको उद्यम भएका महिला समूह, समिति र सहकारी संस्थाका सदस्यको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.५",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "118",
+      "name": {
+        "en": "Proportion of women aged 15 to 49 making decisions about sex, use of family planning tools, and reproductive health care (DVIL 5.6.1.1)",
+        "ne": "यौन सम्बन्ध, परिवार योजनाको साधनको प्रयोग र प्रजनन स्वास्थ्य हेरचाह सम्बन्धमा आफैले निर्णय गर्ने १५ देखि ४९ वर्षका महिलाको अनुपात (दि.वि.ल. ५.६.१.१)"
+      },
+      "typeNp": "प्रतिफल २.५",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "119",
+      "name": {
+        "en": "Number of children receiving Child Protection Subsidy for Nutrition (Gaslin) (for Madhesh, Karnali and Sudurpaschim only)",
+        "ne": "पोषणको लागि बाल संरक्षण अनुदान प्राप्त गर्ने (गैसलिन) बालबालिकाको सङ्ख्या (मधेश, कर्णाली र सुदुरपश्चिमको लागि मात्र)"
+      },
+      "typeNp": "प्रतिफल २.६",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "120",
+      "name": {
+        "en": "Number of Children Receiving Child Protection Subsidy for Nutrition (Talin) (All Provinces)",
+        "ne": "पोषणको लागि बाल संरक्षण अनुदान प्राप्त गर्ने (तलिन) बालबालिकाको सङ्ख्या (सबै प्रदेश)"
+      },
+      "typeNp": "प्रतिफल २.६",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "121",
+      "name": {
+        "en": "2.4.5 Equity (Land and House) Percentage of Female-Owned Households (D.V.L. 5.A.2)",
+        "ne": "२.४.५ समपति (जमिन र घर) महिलाको स्वामित्वमा रहेका महिला भएका घरधुरीको प्रतिशत (दि.वि.ल. ५.क.२)"
+      },
+      "typeNp": "प्रतिफल २.६",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "122",
+      "name": {
+        "en": "Children aged 1-14 years who experienced psychological distress or physical punishment during the past 1 month (percentage) (DVIL 5.2.1.2)",
+        "ne": "विगत १ महिनाको अवधिमा मनोवैज्ञानिक त्रास वा भौतिक दण्डको अनुभव गरेका १-१४ वर्ष उमेरका बालबालिका (प्रतिशत) (दि.वि.ल. ५.२.१.२)"
+      },
+      "typeNp": "प्रतिफल २.७",
+      "sectorNp": "महिला तथा बालबालिका",
+      "isActive": true
+    },
+    {
+      "code": "123",
+      "name": {
+        "en": "Number of children enrolled in basic education and early childhood education and development receiving mid-day meals",
+        "ne": "दिवाखाजा प्राप्त गरिरहेका आधारभूत शिक्षा तथा प्रारम्भिक बालशिक्षा र विकासको लागि भर्ना भएका बालबालिकाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.८",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "124",
+      "name": {
+        "en": "Percentage of schools and early childhood education and development centers using locally available agricultural and animal food for lunch",
+        "ne": "दिवाखाजाको लागि स्थानीय रूपमा उपलब्ध हुने कृषि तथा पशुपंक्षीजन्य खाद्यान्नको प्रयोग गर्ने विद्यालय तथा प्रारम्भिक बालशिक्षा र विकास केन्द्रको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.८",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "125",
+      "name": {
+        "en": "Percentage of children aged 24-59 months who engaged in four or more activities that provided early encouragement and responsive care in the past 3 days with active household membership participation",
+        "ne": "वयम्क घरपरिवारको सदस्यताको सहभागितामा राखी पछिल्लो ३ दिनमा प्रारम्भिक प्रोत्साहन र उत्तरदायी हेरचाह प्रदान गर्ने चार वा सो भन्दा बढी गतिविधिमा संलग्न भएका २४-५९ महिना उमेरका बालबालिकाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.८",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "126",
+      "name": {
+        "en": "Number of schools providing quality care and education to children enrolled in early childhood development and education",
+        "ne": "प्रारम्भिक बालविकास र शिक्षामा भर्ना भएका बालबालिकालाई गुणस्तरीय हेरचाह र शिक्षा उपलब्ध गराउने विद्यालयको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "127",
+      "name": {
+        "en": "Levels of physical activity in school children and adolescents",
+        "ne": " विद्यालय बालबालिका तथा किशोरकिशोरीमा शारीरिक क्रियाकलापको स्तर\n"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "128",
+      "name": {
+        "en": "Percentage of schools with basic sanitation and hygiene services",
+        "ne": "आधारभूत स्वच्छता तथा सरसफाइका सेवा-सुविधा उपलब्ध भएका विद्यालयको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "129",
+      "name": {
+        "en": "Percentage of schools using nutrition sensitive education materials",
+        "ne": "पोषण संवेदनशील शिक्षा सामग्री प्रयोग गर्ने विद्यालयको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "130",
+      "name": {
+        "en": "Percentage of schools with safe drinking water stations",
+        "ne": "सुरक्षित खानेपानीको स्टेसन भएका विद्यालयको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "131",
+      "name": {
+        "en": "Percentage of schools that are commercial",
+        "ne": "करेसाबारी भएका विद्यालयको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "132",
+      "name": {
+        "en": "Levels of physical activity in school children and adolescents up to grade 12",
+        "ne": "कक्षा १२ सम्मको विद्यालय बालबालिका तथा किशोर-किशोरीमा शारीरिक क्रियाकलापको स्तर"
+      },
+      "typeNp": "प्रतिफल २.९",
+      "sectorNp": "शिक्षा",
+      "isActive": true
+    },
+    {
+      "code": "133",
+      "name": {
+        "en": "Number of meetings of the High Level Nutrition and Food Security Steering Committee at the federal level",
+        "ne": "सङ्घीय तहमा उच्चस्तरीय पोषण तथा खाद्य सुरक्षा निर्देशक समितिको बैठकको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "134",
+      "name": {
+        "en": "Number of meetings of the Coordination Committee on Nutrition and Food Security at the federal level",
+        "ne": "सङ्घीय तहमा पोषण तथा खाद्य सुरक्षा समन्वय समितिको बैठकको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "135",
+      "name": {
+        "en": "Number of meetings of the Nutrition and Food Security Facilitation Committee at the federal level",
+        "ne": "सङ्घीय तहमा पोषण तथा खाद्य सुरक्षा सहजीकरण समितिको बैठकको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "136",
+      "name": {
+        "en": "At the federal level, No. and S.P. Co-ordination of Ministries Number of periodic co-ordination meetings held with sectoral ministries",
+        "ne": "सङ्घीय तहमा सं.मा. तथा सा.प्र. मन्त्रालयका समन्वय क्षेत्रगत मन्त्रालयसँग बसेको आवधिक समन्वय बैठकको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "137",
+      "name": {
+        "en": "Number of women utilizing institutional delivery services",
+        "ne": "प्रादेशिक तहका पोषण तथा खाद्य सुरक्षा निर्देशक समितिको बैठक सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "138",
+      "name": {
+        "en": "Proportion of women attending 4 ANC visits",
+        "ne": "स्थानीय तहका पोषण तथा खाद्य सुरक्षा निर्देशक समितिको बैठक सङ्ख्या (७५३x३=२,२५९)"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "139",
+      "name": {
+        "en": "Percentage of children breastfed within 1 hour of birth",
+        "ne": "पोषणमैत्री स्थानीय शासन अवलम्बन गरेका स्थानीय तहको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "140",
+      "name": {
+        "en": "Federal level sectoral ministries updating progress of MSNP in thematic committees",
+        "ne": "सङ्घीय तहमा बहुक्षेत्रीय पोषण योजना तेस्रोसँग तादाम्यता राख्दै वार्षिक नीति, योजना र बजेटमा पोषण तथा खाद्य सुरक्षा कार्यक्रम समावेश गर्ने क्षेत्रको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "141",
+      "name": {
+        "en": "Provinces incorporating nutrition and food security programs in annual policies, plans and budgets aligned with MSNP-III",
+        "ne": "बहुक्षेत्रीय पोषण योजना तेस्रोसँग तादाम्यता राख्दै वार्षिक नीति, योजना र बजेटमा पोषण तथा खाद्य सुरक्षा कार्यक्रम समावेश गर्ने प्रदेशको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "142",
+      "name": {
+        "en": "Rural/Urban Municipalities approving integrated MSNP plans as recommended by local level nutrition and food security steering committee",
+        "ne": "स्थानीय तह पोषण तथा खाद्य सुरक्षा निर्देशक समितिको सिफारिस अनुसार बहुक्षेत्रीय पोषण कार्यक्रमको एकीकृत योजना स्वीकृत गर्ने गाउँपालिका/नगरपालिकाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.१",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "143",
+      "name": {
+        "en": "Local levels reporting progress through web-based system (Percentage)",
+        "ne": "वेबमा आधारित प्रणालीमार्फत प्रगति प्रतिवेदन (रिपोर्टिङ) गर्ने स्थानीय तह (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "144",
+      "name": {
+        "en": "Number of local levels with nutrition facilitators",
+        "ne": "पोषण सहजकर्ता भएका स्थानीय तहको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "145",
+      "name": {
+        "en": "Integrated nutrition information system is functional",
+        "ne": "एकीकृत पोषण सूचना प्रणाली रहेको हुने"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "146",
+      "name": {
+        "en": "Rural/Urban Municipalities with dashboards updating MSNP implementation status (Percentage)",
+        "ne": "बहुक्षेत्रीय पोषण योजना कार्यान्वयनको स्थिति अद्यावधिक गरिने ड्यासबोर्ड भएका गाउँपालिका/नगरपालिका (प्रतिशत)"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "147",
+      "name": {
+        "en": "Nepal Nutrition and Food Security Portal is updated",
+        "ne": "नेपाल पोषण तथा खाद्य सुरक्षा पोर्टल अद्यावधिक गरिएको/रहेको हुने"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "148",
+      "name": {
+        "en": "Integrated Monitoring and Evaluation System is functional",
+        "ne": "एकीकृत अनुगमन तथा मूल्याङ्कन प्रणाली क्रियाशील रहेको हुने"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "149",
+      "name": {
+        "en": "Number of local levels adopting social accountability tools (Social Audit/Community Score Card/Public Expenditure Tracking Survey/Citizen Report Card)",
+        "ne": "सामाजिक उत्तरदायित्वका साधन (सामाजिक लेखापरीक्षण/सामुदायिक स्कोर कार्ड/सार्वजनिक खर्च ट्र्याकिङ सर्वेक्षण/नागरिक प्रतिवेदन कार्ड) अपनाएका स्थानीय तहको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "150",
+      "name": {
+        "en": "Number of federal sectors incorporating nutrition and food security programs in annual policies, plans and budgets aligned with MSNP-III",
+        "ne": "सङ्घीय तहमा बहुक्षेत्रीय पोषण योजना तेस्रोसँग तादाम्यता राख्दै वार्षिक नीति, योजना र बजेटमा पोषण तथा खाद्य सुरक्षा कार्यक्रम समावेश गर्ने विषयक्षेत्रको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "151",
+      "name": {
+        "en": "Number of provinces incorporating nutrition and food security programs in annual policies, plans and budgets aligned with MSNP-III",
+        "ne": "बहुक्षेत्रीय पोषण योजना तेस्रोसँग तादाम्यता राख्दै वार्षिक नीति, योजना र बजेटमा पोषण तथा खाद्य सुरक्षा कार्यक्रम समावेश गर्ने प्रदेशको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "152",
+      "name": {
+        "en": "Percentage of Rural/Urban Municipalities approving integrated MSNP plans as recommended by local level nutrition and food security steering committee",
+        "ne": "स्थानीय तह पोषण तथा खाद्य सुरक्षा निर्देशक समितिको सिफारिस अनुसार बहुक्षेत्रीय पोषण कार्यक्रमको एकीकृत योजना स्वीकृत गर्ने गाउँपालिका/नगरपालिकाको प्रतिशत"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "153",
+      "name": {
+        "en": "Number of local levels adopting nutrition-friendly local governance",
+        "ne": "पोषणमैत्री स्थानीय शासन अवलम्बन गरेका स्थानीय तहको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.२",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "154",
+      "name": {
+        "en": "Capacity building guidelines prepared and approved",
+        "ne": "क्षमता अभिवृद्धि निर्देशिका तयार गरी पास भएको"
+      },
+      "typeNp": "प्रतिफल ३.३",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "155",
+      "name": {
+        "en": "Number of Rural/Urban Municipalities with designated human resources and nutrition section/unit overseeing nutrition programs",
+        "ne": "जिम्मेवारीसहित खिजाइएका जनशक्ति र पोषण शाखा/पोषण कार्यक्रम हेर्ने गरी तोकिएका एकाइ भएका गाउँपालिका/नगरपालिकाको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ३.३",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "156",
+      "name": {
+        "en": "National budget code established for nutrition budget tracking",
+        "ne": "पोषण बजेट ट्र्याकिङका लागि राष्ट्रिय बजेट कोडको व्यवस्था गरिने"
+      },
+      "typeNp": "प्रतिफल ३.४",
+      "sectorNp": "शासकीय प्रबन्ध ",
+      "isActive": true
+    },
+    {
+      "code": "157",
+      "name": {
+        "en": "Number of social behavior change activities conducted to raise awareness on appropriate nutrition, WASH and menstrual hygiene practices",
+        "ne": "उपयुक्त पोषण, खानेपानी तथा सरसफाइका साथै महिनावारी स्वच्छतासम्बन्धी अभ्यासको बारेमा सचेतना अभिवृद्धि गर्नको लागि सञ्चालन गरिएका सामाजिक व्यवहार परिवर्तनका क्रियाकलापको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "158",
+      "name": {
+        "en": "a) Interpersonal communication",
+        "ne": "क) अन्तरव्यक्ति सञ्चार"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "159",
+      "name": {
+        "en": "b) Group meetings",
+        "ne": "ख) समूह बैठक"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "160",
+      "name": {
+        "en": "c) Street dramas and other community activities",
+        "ne": "ग) सडक नाटक तथा अन्य सामुदायिक गतिविधि"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "161",
+      "name": {
+        "en": "d) Public messages (Radio jingles, television programs)",
+        "ne": "घ) सार्वजनिक सन्देश (रेडियो जिङ्गल, टेलिभिजन कार्यक्रम)"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "162",
+      "name": {
+        "en": "e) Documentary broadcasting",
+        "ne": "ङ) वृत्तचित्र प्रशारण"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "163",
+      "name": {
+        "en": "f) Public debates",
+        "ne": "च) सार्वजनिक बहस"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "164",
+      "name": {
+        "en": "Number of nutrition champions mobilized to raise awareness on appropriate diet, WASH and menstrual hygiene",
+        "ne": "उपयुक्त खानपान, खानेपानी तथा सरसफाइका साथै महिनावारी स्वच्छतासम्बन्धी सचेतना अभिवृद्धि गर्नको लागि परिचालित पोषण अभियन्ताको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ४.१",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "165",
+      "name": {
+        "en": "Number of intergenerational dialogues to prevent harmful practices (child marriage, menstrual discrimination and gender-based violence)",
+        "ne": "जोखिमपूर्ण अभ्यास (बालबिवाह, महिनावारी छुवाछुत तथा लैङ्गिक हिंसा) रोकथामको लागि अन्तरपुस्ता बहसको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ४.२",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "166",
+      "name": {
+        "en": "Number of community-level awareness programs conducted to reduce child marriage",
+        "ne": "बालबिवाह न्यूनयीकरण गर्नको लागि समुदायस्तरमा सञ्चालन भएका सचेतना कार्यक्रमको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ४.२",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "167",
+      "name": {
+        "en": "Number of social behavior change programs conducted with community engagement to promote positive social norms and behaviors",
+        "ne": "सकारात्मक सामाजिक मूल्यमान्यता तथा व्यवहार प्रवर्धन गर्न समुदायको संलग्नतामा सञ्चालन भएका सामाजिक व्यवहार परिवर्तन कार्यक्रमको सङ्ख्या"
+      },
+      "typeNp": "प्रतिफल ४.२",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "168",
+      "name": {
+        "en": "Number of local levels declaring the end of harmful practices like Chhaupadi and Dowry system - Chhaupadi (Karnali and Sudurpashchim)",
+        "ne": "छाउपडी, दाइजो प्रथा लगायतका हानिकारक अभ्यासको अन्त्य घोषणा गरेका स्थानीय तहको सङ्ख्या – छाउपडी (कर्णाली र सुदुरपश्चिम)"
+      },
+      "typeNp": "प्रतिफल ४.३",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "169",
+      "name": {
+        "en": "Chhaupadi",
+        "ne": "छाउपडी"
+      },
+      "typeNp": "प्रतिफल ४.३",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "170",
+      "name": {
+        "en": "Dowry",
+        "ne": "दाईजो"
+      },
+      "typeNp": "प्रतिफल ४.३",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "171",
+      "name": {
+        "en": "Child marriage",
+        "ne": "बाल विवाह"
+      },
+      "typeNp": "प्रतिफल ४.३",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    },
+    {
+      "code": "172",
+      "name": {
+        "en": "Child labor",
+        "ne": "बाल श्रम"
+      },
+      "typeNp": "प्रतिफल ४.३",
+      "sectorNp": "सामाजिक व्यवहार परिवर्तन",
+      "isActive": true
+    }
+  ]
+}

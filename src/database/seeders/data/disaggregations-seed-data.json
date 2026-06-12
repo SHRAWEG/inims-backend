@@ -1,0 +1,771 @@
+{
+  "disaggregationTypes": [
+    {
+      "name": {
+        "en": "Mothers Age Group",
+        "ne": "आमाको उमेर समूह"
+      },
+      "isSelective": true,
+      "sortOrder": 1,
+      "options": [
+        {
+          "name": {
+            "en": "15 -19",
+            "ne": "15 -19"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "20-24",
+            "ne": "20-24"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "25-29",
+            "ne": "25-29"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "30-34",
+            "ne": "30-34"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "35-39",
+            "ne": "35-39"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "40-44",
+            "ne": "40-44"
+          },
+          "sortOrder": 6
+        },
+        {
+          "name": {
+            "en": "45-49",
+            "ne": "45-49"
+          },
+          "sortOrder": 7
+        },
+        {
+          "name": {
+            "en": "20-29",
+            "ne": "20-29"
+          },
+          "sortOrder": 8
+        },
+        {
+          "name": {
+            "en": "30-39",
+            "ne": "30-39"
+          },
+          "sortOrder": 9
+        },
+        {
+          "name": {
+            "en": "40-49",
+            "ne": "40-49"
+          },
+          "sortOrder": 10
+        },
+        {
+          "name": {
+            "en": "15-29",
+            "ne": "15-29"
+          },
+          "sortOrder": 11
+        },
+        {
+          "name": {
+            "en": "<20",
+            "ne": "<20"
+          },
+          "sortOrder": 12
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Age Group",
+        "ne": "उमेर समूह"
+      },
+      "isSelective": true,
+      "sortOrder": 2,
+      "options": [
+        {
+          "name": {
+            "en": "15 -19",
+            "ne": "15 -19"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "20-24",
+            "ne": "20-24"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "25-29",
+            "ne": "25-29"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "30-34",
+            "ne": "30-34"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "35-39",
+            "ne": "35-39"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "40-44",
+            "ne": "40-44"
+          },
+          "sortOrder": 6
+        },
+        {
+          "name": {
+            "en": "45-49",
+            "ne": "45-49"
+          },
+          "sortOrder": 7
+        },
+        {
+          "name": {
+            "en": "20-29",
+            "ne": "20-29"
+          },
+          "sortOrder": 8
+        },
+        {
+          "name": {
+            "en": "30-39",
+            "ne": "30-39"
+          },
+          "sortOrder": 9
+        },
+        {
+          "name": {
+            "en": "40-49",
+            "ne": "40-49"
+          },
+          "sortOrder": 10
+        },
+        {
+          "name": {
+            "en": "15-24",
+            "ne": "15-24"
+          },
+          "sortOrder": 11
+        },
+        {
+          "name": {
+            "en": "40-59",
+            "ne": "40-59"
+          },
+          "sortOrder": 12
+        },
+        {
+          "name": {
+            "en": "55-59",
+            "ne": "55-59"
+          },
+          "sortOrder": 13
+        },
+        {
+          "name": {
+            "en": "1-2",
+            "ne": "1-2"
+          },
+          "sortOrder": 14
+        },
+        {
+          "name": {
+            "en": "3-4",
+            "ne": "3-4"
+          },
+          "sortOrder": 15
+        },
+        {
+          "name": {
+            "en": "5-9",
+            "ne": "5-9"
+          },
+          "sortOrder": 16
+        },
+        {
+          "name": {
+            "en": "10-14",
+            "ne": "10-14"
+          },
+          "sortOrder": 17
+        },
+        {
+          "name": {
+            "en": "15-17",
+            "ne": "15-17"
+          },
+          "sortOrder": 18
+        },
+        {
+          "name": {
+            "en": "18-19",
+            "ne": "18-19"
+          },
+          "sortOrder": 19
+        },
+        {
+          "name": {
+            "en": "5-12",
+            "ne": "5-12"
+          },
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Age in Months",
+        "ne": "उमेर (महिनामा)"
+      },
+      "isSelective": true,
+      "sortOrder": 3,
+      "options": [
+        {
+          "name": {
+            "en": "<6",
+            "ne": "<6"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "6 - 11",
+            "ne": "6 - 11"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "12 - 23",
+            "ne": "12 - 23"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "24 - 35",
+            "ne": "24 - 35"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "36 - 47",
+            "ne": "36 - 47"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "48 - 59",
+            "ne": "48 - 59"
+          },
+          "sortOrder": 6
+        },
+        {
+          "name": {
+            "en": "6-23",
+            "ne": "6-23"
+          },
+          "sortOrder": 7
+        },
+        {
+          "name": {
+            "en": "24-59",
+            "ne": "24-59"
+          },
+          "sortOrder": 8
+        },
+        {
+          "name": {
+            "en": "12-17",
+            "ne": "12-17"
+          },
+          "sortOrder": 9
+        },
+        {
+          "name": {
+            "en": "18-23",
+            "ne": "18-23"
+          },
+          "sortOrder": 10
+        },
+        {
+          "name": {
+            "en": "0-1",
+            "ne": "0-1"
+          },
+          "sortOrder": 11
+        },
+        {
+          "name": {
+            "en": "2-3",
+            "ne": "2-3"
+          },
+          "sortOrder": 12
+        },
+        {
+          "name": {
+            "en": "4-5",
+            "ne": "4-5"
+          },
+          "sortOrder": 13
+        },
+        {
+          "name": {
+            "en": "12-15",
+            "ne": "12-15"
+          },
+          "sortOrder": 14
+        },
+        {
+          "name": {
+            "en": "16-19",
+            "ne": "16-19"
+          },
+          "sortOrder": 15
+        },
+        {
+          "name": {
+            "en": "20-23",
+            "ne": "20-23"
+          },
+          "sortOrder": 16
+        },
+        {
+          "name": {
+            "en": "6-8",
+            "ne": "6-8"
+          },
+          "sortOrder": 17
+        },
+        {
+          "name": {
+            "en": "9-11",
+            "ne": "9-11"
+          },
+          "sortOrder": 18
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Province",
+        "ne": "प्रदेश"
+      },
+      "isSelective": false,
+      "sortOrder": 4,
+      "options": [
+        {
+          "name": {
+            "en": "Koshi",
+            "ne": "कोशी"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Madhesh",
+            "ne": "मधेश"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "Bagmati",
+            "ne": "बागमती"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "Gandaki",
+            "ne": "गण्डकी"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "Lumbini",
+            "ne": "लुम्बिनी"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "Sudhurpaschim",
+            "ne": "सुदूरपश्चिम"
+          },
+          "sortOrder": 6
+        },
+        {
+          "name": {
+            "en": "Karnali",
+            "ne": "कर्णाली"
+          },
+          "sortOrder": 7
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Sex",
+        "ne": "लिङ्ग"
+      },
+      "isSelective": false,
+      "sortOrder": 5,
+      "options": [
+        {
+          "name": {
+            "en": "Male",
+            "ne": "पुरुष"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Female",
+            "ne": "महिला"
+          },
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Ethnic group",
+        "ne": "जातीय समूह"
+      },
+      "isSelective": false,
+      "sortOrder": 6,
+      "options": [
+        {
+          "name": {
+            "en": "Brahmin/Chhetri",
+            "ne": "ब्राह्मण/क्षेत्री"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Dalit",
+            "ne": "दलित"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "Janajati",
+            "ne": "जनजाति"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "Madhesi",
+            "ne": "मधेसी"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "Muslim",
+            "ne": "मुस्लिम"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "Other",
+            "ne": "अन्य"
+          },
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Residence",
+        "ne": "बसोबास"
+      },
+      "isSelective": false,
+      "sortOrder": 7,
+      "options": [
+        {
+          "name": {
+            "en": "Urban",
+            "ne": "सहरी"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Rural",
+            "ne": "ग्रामीण"
+          },
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Education",
+        "ne": "शिक्षा"
+      },
+      "isSelective": false,
+      "sortOrder": 8,
+      "options": [
+        {
+          "name": {
+            "en": "No education",
+            "ne": "शिक्षा नभएको"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "ECD",
+            "ne": "प्रारम्भिक बाल विकास (ECD)"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "Basic education (1–8)",
+            "ne": "आधारभूत शिक्षा (१-८)"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "Secondary (9–12)",
+            "ne": "माध्यमिक शिक्षा (९-१२)"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "More than secondary (13 and above)",
+            "ne": "माध्यमिक भन्दा माथि (१३ र माथि)"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "Missing/DK",
+            "ne": "थाहा नभएको"
+          },
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Mother's Education",
+        "ne": "आमाको शिक्षा"
+      },
+      "isSelective": false,
+      "sortOrder": 9,
+      "options": [
+        {
+          "name": {
+            "en": "No education",
+            "ne": "शिक्षा नभएको"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "ECD",
+            "ne": "प्रारम्भिक बाल विकास (ECD)"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "Basic education (1–8)",
+            "ne": "आधारभूत शिक्षा (१-८)"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "Secondary (9–12)",
+            "ne": "माध्यमिक शिक्षा (९-१२)"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "More than secondary (13 and above)",
+            "ne": "माध्यमिक भन्दा माथि (१३ र माथि)"
+          },
+          "sortOrder": 5
+        },
+        {
+          "name": {
+            "en": "Missing/DK",
+            "ne": "थाहा नभएको"
+          },
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Wealth Quintile",
+        "ne": "सम्पत्ति क्विन्टाइल"
+      },
+      "isSelective": false,
+      "sortOrder": 10,
+      "options": [
+        {
+          "name": {
+            "en": "Lowest",
+            "ne": "सबैभन्दा कम"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Second Lowest",
+            "ne": "दोस्रो सबैभन्दा कम"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "Middle",
+            "ne": "मध्यम"
+          },
+          "sortOrder": 3
+        },
+        {
+          "name": {
+            "en": "Fourth",
+            "ne": "चौथो"
+          },
+          "sortOrder": 4
+        },
+        {
+          "name": {
+            "en": "Highest",
+            "ne": "उच्चतम"
+          },
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Local Level (/)",
+        "ne": "स्थानीय तह (सहर/गाउँ)"
+      },
+      "isSelective": false,
+      "sortOrder": 11,
+      "options": [
+        {
+          "name": {
+            "en": "Urban",
+            "ne": "सहरी"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Rural",
+            "ne": "ग्रामीण"
+          },
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Local government /",
+        "ne": "स्थानीय सरकार / नगर पालिका"
+      },
+      "isSelective": false,
+      "sortOrder": 12,
+      "options": [
+        {
+          "name": {
+            "en": "Municipality",
+            "ne": "नगरपालिका"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Rural Municipality",
+            "ne": "गाउँपालिका"
+          },
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "School Education Level",
+        "ne": "विद्यालय शिक्षा स्तर"
+      },
+      "isSelective": false,
+      "sortOrder": 13,
+      "options": [
+        {
+          "name": {
+            "en": "ECED/PPE (Early childhood education development / pre primary education)",
+            "ne": "प्रारम्भिक बाल विकास / पूर्व प्राथमिक शिक्षा"
+          },
+          "sortOrder": 1
+        },
+        {
+          "name": {
+            "en": "Basic Level(1-8)",
+            "ne": "आधारभूत तह (१-८)"
+          },
+          "sortOrder": 2
+        },
+        {
+          "name": {
+            "en": "Secondary Level (9-12)",
+            "ne": "माध्यमिक तह (९-१२)"
+          },
+          "sortOrder": 3
+        }
+      ]
+    }
+  ]
+}

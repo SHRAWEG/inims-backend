@@ -72,6 +72,15 @@ export class FiscalYearsController {
     return buildResponse(data);
   }
 
+  @Patch(':id/set-active')
+  @Permissions('fiscal_years:update')
+  @ApiOperation({ summary: 'Set a fiscal year as active' })
+  @ApiResponse({ status: 200, description: 'Successfully set active' })
+  async setActive(@Param('id') id: string) {
+    const data = await this.fiscalYearsService.setActive(id);
+    return buildResponse(data);
+  }
+
   @Delete(':id')
   @Permissions('fiscal_years:delete')
   @HttpCode(HttpStatus.NO_CONTENT)

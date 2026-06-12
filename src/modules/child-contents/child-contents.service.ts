@@ -60,6 +60,10 @@ export class ChildContentsService {
         parent,
       });
       const saved = await this.repository.save(entity);
+      const loaded = await this.repository.findOne({
+        where: { id: saved.id },
+        relations: ['parent'],
+      });
 
       await this.auditLogService.log({
         action: AuditAction.CREATE,
@@ -68,7 +72,7 @@ export class ChildContentsService {
         after: sanitizeForAudit(saved),
       });
 
-      return this.toResponse(saved);
+      return this.toResponse(loaded!);
     } catch (error) {
       this.logger.error('Failed to create child content', {
         error: (error as Error).message,
@@ -80,7 +84,7 @@ export class ChildContentsService {
   async findAll(query: QueryChildContentDto) {
     const qb = this.repository.createQueryBuilder('childContent');
 
-    qb.where('childContent.parent_id IS NULL');
+    qb.leftJoinAndSelect('childContent.parent', 'parent');
 
     if (query.search) {
       qb.andWhere(
@@ -102,7 +106,10 @@ export class ChildContentsService {
   }
 
   async findById(id: string): Promise<ChildContentResponseDto> {
-    const entity = await this.repository.findOne({ where: { id } });
+    const entity = await this.repository.findOne({
+      where: { id },
+      relations: ['parent'],
+    });
     if (!entity) {
       throw new EntityNotFoundException('ChildContent', id);
     }
@@ -113,7 +120,10 @@ export class ChildContentsService {
     id: string,
     dto: UpdateChildContentDto,
   ): Promise<ChildContentResponseDto> {
-    const existing = await this.repository.findOne({ where: { id } });
+    const existing = await this.repository.findOne({
+      where: { id },
+      relations: ['parent'],
+    });
     if (!existing) {
       throw new EntityNotFoundException('ChildContent', id);
     }
@@ -145,12 +155,17 @@ export class ChildContentsService {
     try {
       const before = { ...existing };
 
-      const updated = await this.repository.save({
+      await this.repository.save({
         ...existing,
         title: dto.title ?? existing.title,
         slug: dto.slug ?? existing.slug,
         htmlContent: dto.htmlContent ?? existing.htmlContent,
         parent,
+      });
+
+      const updated = await this.repository.findOne({
+        where: { id },
+        relations: ['parent'],
       });
 
       await this.auditLogService.log({
@@ -161,7 +176,7 @@ export class ChildContentsService {
         after: sanitizeForAudit(updated),
       });
 
-      return this.toResponse(updated);
+      return this.toResponse(updated!);
     } catch (error) {
       this.logger.error(`Failed to update child content: ${id}`, {
         error: (error as Error).message,
@@ -192,6 +207,13 @@ export class ChildContentsService {
       title: entity.title,
       slug: entity.slug,
       htmlContent: entity.htmlContent,
+      parent: entity.parent
+        ? {
+            id: entity.parent.id,
+            title: entity.parent.title,
+            slug: entity.parent.slug,
+          }
+        : undefined,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };
@@ -204,6 +226,13 @@ export class ChildContentsService {
       id: entity.id,
       title: entity.title,
       slug: entity.slug,
+      parent: entity.parent
+        ? {
+            id: entity.parent.id,
+            title: entity.parent.title,
+            slug: entity.parent.slug,
+          }
+        : undefined,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };

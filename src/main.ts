@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppModule } from './app.module';
+import type { Request, Response, NextFunction } from 'express';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 import { CustomValidationPipe } from './common/pipes/validation.pipe';
@@ -77,19 +78,28 @@ async function bootstrap(): Promise<void> {
   (app as NestApplication).useBodyParser('json', { limit: '10mb' });
 
   // Catch PayloadTooLargeError from body-parser (Express error middleware)
-  app.use((err: any, _req: any, res: any, next: any) => {
-    if (err?.type === 'entity.too.large') {
-      res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'Validation failed',
-        statusCode: HttpStatus.BAD_REQUEST,
-        timestamp: new Date().toISOString(),
-        path: _req.url,
-        errors: { htmlContent: ['Request body exceeds maximum allowed size'] },
-      });
-      return;
-    }
-    next(err);
-  });
+  app.use(
+    (
+      err: Error & { type?: string },
+      _req: Request,
+      res: Response,
+      next: NextFunction,
+    ) => {
+      if (err.type === 'entity.too.large') {
+        res.status(HttpStatus.BAD_REQUEST).json({
+          message: 'Validation failed',
+          statusCode: HttpStatus.BAD_REQUEST,
+          timestamp: new Date().toISOString(),
+          path: _req.url,
+          errors: {
+            htmlContent: ['Request body exceeds maximum allowed size'],
+          },
+        });
+        return;
+      }
+      next(err);
+    },
+  );
 
   const corsOriginEnv = configService.get<string>('CORS_ORIGIN', '');
   const allowedOrigins = [

@@ -25,6 +25,7 @@ import { RoleResponseDto } from './dto/role-response.dto';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { ParseUuidPipe } from '../../common/pipes/parse-uuid.pipe';
 import { buildResponse } from '../../common/utils/response.util';
+import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { FindOneQueryDto } from '../../common/dto/find-one-query.dto';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { AuditAction } from '../../common/enums/audit-action.enum';
@@ -68,9 +69,15 @@ export class RolesController {
   @ApiResponse({ status: 200, type: [RoleResponseDto] })
   @ApiQuery({ type: RoleFilterDto, required: false })
   async findAll(@Query() filter: RoleFilterDto) {
-    const data = await this.rolesService.findAll(filter);
+    const [data, total] = await this.rolesService.findAll(filter);
+    const meta = buildPaginationMeta(
+      total,
+      filter.page || 1,
+      filter.limit || 20,
+    );
     return buildResponse(
       data.map((r) => this.rolesService.toResponseDto(r, filter.locale)),
+      meta,
     );
   }
 

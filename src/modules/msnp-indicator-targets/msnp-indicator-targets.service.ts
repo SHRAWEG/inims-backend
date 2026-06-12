@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MsnpIndicatorTarget } from './entities/msnp-indicator-target.entity';
 import { MsnpIndicatorConfiguration } from '../msnp-indicator-configurations/entities/msnp-indicator-configuration.entity';
+import { FiscalYear } from '../fiscal-years/entities/fiscal-year.entity';
 import { CreateMsnpIndicatorTargetDto } from './dto/create-msnp-indicator-target.dto';
 import { UpdateMsnpIndicatorTargetDto } from './dto/update-msnp-indicator-target.dto';
 import { MsnpIndicatorTargetResponseDto } from './dto/msnp-indicator-target-response.dto';
@@ -31,6 +32,15 @@ export class MsnpIndicatorTargetsService {
     dto: CreateMsnpIndicatorTargetDto,
   ): Promise<MsnpIndicatorTargetResponseDto> {
     try {
+      const fiscalYear = await this.targetRepository.manager.findOne(
+        FiscalYear,
+        { where: { id: dto.fiscalYearId } },
+      );
+      if (!fiscalYear?.isActive) {
+        throw new BusinessLogicException(
+          'Data entry is only permitted for the active fiscal year.',
+        );
+      }
       const config = await this.targetRepository.manager.findOne(
         MsnpIndicatorConfiguration,
         {
@@ -69,6 +79,15 @@ export class MsnpIndicatorTargetsService {
     dto: BulkUpsertMsnpIndicatorTargetDto,
   ): Promise<MsnpIndicatorTargetResponseDto[]> {
     const responses: MsnpIndicatorTargetResponseDto[] = [];
+
+    const fiscalYear = await this.targetRepository.manager.findOne(FiscalYear, {
+      where: { id: dto.fiscalYearId },
+    });
+    if (!fiscalYear?.isActive) {
+      throw new BusinessLogicException(
+        'Data entry is only permitted for the active fiscal year.',
+      );
+    }
 
     const configIds = [...new Set(dto.entries.map((e) => e.indicatorConfigId))];
     const configs = await this.targetRepository.manager.find(
@@ -172,7 +191,8 @@ export class MsnpIndicatorTargetsService {
       qb.andWhere('t.remarks ILIKE :search', { search: `%${query.search}%` });
     }
 
-    qb.orderBy('t.createdAt', 'DESC')
+    qb.orderBy('indicator.code', 'ASC')
+      .addOrderBy('t.createdAt', 'DESC')
       .skip((query.page - 1) * query.limit)
       .take(query.limit);
 
@@ -205,6 +225,15 @@ export class MsnpIndicatorTargetsService {
     }
 
     try {
+      const fiscalYear = await this.targetRepository.manager.findOne(
+        FiscalYear,
+        { where: { id: existing.fiscalYearId } },
+      );
+      if (!fiscalYear?.isActive) {
+        throw new BusinessLogicException(
+          'Data entry is only permitted for the active fiscal year.',
+        );
+      }
       const before = { ...existing };
       const updated = await this.targetRepository.save({
         ...existing,
@@ -258,7 +287,9 @@ export class MsnpIndicatorTargetsService {
       id: entity.id,
       indicatorConfigId: entity.indicatorConfigId,
       indicatorId: entity.indicatorId,
+      indicatorCode: entity.indicatorConfig?.indicator?.code,
       indicatorName,
+      unit: entity.indicatorConfig?.unit || undefined,
       fiscalYearId: entity.fiscalYearId,
       targetValue: entity.targetValue,
       remarks: entity.remarks,

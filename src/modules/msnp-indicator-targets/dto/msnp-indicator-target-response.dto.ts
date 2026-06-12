@@ -10,8 +10,14 @@ export class MsnpIndicatorTargetResponseDto {
   @ApiProperty({ example: 'uuid-string', required: false })
   indicatorId?: string;
 
+  @ApiProperty({ required: false })
+  indicatorCode?: string;
+
   @ApiProperty({ example: 'Indicator 1 Name', required: false })
   indicatorName?: string;
+
+  @ApiProperty({ example: 'Percentage', required: false })
+  unit?: string;
 
   @ApiProperty({ example: 'uuid-string' })
   fiscalYearId: string;
