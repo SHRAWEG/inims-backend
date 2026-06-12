@@ -9,7 +9,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { DisaggregationOptionsService } from './disaggregation-options.service';
 import { CreateDisaggregationOptionDto } from './dto/create-disaggregation-option.dto';
 import { UpdateDisaggregationOptionDto } from './dto/update-disaggregation-option.dto';
@@ -17,6 +22,8 @@ import { QueryDisaggregationOptionDto } from './dto/query-disaggregation-option.
 import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { buildResponse } from '../../common/utils/response.util';
+import { ReorderDisaggregationOptionsDto } from './dto/reorder-disaggregation-options.dto';
+import { Permissions } from '../../common/decorators/permissions.decorator';
 
 @ApiTags('disaggregation-options')
 @ApiBearerAuth('access-token')
@@ -66,6 +73,15 @@ export class DisaggregationOptionsController {
       undefined,
       'Disaggregation option retrieved successfully',
     );
+  }
+
+  @Patch('reorder')
+  @Permissions('disaggregation-options:update')
+  @ApiOperation({ summary: 'Reorder disaggregation options' })
+  @ApiResponse({ status: 200, description: 'Reordered successfully' })
+  async reorder(@Body() reorderDto: ReorderDisaggregationOptionsDto) {
+    await this.disaggregationOptionsService.reorder(reorderDto);
+    return buildResponse({ success: true });
   }
 
   @Patch(':id')

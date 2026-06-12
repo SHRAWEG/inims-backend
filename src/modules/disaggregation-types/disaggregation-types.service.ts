@@ -12,6 +12,7 @@ import { BusinessLogicException } from '../../common/exceptions/business-logic.e
 import { QueryDisaggregationTypeDto } from './dto/query-disaggregation-type.dto';
 import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
+import { ReorderDisaggregationTypesDto } from './dto/reorder-disaggregation-types.dto';
 import { SupportedLocale, DEFAULT_LOCALE } from '../../common/types/i18n.type';
 
 @Injectable()
@@ -143,6 +144,40 @@ export class DisaggregationTypesService {
         stack: (error as Error).stack,
       });
       this.handleDbError(error);
+    }
+  }
+
+  async reorder(dto: ReorderDisaggregationTypesDto): Promise<void> {
+    const { orderedIds } = dto;
+    if (!orderedIds || orderedIds.length === 0) return;
+
+    try {
+      await this.disaggregationTypeRepository.manager.transaction(
+        async (transactionalEntityManager) => {
+          for (let i = 0; i < orderedIds.length; i++) {
+            await transactionalEntityManager.update(
+              DisaggregationType,
+              orderedIds[i],
+              { sortOrder: i },
+            );
+          }
+        },
+      );
+
+      await this.auditLogService.log({
+        action: AuditAction.UPDATE,
+        resource: 'disaggregation-type',
+        resourceId: 'bulk-reorder',
+        after: { orderedIds },
+      });
+    } catch (error) {
+      this.logger.error('Failed to reorder disaggregation types', {
+        error: (error as Error).message,
+        stack: (error as Error).stack,
+      });
+      throw new BusinessLogicException(
+        'Failed to reorder disaggregation types',
+      );
     }
   }
 
