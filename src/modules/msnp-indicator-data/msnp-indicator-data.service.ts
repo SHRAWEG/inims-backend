@@ -357,10 +357,11 @@ export class MsnpIndicatorDataService {
   async findAll(
     query: { fiscalYearId: string; locale?: string },
     roleId?: string,
+    systemRole?: string,
   ): Promise<DataEntryFormResponseDto[]> {
     const locale = (query.locale as SupportedLocale) || DEFAULT_LOCALE;
 
-    if (!roleId) {
+    if (!roleId && !systemRole) {
       return [];
     }
 
@@ -369,10 +370,17 @@ export class MsnpIndicatorDataService {
       return nameObj[locale] ?? (nameObj['en'] || nameObj['ne'] || '');
     };
 
+    const whereCondition: { isActive: boolean; roleId?: string } = {
+      isActive: true,
+    };
+    if (!systemRole) {
+      whereCondition.roleId = roleId;
+    }
+
     const configs = await this.dataSource.manager.find(
       MsnpIndicatorConfiguration,
       {
-        where: { roleId, isActive: true },
+        where: whereCondition,
         relations: [
           'indicator',
           'disaggregations',

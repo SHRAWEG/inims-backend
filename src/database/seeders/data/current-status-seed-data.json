@@ -1,0 +1,658 @@
+[
+  {
+    "code": "1",
+    "currentStatus": "२४.८"
+  },
+  {
+    "code": "2",
+    "currentStatus": "७.७"
+  },
+  {
+    "code": "3",
+    "currentStatus": "११.५"
+  },
+  {
+    "code": "4",
+    "currentStatus": "१८.७"
+  },
+  {
+    "code": "5",
+    "currentStatus": "१"
+  },
+  {
+    "code": "6",
+    "currentStatus": "आधाररेखा र लक्ष्य कायम गरिनेछ"
+  },
+  {
+    "code": "7",
+    "currentStatus": "२४.३"
+  },
+  {
+    "code": "8",
+    "currentStatus": "१०"
+  },
+  {
+    "code": "9",
+    "currentStatus": "४३.४"
+  },
+  {
+    "code": "10",
+    "currentStatus": "३४"
+  },
+  {
+    "code": "11",
+    "currentStatus": "४३"
+  },
+  {
+    "code": "12",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "13",
+    "currentStatus": "50"
+  },
+  {
+    "code": "14",
+    "currentStatus": "५६.४"
+  },
+  {
+    "code": "15",
+    "currentStatus": "३.६"
+  },
+  {
+    "code": "16",
+    "currentStatus": "६०"
+  },
+  {
+    "code": "17",
+    "currentStatus": "५२.६"
+  },
+  {
+    "code": "18",
+    "currentStatus": "१२"
+  },
+  {
+    "code": "19",
+    "currentStatus": "९४.५"
+  },
+  {
+    "code": "20",
+    "currentStatus": "२.८"
+  },
+  {
+    "code": "21",
+    "currentStatus": "९.७"
+  },
+  {
+    "code": "22",
+    "currentStatus": "१२.७"
+  },
+  {
+    "code": "23",
+    "currentStatus": "५६.९"
+  },
+  {
+    "code": "24",
+    "currentStatus": "४८.२"
+  },
+  {
+    "code": "27",
+    "currentStatus": "0.57"
+  },
+  {
+    "code": "28",
+    "currentStatus": "38.4"
+  },
+  {
+    "code": "29",
+    "currentStatus": "२१.८"
+  },
+  {
+    "code": "30",
+    "currentStatus": "९१.२"
+  },
+  {
+    "code": "31",
+    "currentStatus": "७८.२"
+  },
+  {
+    "code": "32",
+    "currentStatus": "९"
+  },
+  {
+    "code": "33",
+    "currentStatus": "५३"
+  },
+  {
+    "code": "34",
+    "currentStatus": "२४,००,००,०००"
+  },
+  {
+    "code": "35",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "36",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "37",
+    "currentStatus": "८०.७"
+  },
+  {
+    "code": "38",
+    "currentStatus": "आधाररेखा कायम गरिनेछ"
+  },
+  {
+    "code": "39",
+    "currentStatus": "आधाररेखा कायम गरिनेछ"
+  },
+  {
+    "code": "40",
+    "currentStatus": "३१.०/२२.२"
+  },
+  {
+    "code": "41",
+    "currentStatus": "१९.३/५.३"
+  },
+  {
+    "code": "42",
+    "currentStatus": "३८.४"
+  },
+  {
+    "code": "43",
+    "currentStatus": "८३.१"
+  },
+  {
+    "code": "44",
+    "currentStatus": "३.८"
+  },
+  {
+    "code": "45",
+    "currentStatus": "५५.३"
+  },
+  {
+    "code": "46",
+    "currentStatus": "८७.६"
+  },
+  {
+    "code": "47",
+    "currentStatus": "४९.६"
+  },
+  {
+    "code": "48",
+    "currentStatus": "७८.२"
+  },
+  {
+    "code": "49",
+    "currentStatus": "६८.७"
+  },
+  {
+    "code": "50",
+    "currentStatus": "२३"
+  },
+  {
+    "code": "51",
+    "currentStatus": "<१%"
+  },
+  {
+    "code": "53",
+    "currentStatus": "१"
+  },
+  {
+    "code": "54",
+    "currentStatus": "९१"
+  },
+  {
+    "code": "55",
+    "currentStatus": "८५"
+  },
+  {
+    "code": "56",
+    "currentStatus": "८५"
+  },
+  {
+    "code": "57",
+    "currentStatus": "५५"
+  },
+  {
+    "code": "58",
+    "currentStatus": "९४.९"
+  },
+  {
+    "code": "59",
+    "currentStatus": "२०"
+  },
+  {
+    "code": "60",
+    "currentStatus": "९.१"
+  },
+  {
+    "code": "61",
+    "currentStatus": "१७"
+  },
+  {
+    "code": "62",
+    "currentStatus": "७९.४"
+  },
+  {
+    "code": "63",
+    "currentStatus": "७९"
+  },
+  {
+    "code": "64",
+    "currentStatus": "७९"
+  },
+  {
+    "code": "65",
+    "currentStatus": "४०.८"
+  },
+  {
+    "code": "66",
+    "currentStatus": "४२.७"
+  },
+  {
+    "code": "67",
+    "currentStatus": "११७"
+  },
+  {
+    "code": "68",
+    "currentStatus": "95.2"
+  },
+  {
+    "code": "69",
+    "currentStatus": "०"
+  },
+  {
+    "code": "70",
+    "currentStatus": "18.186"
+  },
+  {
+    "code": "71",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "72",
+    "currentStatus": "०"
+  },
+  {
+    "code": "73",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "74",
+    "currentStatus": "८"
+  },
+  {
+    "code": "75",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "77",
+    "currentStatus": "११११८"
+  },
+  {
+    "code": "78",
+    "currentStatus": "३९४"
+  },
+  {
+    "code": "79",
+    "currentStatus": "३९९३"
+  },
+  {
+    "code": "80",
+    "currentStatus": "३३२५"
+  },
+  {
+    "code": "81",
+    "currentStatus": "१३६०"
+  },
+  {
+    "code": "82",
+    "currentStatus": "२४७९"
+  },
+  {
+    "code": "83",
+    "currentStatus": "१४९"
+  },
+  {
+    "code": "84",
+    "currentStatus": "१०४"
+  },
+  {
+    "code": "85",
+    "currentStatus": "५२०"
+  },
+  {
+    "code": "86",
+    "currentStatus": "३२०"
+  },
+  {
+    "code": "87",
+    "currentStatus": "2"
+  },
+  {
+    "code": "88",
+    "currentStatus": "२"
+  },
+  {
+    "code": "89",
+    "currentStatus": "३९६"
+  },
+  {
+    "code": "90",
+    "currentStatus": "६५०००"
+  },
+  {
+    "code": "91",
+    "currentStatus": "२५.२"
+  },
+  {
+    "code": "92",
+    "currentStatus": "१.९६"
+  },
+  {
+    "code": "93",
+    "currentStatus": "६६०९"
+  },
+  {
+    "code": "94",
+    "currentStatus": "20"
+  },
+  {
+    "code": "95",
+    "currentStatus": "३"
+  },
+  {
+    "code": "96",
+    "currentStatus": "२१"
+  },
+  {
+    "code": "97",
+    "currentStatus": "०"
+  },
+  {
+    "code": "98",
+    "currentStatus": "०"
+  },
+  {
+    "code": "99",
+    "currentStatus": "११५"
+  },
+  {
+    "code": "100",
+    "currentStatus": "९७.१"
+  },
+  {
+    "code": "101",
+    "currentStatus": "७८"
+  },
+  {
+    "code": "102",
+    "currentStatus": "८५.१"
+  },
+  {
+    "code": "103",
+    "currentStatus": "७५.३"
+  },
+  {
+    "code": "104",
+    "currentStatus": "95"
+  },
+  {
+    "code": "105",
+    "currentStatus": "२३.५"
+  },
+  {
+    "code": "106",
+    "currentStatus": "९५"
+  },
+  {
+    "code": "107",
+    "currentStatus": "९३.८"
+  },
+  {
+    "code": "108",
+    "currentStatus": "७०.३"
+  },
+  {
+    "code": "109",
+    "currentStatus": "६१.१"
+  },
+  {
+    "code": "111",
+    "currentStatus": "आधाररेखा कायम गरिनेछ"
+  },
+  {
+    "code": "113",
+    "currentStatus": "३१.३"
+  },
+  {
+    "code": "114",
+    "currentStatus": "247880"
+  },
+  {
+    "code": "115",
+    "currentStatus": "१५००"
+  },
+  {
+    "code": "116",
+    "currentStatus": "२७७५"
+  },
+  {
+    "code": "117",
+    "currentStatus": "९५७५"
+  },
+  {
+    "code": "118",
+    "currentStatus": "६८"
+  },
+  {
+    "code": "119",
+    "currentStatus": "४१०२९५"
+  },
+  {
+    "code": "120",
+    "currentStatus": "३८३९२६"
+  },
+  {
+    "code": "121",
+    "currentStatus": "२८"
+  },
+  {
+    "code": "122",
+    "currentStatus": "८२.०"
+  },
+  {
+    "code": "123",
+    "currentStatus": "३०८१४९१"
+  },
+  {
+    "code": "124",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "126",
+    "currentStatus": "3806"
+  },
+  {
+    "code": "127",
+    "currentStatus": "आधाररेखा: आधाररेखा कायम गरिनेछ"
+  },
+  {
+    "code": "128",
+    "currentStatus": "७१.६"
+  },
+  {
+    "code": "129",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "130",
+    "currentStatus": "६५"
+  },
+  {
+    "code": "131",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "132",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "133",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "134",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "135",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "136",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "137",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "138",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "139",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "140",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "141",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "142",
+    "currentStatus": "55"
+  },
+  {
+    "code": "143",
+    "currentStatus": "५१"
+  },
+  {
+    "code": "144",
+    "currentStatus": "380"
+  },
+  {
+    "code": "145",
+    "currentStatus": "नभएको"
+  },
+  {
+    "code": "146",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "147",
+    "currentStatus": "१"
+  },
+  {
+    "code": "148",
+    "currentStatus": "०"
+  },
+  {
+    "code": "149",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "150",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "141",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "152",
+    "currentStatus": "५५"
+  },
+  {
+    "code": "139",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "154",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "155",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "156",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "157",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "158",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "159",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "160",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "161",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "162",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "163",
+    "currentStatus": "आधाररेखा कायम गरिने"
+  },
+  {
+    "code": "164",
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+  },
+  {
+    "code": "165",
+    "currentStatus": "आधाररेखा कायम गरिने"
+  },
+  {
+    "code": "166",
+    "currentStatus": "आधाररेखा कायम गरिने"
+  },
+  {
+    "code": "167",
+    "currentStatus": "आधाररेखा कायम गरिने"
+  },
+  {
+    "code": "169",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "170",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "171",
+    "currentStatus": "उपलब्ध नभएको"
+  },
+  {
+    "code": "172",
+    "currentStatus": "उपलब्ध नभएको"
+  }
+]

@@ -44,7 +44,7 @@
     },
     {
       "name": {
-        "en": "social behavior change",
+        "en": "Social behavior change",
         "ne": "सामाजिक व्यवहार परिवर्तन"
       },
       "isActive": true
@@ -60,7 +60,8 @@
         "en": "Improving the nutritional status of the human life cycle by ensuring the availability and accessibility of quality nutrition services.",
         "ne": "गुणस्तरीय पोषण सेवाको उपलब्धता र पहुँच सुनिश्चतता गर्दै मानव जीवनचक्रमा पोषणको अवस्था सुधार गर्ने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Impact"
     },
     {
       "name": {
@@ -71,7 +72,8 @@
         "en": "Access to quality nutrition special services and equitable consumption will be improved",
         "ne": "गुणस्तरीय पोषण विशेष सेवामा पहुँच र समतामूलक उपभोगमा सुधार भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Outcome"
     },
     {
       "name": {
@@ -82,7 +84,8 @@
         "en": "Access to quality nutrition sensitive services and equitable consumption will be improved and adequate consumption of safe, healthy and nutritious food will be achieved.",
         "ne": "गुणस्तरीय पोषण संवेदनशील सेवामा पहुँच र समतामूलक उपभोगमा सुधार भएको हुने र सुरक्षित, स्वस्थ र पोसिलो खानाको पर्याप्त उपभोग भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Outcome"
     },
     {
       "name": {
@@ -93,7 +96,8 @@
         "en": "The nutrition-friendly system will be institutionalized in three levels of government",
         "ne": "तीन तहका सरकारमा पोषणमैत्री पद्धति संस्थागत भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Outcome"
     },
     {
       "name": {
@@ -104,7 +108,8 @@
         "en": "Positive knowledge, behavior and practices related to health, good nutrition, drinking water, sanitation and hygiene will be improved and harmful practices will be eliminated.",
         "ne": "स्वास्थ्य, असल पोषणका साथै खानेपानी, सरसफाइ तथा स्वच्छतासम्बन्धी सकारात्मक ज्ञान, व्यवहार र अभ्यासमा सुधार भइ हानिकारक अभ्यासको उन्मुलन भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Outcome"
     },
     {
       "name": {
@@ -115,7 +120,8 @@
         "en": "Maternal, infant, childhood and adolescent eating practices will be improved",
         "ne": "मातृ, शिशु, बाल्यावस्था र किशोरावस्थामा खानपानको अभ्यासमा सुधार भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -126,7 +132,8 @@
         "en": "Increased access to health and nutrition services in maternal, infant, childhood, adolescence and old age",
         "ne": "मातृ, शिशु, बाल्यावस्था, किशोरावस्था र वृद्धावस्थामा स्वास्थ्य तथा पोषण सेवाको पहुँचमा वृद्धि भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -137,7 +144,8 @@
         "en": "Prevention, control and management of all forms of malnutrition will be improved",
         "ne": "सबै प्रकारका कुपोषणको रोकथाम, नियन्त्रण र व्यवस्थापनमा सुधार भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -148,7 +156,8 @@
         "en": "The resilience of governmental, non-governmental, private and community-based organizations will be strengthened to address the nutritional needs during disaster-induced crises.",
         "ne": " विपद् सिर्जित सङ्कटको समयमा हुने पोषणको आवश्यकतालाई सम्बोधन गर्न सरकारी, गैरसरकारी, निजी तथा समुदायमा आधारित सङ्घ संस्थाको उत्थानशीलता सुदृढ भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -159,7 +168,8 @@
         "en": "The availability, equitable access and consumption of nutritionally free, healthy and safe food items will be improved in every household throughout the year.",
         "ne": "हरेक घर परिवारमा वर्षभरि पोषणमुक्त, स्वस्थ तथा सुरक्षित खाद्यवस्तुको उपलब्धता, समतामूलक पहुँच तथा उपभोगमा सुधार भएको हुने |"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -170,7 +180,8 @@
         "en": "Sustainability in nutrition and food security would have increased.",
         "ne": "पोषण तथा खाद्य सुरक्षामा उत्थानशीलता वृद्धि भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -181,7 +192,8 @@
         "en": "Systematically increased access to and use of safe drinking water.",
         "ne": "व्यवस्थित रूपमा सुरक्षित खानेपानीको पहुँच र उपयोगमा वृद्धि भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -192,7 +204,8 @@
         "en": "Systematically increased access to and use of safe sanitation services.",
         "ne": "व्यवस्थित रूपमा सुरक्षित सरसफाइ सेवाको पहुँच र उपयोगमा वृद्धि भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -203,7 +216,8 @@
         "en": "Empowerment of women and girls through income earning activities.",
         "ne": "आय आर्जनका क्रियाकलापमार्फत महिला तथा किशोरीको सशक्तीकरण भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -214,7 +228,8 @@
         "en": "The scope of the social security scheme would have been expanded.",
         "ne": "सामाजिक सरुक्षा योजनाको दायरामा विस्तार भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -225,7 +240,8 @@
         "en": "Improved mental and psychosocial health.",
         "ne": "मानसिक तथा मनोसामाजिक स्वास्थ्यमा सुधार भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -236,7 +252,8 @@
         "en": "Children's school participation and learning outcomes will improve.",
         "ne": "बालबालिकाको विद्यालयमा सहभागिता र सिकाइको नतिजामा सुधार भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -247,7 +264,8 @@
         "en": "Increased access to early childhood development and education.",
         "ne": "प्रारम्भिक बालविकास र शिक्षाको पहुँचमा वृद्धि भएको हुने।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -258,7 +276,8 @@
         "en": "The government structure related to nutrition should be active at all levels.",
         "ne": "सबै तहमा पोषणसम्बन्धी शासकीय संरचना क्रियाशील भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -269,7 +288,8 @@
         "en": "Monitoring and evaluation system should be strengthened at all levels",
         "ne": "सबै तहमा अनुगमन तथा मूल्याङ्कन प्रणाली सुदृढ भएको हुने"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -280,7 +300,8 @@
         "en": "The capacity of the federal, state and local governments to provide nutrition-specific and nutrition-sensitive services would have been enhanced.",
         "ne": "पोषण विशेष र पोषण संवेदनशील सेवा प्रवाह गर्न सङ्घीय, प्रदेश र स्थानीय सरकारको क्षमता अभिवृद्धि भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -291,7 +312,8 @@
         "en": "The capacity of the federal, state and local governments to provide nutrition-specific and nutrition-sensitive services would have been enhanced.",
         "ne": "पोषण विशेष र पोषण संवेदनशील सेवा प्रवाह गर्न सङ्घीय, प्रदेश र स्थानीय सरकारको क्षमता अभिवृद्धि भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -302,7 +324,8 @@
         "en": "School-age children's nutritional education, behavior and water and sanitation practices would have improved.",
         "ne": "विद्यालय जाने उमेरका बालबालिकाको पोषण शिक्षा, व्यवहार र खानेपानी तथा सरसफाइ अभ्यासमा सुधार भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -313,7 +336,8 @@
         "en": "Mothers, children under five and caregivers and service providers will have increased knowledge about good food, nutrition and drinking water and sanitation practices.",
         "ne": " आमा, पाँच वर्षमुनिका बालबालिका तथा हेरचाहकर्ता र सेवा प्रदायकमा असल खानपान, पोषण र खानेपानी तथा सरसफाइका अभ्यास सम्बन्धमा ज्ञान वृद्धि भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     },
     {
       "name": {
@@ -324,7 +348,8 @@
         "en": "Women and girls will be empowered to prevent harmful social practices.",
         "ne": "हानिकारक सामाजिक अभ्यासको रोकथामको लागि महिला तथा किशोरी सशक्त भएको हुने ।"
       },
-      "isActive": true
+      "isActive": true,
+      "category": "Output"
     }
   ],
   "indicators": [

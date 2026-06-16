@@ -30,6 +30,7 @@ import { MsnpIndicatorDataModule } from './modules/msnp-indicator-data/msnp-indi
 import { MsnpIndicatorTargetsModule } from './modules/msnp-indicator-targets/msnp-indicator-targets.module';
 import { DisaggregationTypesModule } from './modules/disaggregation-types/disaggregation-types.module';
 import { DisaggregationOptionsModule } from './modules/disaggregation-options/disaggregation-options.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -82,6 +83,7 @@ import { DisaggregationOptionsModule } from './modules/disaggregation-options/di
     MsnpIndicatorTargetsModule,
     DisaggregationTypesModule,
     DisaggregationOptionsModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [
