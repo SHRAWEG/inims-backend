@@ -1,31 +1,17 @@
-import { IsString, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { PartialType } from '@nestjs/swagger';
 
-// src/common/dto/localized-field.dto.ts
 export class LocalizedFieldDto {
-  @IsString()
+  @ApiPropertyOptional({ example: 'About Us' })
   @IsOptional()
-  @MaxLength(255)
-  @ApiProperty({ example: 'English value', required: false })
+  @IsString()
   en?: string;
 
+  @ApiProperty({ example: 'हाम्रो बारे' })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
-  @ApiProperty({ example: 'नेपाली मान' })
   ne: string;
 }
 
-export class PartialLocalizedFieldDto {
-  @IsString()
-  @IsOptional()
-  @MaxLength(255)
-  @ApiProperty({ example: 'English value', required: false })
-  en?: string;
-
-  @IsString()
-  @IsOptional()
-  @MaxLength(255)
-  @ApiProperty({ example: 'नेपाली मान', required: false })
-  ne?: string;
-}
+export class PartialLocalizedFieldDto extends PartialType(LocalizedFieldDto) {}

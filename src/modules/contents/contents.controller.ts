@@ -27,6 +27,7 @@ import { ContentSummaryResponseDto } from './dto/content-summary-response.dto';
 import { Public } from '../../common/decorators/public.decorator';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { buildResponse } from '../../common/utils/response.util';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
 
 @ApiTags('contents')
 @ApiBearerAuth('access-token')
@@ -60,8 +61,14 @@ export class ContentsController {
   @ApiParam({ name: 'slug', type: 'string' })
   @ApiResponse({ status: 200, type: ContentResponseDto })
   @ApiResponse({ status: 404, description: 'Not found' })
-  async findOne(@Param('slug') slug: string) {
-    const data = await this.contentsService.findBySlug(slug);
+  async findOne(
+    @Param('slug') slug: string,
+    @Query() localeQuery: LocaleQueryDto,
+  ) {
+    const data = await this.contentsService.findBySlug(
+      slug,
+      localeQuery.locale,
+    );
     return buildResponse(data);
   }
 
@@ -75,8 +82,9 @@ export class ContentsController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdateContentDto,
+    @Query() localeQuery: LocaleQueryDto,
   ) {
-    const data = await this.contentsService.update(id, dto);
+    const data = await this.contentsService.update(id, dto, localeQuery.locale);
     return buildResponse(data);
   }
 

@@ -1,12 +1,18 @@
-import { IsString, IsNotEmpty, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateContentDto {
-  @ApiProperty({ example: 'About Us' })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(255)
-  title: string;
+  @ApiProperty({ type: LocalizedFieldDto })
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  title: LocalizedFieldDto;
 
   @ApiProperty({ example: 'about-us' })
   @IsString()
@@ -14,8 +20,8 @@ export class CreateContentDto {
   @MaxLength(255)
   slug: string;
 
-  @ApiProperty({ example: '<h1>About Us</h1><p>Content here...</p>' })
-  @IsString()
-  @IsNotEmpty()
-  htmlContent: string;
+  @ApiProperty({ type: LocalizedFieldDto })
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  htmlContent: LocalizedFieldDto;
 }

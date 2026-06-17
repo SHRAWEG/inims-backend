@@ -1,21 +1,28 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { LocalizedFieldDto } from '../../../common/dto/localized-field.dto';
 
 export class CreateChildContentDto {
-  @ApiProperty({ example: 'Section 1' })
-  @IsString()
-  @IsNotEmpty()
-  title: string;
+  @ApiProperty({ type: LocalizedFieldDto })
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  title: LocalizedFieldDto;
 
   @ApiProperty({ example: 'section-1' })
   @IsString()
   @IsNotEmpty()
   slug: string;
 
-  @ApiProperty({ example: '<h2>Section 1</h2><p>Content...</p>' })
-  @IsString()
-  @IsNotEmpty()
-  htmlContent: string;
+  @ApiProperty({ type: LocalizedFieldDto })
+  @ValidateNested()
+  @Type(() => LocalizedFieldDto)
+  htmlContent: LocalizedFieldDto;
 
   @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
   @IsOptional()

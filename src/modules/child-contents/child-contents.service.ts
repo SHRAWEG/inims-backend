@@ -16,6 +16,11 @@ import { BusinessValidationException } from '../../common/exceptions/business-va
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
+import {
+  LocalizedField,
+  SupportedLocale,
+  DEFAULT_LOCALE,
+} from '../../common/types/i18n.type';
 
 @Injectable()
 export class ChildContentsService {
@@ -87,10 +92,9 @@ export class ChildContentsService {
     qb.leftJoinAndSelect('childContent.parent', 'parent');
 
     if (query.search) {
-      qb.andWhere(
-        '(childContent.title ILIKE :search OR childContent.slug ILIKE :search)',
-        { search: `%${query.search}%` },
-      );
+      qb.andWhere('(childContent.slug ILIKE :search)', {
+        search: `%${query.search}%`,
+      });
     }
 
     qb.orderBy('childContent.createdAt', 'DESC')
@@ -100,12 +104,15 @@ export class ChildContentsService {
     const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: data.map((c) => this.toSummaryResponse(c)),
+      data: data.map((c) => this.toSummaryResponse(c, query.locale)),
       meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findById(id: string): Promise<ChildContentResponseDto> {
+  async findById(
+    id: string,
+    locale?: SupportedLocale,
+  ): Promise<ChildContentResponseDto> {
     const entity = await this.repository.findOne({
       where: { id },
       relations: ['parent'],
@@ -113,12 +120,13 @@ export class ChildContentsService {
     if (!entity) {
       throw new EntityNotFoundException('ChildContent', id);
     }
-    return this.toResponse(entity);
+    return this.toResponse(entity, locale);
   }
 
   async update(
     id: string,
     dto: UpdateChildContentDto,
+    locale?: SupportedLocale,
   ): Promise<ChildContentResponseDto> {
     const existing = await this.repository.findOne({
       where: { id },
@@ -176,7 +184,7 @@ export class ChildContentsService {
         after: sanitizeForAudit(updated),
       });
 
-      return this.toResponse(updated!);
+      return this.toResponse(updated!, locale);
     } catch (error) {
       this.logger.error(`Failed to update child content: ${id}`, {
         error: (error as Error).message,
@@ -201,16 +209,27 @@ export class ChildContentsService {
     });
   }
 
-  private toResponse(entity: ChildContent): ChildContentResponseDto {
+  private resolveLocale(
+    field: LocalizedField,
+    locale?: SupportedLocale,
+  ): string {
+    const lang = locale ?? DEFAULT_LOCALE;
+    return field[lang] ?? field[DEFAULT_LOCALE] ?? '';
+  }
+
+  private toResponse(
+    entity: ChildContent,
+    locale?: SupportedLocale,
+  ): ChildContentResponseDto {
     return {
       id: entity.id,
-      title: entity.title,
+      title: this.resolveLocale(entity.title, locale),
       slug: entity.slug,
-      htmlContent: entity.htmlContent,
+      htmlContent: this.resolveLocale(entity.htmlContent, locale),
       parent: entity.parent
         ? {
             id: entity.parent.id,
-            title: entity.parent.title,
+            title: this.resolveLocale(entity.parent.title, locale),
             slug: entity.parent.slug,
           }
         : undefined,
@@ -221,15 +240,16 @@ export class ChildContentsService {
 
   private toSummaryResponse(
     entity: ChildContent,
+    locale?: SupportedLocale,
   ): ChildContentSummaryResponseDto {
     return {
       id: entity.id,
-      title: entity.title,
+      title: this.resolveLocale(entity.title, locale),
       slug: entity.slug,
       parent: entity.parent
         ? {
             id: entity.parent.id,
-            title: entity.parent.title,
+            title: this.resolveLocale(entity.parent.title, locale),
             slug: entity.parent.slug,
           }
         : undefined,

@@ -27,6 +27,7 @@ import { ChildContentSummaryResponseDto } from './dto/child-content-summary-resp
 import { Public } from '../../common/decorators/public.decorator';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { buildResponse } from '../../common/utils/response.util';
+import { LocaleQueryDto } from '../../common/dto/locale-query.dto';
 
 @ApiTags('child-contents')
 @ApiBearerAuth('access-token')
@@ -59,8 +60,14 @@ export class ChildContentsController {
   @ApiParam({ name: 'id', type: 'string', format: 'uuid' })
   @ApiResponse({ status: 200, type: ChildContentResponseDto })
   @ApiResponse({ status: 404, description: 'Not found' })
-  async findOne(@Param('id', ParseUUIDPipe) id: string) {
-    const data = await this.childContentsService.findById(id);
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query() localeQuery: LocaleQueryDto,
+  ) {
+    const data = await this.childContentsService.findById(
+      id,
+      localeQuery.locale,
+    );
     return buildResponse(data);
   }
 
@@ -73,8 +80,13 @@ export class ChildContentsController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdateChildContentDto,
+    @Query() localeQuery: LocaleQueryDto,
   ) {
-    const data = await this.childContentsService.update(id, dto);
+    const data = await this.childContentsService.update(
+      id,
+      dto,
+      localeQuery.locale,
+    );
     return buildResponse(data);
   }
 

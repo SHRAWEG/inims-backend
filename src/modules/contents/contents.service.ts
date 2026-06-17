@@ -14,6 +14,11 @@ import { BusinessValidationException } from '../../common/exceptions/business-va
 import { BusinessLogicException } from '../../common/exceptions/business-logic.exception';
 import { buildPaginationMeta } from '../../common/utils/pagination.util';
 import { sanitizeForAudit } from '../../common/utils/audit.util';
+import {
+  LocalizedField,
+  SupportedLocale,
+  DEFAULT_LOCALE,
+} from '../../common/types/i18n.type';
 
 @Injectable()
 export class ContentsService {
@@ -26,18 +31,12 @@ export class ContentsService {
   ) {}
 
   async create(dto: CreateContentDto): Promise<ContentResponseDto> {
-    const errors: Record<string, string[]> = {};
+    const existingSlug = await this.repository.findOne({
+      where: { slug: dto.slug },
+    });
 
-    const [existingTitle, existingSlug] = await Promise.all([
-      this.repository.findOne({ where: { title: dto.title } }),
-      this.repository.findOne({ where: { slug: dto.slug } }),
-    ]);
-
-    if (existingTitle) errors['title'] = ['Title already in use'];
-    if (existingSlug) errors['slug'] = ['Slug already in use'];
-
-    if (Object.keys(errors).length > 0) {
-      throw new BusinessValidationException(errors);
+    if (existingSlug) {
+      throw new BusinessValidationException({ slug: ['Slug already in use'] });
     }
 
     try {
@@ -68,10 +67,9 @@ export class ContentsService {
     const qb = this.repository.createQueryBuilder('content');
 
     if (query.search) {
-      qb.andWhere(
-        '(content.title ILIKE :search OR content.slug ILIKE :search)',
-        { search: `%${query.search}%` },
-      );
+      qb.andWhere('(content.slug ILIKE :search)', {
+        search: `%${query.search}%`,
+      });
     }
 
     qb.orderBy('content.createdAt', 'DESC')
@@ -81,12 +79,15 @@ export class ContentsService {
     const [data, total] = await qb.getManyAndCount();
 
     return {
-      data: data.map((c) => this.toSummaryResponse(c)),
+      data: data.map((c) => this.toSummaryResponse(c, query.locale)),
       meta: buildPaginationMeta(total, query.page, query.limit),
     };
   }
 
-  async findBySlug(slug: string): Promise<ContentResponseDto> {
+  async findBySlug(
+    slug: string,
+    locale?: SupportedLocale,
+  ): Promise<ContentResponseDto> {
     const entity = await this.repository.findOne({
       where: { slug },
       relations: ['children'],
@@ -94,10 +95,14 @@ export class ContentsService {
     if (!entity) {
       throw new EntityNotFoundException('Content', slug);
     }
-    return this.toResponse(entity);
+    return this.toResponse(entity, locale);
   }
 
-  async update(id: string, dto: UpdateContentDto): Promise<ContentResponseDto> {
+  async update(
+    id: string,
+    dto: UpdateContentDto,
+    locale?: SupportedLocale,
+  ): Promise<ContentResponseDto> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) {
       throw new EntityNotFoundException('Content', id);
@@ -105,16 +110,6 @@ export class ContentsService {
 
     const errors: Record<string, string[]> = {};
     const checks: Promise<void>[] = [];
-
-    if (dto.title && dto.title !== existing.title) {
-      checks.push(
-        this.repository
-          .findOne({ where: { title: dto.title, id: Not(id) } })
-          .then((res) => {
-            if (res) errors['title'] = ['Title already in use'];
-          }),
-      );
-    }
 
     if (dto.slug && dto.slug !== existing.slug) {
       checks.push(
@@ -148,7 +143,7 @@ export class ContentsService {
         after: sanitizeForAudit(updated),
       });
 
-      return this.toResponse(updated);
+      return this.toResponse(updated, locale);
     } catch (error) {
       this.logger.error(`Failed to update content: ${id}`, {
         error: (error as Error).message,
@@ -173,15 +168,26 @@ export class ContentsService {
     });
   }
 
-  private toResponse(entity: Content): ContentResponseDto {
+  private resolveLocale(
+    field: LocalizedField,
+    locale?: SupportedLocale,
+  ): string {
+    const lang = locale ?? DEFAULT_LOCALE;
+    return field[lang] ?? field[DEFAULT_LOCALE] ?? '';
+  }
+
+  private toResponse(
+    entity: Content,
+    locale?: SupportedLocale,
+  ): ContentResponseDto {
     return {
       id: entity.id,
-      title: entity.title,
+      title: this.resolveLocale(entity.title, locale),
       slug: entity.slug,
-      htmlContent: entity.htmlContent,
+      htmlContent: this.resolveLocale(entity.htmlContent, locale),
       children: entity.children?.map((child) => ({
         id: child.id,
-        title: child.title,
+        title: this.resolveLocale(child.title, locale),
         slug: child.slug,
         createdAt: child.createdAt,
         updatedAt: child.updatedAt,
@@ -191,10 +197,13 @@ export class ContentsService {
     };
   }
 
-  private toSummaryResponse(entity: Content): ContentSummaryResponseDto {
+  private toSummaryResponse(
+    entity: Content,
+    locale?: SupportedLocale,
+  ): ContentSummaryResponseDto {
     return {
       id: entity.id,
-      title: entity.title,
+      title: this.resolveLocale(entity.title, locale),
       slug: entity.slug,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
