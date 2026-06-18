@@ -1,658 +1,986 @@
 [
   {
     "code": "1",
-    "currentStatus": "२४.८"
+    "currentStatus": "२४.८",
+    "remarks": "पु:२४.७, म:२५.०",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "2",
-    "currentStatus": "७.७"
+    "currentStatus": "७.७",
+    "remarks": "पु:८.५, म:६.९",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "3",
-    "currentStatus": "११.५"
+    "currentStatus": "११.५",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "4",
-    "currentStatus": "१८.७"
+    "currentStatus": "१८.७",
+    "remarks": "पु:१६.६, म:२०.९",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "5",
-    "currentStatus": "१"
+    "currentStatus": "१",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "6",
-    "currentStatus": "आधाररेखा र लक्ष्य कायम गरिनेछ"
+    "currentStatus": "आधाररेखा र लक्ष्य कायम गरिनेछ",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "7",
-    "currentStatus": "२४.३"
+    "currentStatus": "२४.३",
+    "remarks": "पु:२३.४, म:२५.१",
+    "dataSource": "स्टेप्स सर्वेक्षण"
   },
   {
     "code": "8",
-    "currentStatus": "१०"
+    "currentStatus": "१०",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "9",
-    "currentStatus": "४३.४"
+    "currentStatus": "४३.४",
+    "remarks": "पु:४३.९, म:४२.७",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "10",
-    "currentStatus": "३४"
+    "currentStatus": "३४",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "11",
-    "currentStatus": "४३"
+    "currentStatus": "४३",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "12",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "13",
-    "currentStatus": "50"
+    "currentStatus": "50",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "14",
-    "currentStatus": "५६.४"
+    "currentStatus": "५६.४",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "15",
-    "currentStatus": "३.६"
+    "currentStatus": "३.६",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "16",
-    "currentStatus": "६०"
+    "currentStatus": "६०",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "17",
-    "currentStatus": "५२.६"
+    "currentStatus": "५२.६",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "18",
-    "currentStatus": "१२"
+    "currentStatus": "१२",
+    "remarks": "२,८४,०१४ किशोरीमा (ए.स्वा.व्य.सू.प्र.२०२२) २,२८९,९०७ कुल ]",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "19",
-    "currentStatus": "९४.५"
+    "currentStatus": "९४.५",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "20",
-    "currentStatus": "२.८"
+    "currentStatus": "२.८",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "21",
-    "currentStatus": "९.७"
+    "currentStatus": "९.७",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "22",
-    "currentStatus": "१२.७"
+    "currentStatus": "१२.७",
+    "remarks": "",
+    "dataSource": "एस. ओ. एफ्. आई."
   },
   {
     "code": "23",
-    "currentStatus": "५६.९"
+    "currentStatus": "५६.९",
+    "remarks": "आर्थिक सूचक",
+    "dataSource": "विश्वव्यापी खाद्य सुरक्षा सूचक"
   },
   {
     "code": "24",
-    "currentStatus": "४८.२"
+    "currentStatus": "४८.२",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "27",
-    "currentStatus": "0.57"
+    "currentStatus": "0.57",
+    "remarks": "",
+    "dataSource": "युएनडीपी"
   },
   {
     "code": "28",
-    "currentStatus": "38.4"
+    "currentStatus": "38.4",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "29",
-    "currentStatus": "२१.८"
+    "currentStatus": "२१.८",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "30",
-    "currentStatus": "९१.२"
+    "currentStatus": "९१.२",
+    "remarks": "",
+    "dataSource": "शि.बि.प्र.म."
   },
   {
     "code": "31",
-    "currentStatus": "७८.२"
+    "currentStatus": "७८.२",
+    "remarks": "",
+    "dataSource": "शि.बि.प्र.म."
   },
   {
     "code": "32",
-    "currentStatus": "९"
+    "currentStatus": "९",
+    "remarks": "",
+    "dataSource": "शि.बि.प्र.म."
   },
   {
     "code": "33",
-    "currentStatus": "५३"
+    "currentStatus": "५३",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "34",
-    "currentStatus": "२४,००,००,०००"
+    "currentStatus": "२४,००,००,०००",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "35",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "36",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "37",
-    "currentStatus": "८०.७"
+    "currentStatus": "८०.७",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "38",
-    "currentStatus": "आधाररेखा कायम गरिनेछ"
+    "currentStatus": "आधाररेखा कायम गरिनेछ",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "39",
-    "currentStatus": "आधाररेखा कायम गरिनेछ"
+    "currentStatus": "आधाररेखा कायम गरिनेछ",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "40",
-    "currentStatus": "३१.०/२२.२"
+    "currentStatus": "३१.०/२२.२",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "41",
-    "currentStatus": "१९.३/५.३"
+    "currentStatus": "१९.३/५.३",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "42",
-    "currentStatus": "३८.४"
+    "currentStatus": "३८.४",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "43",
-    "currentStatus": "८३.१"
+    "currentStatus": "८३.१",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "44",
-    "currentStatus": "३.८"
+    "currentStatus": "३.८",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "45",
-    "currentStatus": "५५.३"
+    "currentStatus": "५५.३",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "46",
-    "currentStatus": "८७.६"
+    "currentStatus": "८७.६",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "47",
-    "currentStatus": "४९.६"
+    "currentStatus": "४९.६",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "48",
-    "currentStatus": "७८.२"
+    "currentStatus": "७८.२",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "49",
-    "currentStatus": "६८.७"
+    "currentStatus": "६८.७",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "50",
-    "currentStatus": "२३"
+    "currentStatus": "२३",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "51",
-    "currentStatus": "<१%"
+    "currentStatus": "<१%",
+    "remarks": "",
+    "dataSource": "परिवार कल्याण महाशाखा"
   },
   {
     "code": "53",
-    "currentStatus": "१"
+    "currentStatus": "१",
+    "remarks": "",
+    "dataSource": "परिवार कल्याण महाशाखा"
   },
   {
     "code": "54",
-    "currentStatus": "९१"
+    "currentStatus": "९१",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "55",
-    "currentStatus": "८५"
+    "currentStatus": "८५",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "56",
-    "currentStatus": "८५"
+    "currentStatus": "८५",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "57",
-    "currentStatus": "५५"
+    "currentStatus": "५५",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "58",
-    "currentStatus": "९४.९"
+    "currentStatus": "९४.९",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "59",
-    "currentStatus": "२०"
+    "currentStatus": "२०",
+    "remarks": "",
+    "dataSource": "डि.एच.आई.एस."
   },
   {
     "code": "60",
-    "currentStatus": "९.१"
+    "currentStatus": "९.१",
+    "remarks": "",
+    "dataSource": "स्टेप्स सर्वेक्षण"
   },
   {
     "code": "61",
-    "currentStatus": "१७"
+    "currentStatus": "१७",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "62",
-    "currentStatus": "७९.४"
+    "currentStatus": "७९.४",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "63",
-    "currentStatus": "७९"
+    "currentStatus": "७९",
+    "remarks": "",
+    "dataSource": "ए.स्वा.व्य.सू.प्र."
   },
   {
     "code": "64",
-    "currentStatus": "७९"
+    "currentStatus": "७९",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "65",
-    "currentStatus": "४०.८"
+    "currentStatus": "४०.८",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "66",
-    "currentStatus": "४२.७"
+    "currentStatus": "४२.७",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "67",
-    "currentStatus": "११७"
+    "currentStatus": "११७",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "68",
-    "currentStatus": "95.2"
+    "currentStatus": "95.2",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "69",
-    "currentStatus": "०"
+    "currentStatus": "०",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "70",
-    "currentStatus": "18.186"
+    "currentStatus": "18.186",
+    "remarks": "",
+    "dataSource": "स्वा.व्य.सू.प्र."
   },
   {
     "code": "71",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "72",
-    "currentStatus": "०"
+    "currentStatus": "०",
+    "remarks": "",
+    "dataSource": "परिवार कल्याण महाशाखा"
   },
   {
     "code": "73",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "74",
-    "currentStatus": "८"
+    "currentStatus": "८",
+    "remarks": "",
+    "dataSource": "परिवार कल्याण महाशाखा"
   },
   {
     "code": "75",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "77",
-    "currentStatus": "११११८"
+    "currentStatus": "११११८",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "78",
-    "currentStatus": "३९४"
+    "currentStatus": "३९४",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "79",
-    "currentStatus": "३९९३"
+    "currentStatus": "३९९३",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "80",
-    "currentStatus": "३३२५"
+    "currentStatus": "३३२५",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "81",
-    "currentStatus": "१३६०"
+    "currentStatus": "१३६०",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "82",
-    "currentStatus": "२४७९"
+    "currentStatus": "२४७९",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "83",
-    "currentStatus": "१४९"
+    "currentStatus": "१४९",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "84",
-    "currentStatus": "१०४"
+    "currentStatus": "१०४",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "85",
-    "currentStatus": "५२०"
+    "currentStatus": "५२०",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "86",
-    "currentStatus": "३२०"
+    "currentStatus": "३२०",
+    "remarks": "",
+    "dataSource": "रा.यो.आ."
   },
   {
     "code": "87",
-    "currentStatus": "2"
+    "currentStatus": "2",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "88",
-    "currentStatus": "२"
+    "currentStatus": "२",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "89",
-    "currentStatus": "३९६"
+    "currentStatus": "३९६",
+    "remarks": 2018,
+    "dataSource": ""
   },
   {
     "code": "90",
-    "currentStatus": "६५०००"
+    "currentStatus": "६५०००",
+    "remarks": "",
+    "dataSource": "फानसेप"
   },
   {
     "code": "91",
-    "currentStatus": "२५.२"
+    "currentStatus": "२५.२",
+    "remarks": "",
+    "dataSource": "रा.यो.आ."
   },
   {
     "code": "92",
-    "currentStatus": "१.९६"
+    "currentStatus": "१.९६",
+    "remarks": "",
+    "dataSource": "रा.यो.आ."
   },
   {
     "code": "93",
-    "currentStatus": "६६०९"
+    "currentStatus": "६६०९",
+    "remarks": "",
+    "dataSource": "मध्यमकालीन खर्च संरचना"
   },
   {
     "code": "94",
-    "currentStatus": "20"
+    "currentStatus": "20",
+    "remarks": "",
+    "dataSource": "रा.यो.आ."
   },
   {
     "code": "95",
-    "currentStatus": "३"
+    "currentStatus": "३",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "96",
-    "currentStatus": "२१"
+    "currentStatus": "२१",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "97",
-    "currentStatus": "०"
+    "currentStatus": "०",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "98",
-    "currentStatus": "०"
+    "currentStatus": "०",
+    "remarks": "",
+    "dataSource": "कृ.प.वि.म."
   },
   {
     "code": "99",
-    "currentStatus": "११५"
+    "currentStatus": "११५",
+    "remarks": "",
+    "dataSource": "रा.यो.आ."
   },
   {
     "code": "100",
-    "currentStatus": "९७.१"
+    "currentStatus": "९७.१",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "101",
-    "currentStatus": "७८"
+    "currentStatus": "७८",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "102",
-    "currentStatus": "८५.१"
+    "currentStatus": "८५.१",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "103",
-    "currentStatus": "७५.३"
+    "currentStatus": "७५.३",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "104",
-    "currentStatus": "95"
+    "currentStatus": "95",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "105",
-    "currentStatus": "२३.५"
+    "currentStatus": "२३.५",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "106",
-    "currentStatus": "९५"
+    "currentStatus": "९५",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "107",
-    "currentStatus": "९३.८"
+    "currentStatus": "९३.८",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "108",
-    "currentStatus": "७०.३"
+    "currentStatus": "७०.३",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "109",
-    "currentStatus": "६१.१"
+    "currentStatus": "६१.१",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "111",
-    "currentStatus": "आधाररेखा कायम गरिनेछ"
+    "currentStatus": "आधाररेखा कायम गरिनेछ",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "113",
-    "currentStatus": "३१.३"
+    "currentStatus": "३१.३",
+    "remarks": "",
+    "dataSource": "ने.ज.स्वा.स."
   },
   {
     "code": "114",
-    "currentStatus": "247880"
+    "currentStatus": "247880",
+    "remarks": "",
+    "dataSource": "राष्ट्रिय तथ्याङ्क कार्यालय"
   },
   {
     "code": "115",
-    "currentStatus": "१५००"
+    "currentStatus": "१५००",
+    "remarks": "",
+    "dataSource": "मध्यमकालीन खर्च संरचना"
   },
   {
     "code": "116",
-    "currentStatus": "२७७५"
+    "currentStatus": "२७७५",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "117",
-    "currentStatus": "९५७५"
+    "currentStatus": "९५७५",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "118",
-    "currentStatus": "६८"
+    "currentStatus": "६८",
+    "remarks": "",
+    "dataSource": "मध्यमकालीन खर्च संरचना"
   },
   {
     "code": "119",
-    "currentStatus": "४१०२९५"
+    "currentStatus": "४१०२९५",
+    "remarks": "",
+    "dataSource": "राष्ट्रिय परिचयपत्र तथा पञ्जीकरण विभाग"
   },
   {
     "code": "120",
-    "currentStatus": "३८३९२६"
+    "currentStatus": "३८३९२६",
+    "remarks": "",
+    "dataSource": "राष्ट्रिय परिचयपत्र तथा पञ्जीकरण विभाग"
   },
   {
     "code": "121",
-    "currentStatus": "२८"
+    "currentStatus": "२८",
+    "remarks": "",
+    "dataSource": "मध्यमकालीन खर्च संरचना"
   },
   {
     "code": "122",
-    "currentStatus": "८२.०"
+    "currentStatus": "८२.०",
+    "remarks": "",
+    "dataSource": "ने.ब.सू.स."
   },
   {
     "code": "123",
-    "currentStatus": "३०८१४९१"
+    "currentStatus": "३०८१४९१",
+    "remarks": "१ देखि ५ कक्षा तथा प्रा.बा.शि.वि.",
+    "dataSource": "शि.बि.प्र.म."
   },
   {
     "code": "124",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "126",
-    "currentStatus": "3806"
+    "currentStatus": "3806",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "127",
-    "currentStatus": "आधाररेखा: आधाररेखा कायम गरिनेछ"
+    "currentStatus": "आधाररेखा: आधाररेखा कायम गरिनेछ",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "128",
-    "currentStatus": "७१.६"
+    "currentStatus": "७१.६",
+    "remarks": "",
+    "dataSource": "शि.बि.प्र.म."
   },
   {
     "code": "129",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "130",
-    "currentStatus": "६५"
+    "currentStatus": "६५",
+    "remarks": "",
+    "dataSource": "मध्यमकालीन खर्च संरचना"
   },
   {
     "code": "131",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "132",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "133",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "134",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "135",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "136",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "137",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "138",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "139",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "140",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "141",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "142",
-    "currentStatus": "55"
+    "currentStatus": "55",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "143",
-    "currentStatus": "५१"
+    "currentStatus": "५१",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "144",
-    "currentStatus": "380"
+    "currentStatus": "380",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "145",
-    "currentStatus": "नभएको"
+    "currentStatus": "नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "146",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "147",
-    "currentStatus": "१"
+    "currentStatus": "१",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "148",
-    "currentStatus": "०"
+    "currentStatus": "०",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "149",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "150",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "141",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "152",
-    "currentStatus": "५५"
+    "currentStatus": "५५",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "139",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "154",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "155",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "156",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "157",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "158",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "159",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "160",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "161",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "162",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "163",
-    "currentStatus": "आधाररेखा कायम गरिने"
+    "currentStatus": "आधाररेखा कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "164",
-    "currentStatus": "आधार तथ्याङ्क कायम गरिने"
+    "currentStatus": "आधार तथ्याङ्क कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "165",
-    "currentStatus": "आधाररेखा कायम गरिने"
+    "currentStatus": "आधाररेखा कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "166",
-    "currentStatus": "आधाररेखा कायम गरिने"
+    "currentStatus": "आधाररेखा कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "167",
-    "currentStatus": "आधाररेखा कायम गरिने"
+    "currentStatus": "आधाररेखा कायम गरिने",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "169",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "170",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "171",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   },
   {
     "code": "172",
-    "currentStatus": "उपलब्ध नभएको"
+    "currentStatus": "उपलब्ध नभएको",
+    "remarks": "",
+    "dataSource": ""
   }
 ]

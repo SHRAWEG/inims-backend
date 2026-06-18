@@ -10,6 +10,8 @@ import * as path from 'path';
 interface CurrentStatusRow {
   code: string;
   currentStatus: string;
+  remarks?: string;
+  dataSource?: string;
 }
 
 export async function seedCurrentStatus(dataSource: DataSource) {
@@ -72,6 +74,9 @@ export async function seedCurrentStatus(dataSource: DataSource) {
 
     if (existingData) {
       existingData.value = item.currentStatus;
+      if (item.remarks !== undefined) existingData.remarks = item.remarks;
+      if (item.dataSource !== undefined)
+        existingData.dataSource = item.dataSource;
       await dataRepo.save(existingData);
     } else {
       const newData = dataRepo.create({
@@ -79,6 +84,8 @@ export async function seedCurrentStatus(dataSource: DataSource) {
         fiscalYearId: targetFy.id,
         indicatorId: indicator.id,
         value: item.currentStatus,
+        remarks: item.remarks,
+        dataSource: item.dataSource,
         submittedBy: superUser.id,
       });
       await dataRepo.save(newData);
