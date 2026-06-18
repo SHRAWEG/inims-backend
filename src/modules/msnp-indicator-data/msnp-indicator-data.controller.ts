@@ -82,10 +82,16 @@ export class MsnpIndicatorDataController {
     @Query() query: QueryMsnpIndicatorDataDto,
     @Req() req: Request,
   ) {
-    const user = req.user as { sub?: string; id?: string; roleId?: string };
+    const user = req.user as {
+      sub?: string;
+      id?: string;
+      roleId?: string;
+      systemRole?: string;
+    };
     const result = await this.msnpIndicatorDataService.findAll(
       query,
       user.roleId,
+      user.systemRole,
     );
     return buildResponse(result);
   }

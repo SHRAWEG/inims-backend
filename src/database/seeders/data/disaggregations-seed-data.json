@@ -690,8 +690,8 @@
     },
     {
       "name": {
-        "en": "Local Level (/)",
-        "ne": "स्थानीय तह (सहर/गाउँ)"
+        "en": "Local Level",
+        "ne": "स्थानीय तह"
       },
       "isSelective": false,
       "sortOrder": 11,
@@ -714,8 +714,8 @@
     },
     {
       "name": {
-        "en": "Local government /",
-        "ne": "स्थानीय सरकार / नगर पालिका"
+        "en": "Local government",
+        "ne": "स्थानीय सरकार"
       },
       "isSelective": false,
       "sortOrder": 12,
