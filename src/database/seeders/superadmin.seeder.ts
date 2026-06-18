@@ -23,7 +23,7 @@ export const seedSuperAdmin = async (dataSource: DataSource) => {
 
     await userRepository.save(superAdmin);
     console.log(
-      `[SuperAdmin Seeder] Created superadmin with email: ${email} and password: superadmin123`,
+      `[SuperAdmin Seeder] Created superadmin with email: ${email} and password: Admin123`,
     );
   } else {
     console.log('[SuperAdmin Seeder] Superadmin already exists. Skipping...');

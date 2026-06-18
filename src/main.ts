@@ -1,4 +1,5 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpStatus } from '@nestjs/common';
+import { NestFactory, NestApplication } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
@@ -6,6 +7,7 @@ import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppModule } from './app.module';
+import type { Request, Response, NextFunction } from 'express';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 import { CustomValidationPipe } from './common/pipes/validation.pipe';
@@ -71,6 +73,33 @@ async function bootstrap(): Promise<void> {
   app.use(helmet());
 
   app.use(compression());
+
+  // Increase JSON body size limit to accommodate HTML content
+  (app as NestApplication).useBodyParser('json', { limit: '10mb' });
+
+  // Catch PayloadTooLargeError from body-parser (Express error middleware)
+  app.use(
+    (
+      err: Error & { type?: string },
+      _req: Request,
+      res: Response,
+      next: NextFunction,
+    ) => {
+      if (err.type === 'entity.too.large') {
+        res.status(HttpStatus.BAD_REQUEST).json({
+          message: 'Validation failed',
+          statusCode: HttpStatus.BAD_REQUEST,
+          timestamp: new Date().toISOString(),
+          path: _req.url,
+          errors: {
+            htmlContent: ['Request body exceeds maximum allowed size'],
+          },
+        });
+        return;
+      }
+      next(err);
+    },
+  );
 
   const corsOriginEnv = configService.get<string>('CORS_ORIGIN', '');
   const allowedOrigins = [
