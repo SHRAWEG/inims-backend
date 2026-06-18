@@ -1,0 +1,34 @@
+const fs = require('fs');
+const xlsx = require('xlsx');
+
+const excelPath = '/home/lily/Downloads/MSNP-III Indicators.xlsx';
+const jsonPath = '/home/lily/Coding/iclick/inims/inims-backend/src/database/seeders/data/current-status-seed-data.json';
+
+const workbook = xlsx.readFile(excelPath);
+const sheetName = workbook.SheetNames[0];
+const worksheet = workbook.Sheets[sheetName];
+const rows = xlsx.utils.sheet_to_json(worksheet, { defval: "" });
+
+const excelMap = {};
+rows.forEach(row => {
+    let codeStr = row['सूचक नं. M&E'];
+    if (codeStr !== undefined && codeStr !== "") {
+        let code = String(codeStr).trim();
+        excelMap[code] = {
+            remarks: row['टिप्पणी - remark for data'],
+            dataSource: row['Source']
+        };
+    }
+});
+
+const currentStatusData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+currentStatusData.forEach(item => {
+    const code = String(item.code).trim();
+    if (excelMap[code]) {
+        item.remarks = excelMap[code].remarks;
+        item.dataSource = excelMap[code].dataSource;
+    }
+});
+
+fs.writeFileSync(jsonPath, JSON.stringify(currentStatusData, null, 2));
+console.log('Updated current-status-seed-data.json');
