@@ -12,8 +12,8 @@ export class Content extends BaseEntity {
   @Column({ unique: true })
   slug: string;
 
-  @Column({ name: 'html_content', type: 'jsonb' })
-  htmlContent: LocalizedField;
+  @Column({ name: 'html_content', type: 'jsonb', nullable: true })
+  htmlContent: LocalizedField | null;
 
   @OneToMany(() => ChildContent, (child) => child.parent)
   children: ChildContent[];

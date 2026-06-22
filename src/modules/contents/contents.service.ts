@@ -99,22 +99,22 @@ export class ContentsService {
   }
 
   async update(
-    id: string,
+    slug: string,
     dto: UpdateContentDto,
     locale?: SupportedLocale,
   ): Promise<ContentResponseDto> {
-    const existing = await this.repository.findOne({ where: { id } });
+    const existing = await this.repository.findOne({ where: { slug } });
     if (!existing) {
-      throw new EntityNotFoundException('Content', id);
+      throw new EntityNotFoundException('Content', slug);
     }
 
     const errors: Record<string, string[]> = {};
     const checks: Promise<void>[] = [];
 
-    if (dto.slug && dto.slug !== existing.slug) {
+    if (dto.slug && dto.slug !== slug) {
       checks.push(
         this.repository
-          .findOne({ where: { slug: dto.slug, id: Not(id) } })
+          .findOne({ where: { slug: dto.slug, id: Not(existing.id) } })
           .then((res) => {
             if (res) errors['slug'] = ['Slug already in use'];
           }),
@@ -138,14 +138,14 @@ export class ContentsService {
       await this.auditLogService.log({
         action: AuditAction.UPDATE,
         resource: 'content',
-        resourceId: id,
+        resourceId: existing.id,
         before: sanitizeForAudit(before),
         after: sanitizeForAudit(updated),
       });
 
       return this.toResponse(updated, locale);
     } catch (error) {
-      this.logger.error(`Failed to update content: ${id}`, {
+      this.logger.error(`Failed to update content: ${slug}`, {
         error: (error as Error).message,
       });
       this.handleDbError(error);
@@ -169,9 +169,10 @@ export class ContentsService {
   }
 
   private resolveLocale(
-    field: LocalizedField,
+    field: LocalizedField | null | undefined,
     locale?: SupportedLocale,
   ): string {
+    if (!field) return '';
     const lang = locale ?? DEFAULT_LOCALE;
     return field[lang] ?? field[DEFAULT_LOCALE] ?? '';
   }
