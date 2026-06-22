@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class MakeContentHtmlContentNullable1782109794610
-  implements MigrationInterface
-{
+export class MakeContentHtmlContentNullable1782109794610 implements MigrationInterface {
   name = 'MakeContentHtmlContentNullable1782109794610';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
