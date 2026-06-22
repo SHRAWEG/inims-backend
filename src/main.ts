@@ -23,20 +23,19 @@ async function bootstrap(): Promise<void> {
           format:
             process.env.NODE_ENV === 'production'
               ? winston.format.combine(
-                  winston.format.timestamp(),
-                  winston.format.json(),
-                )
+                winston.format.timestamp(),
+                winston.format.json(),
+              )
               : winston.format.combine(
-                  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-                  winston.format.colorize(),
-                  winston.format.printf((info) => {
-                    const { timestamp, level, message, context, ...meta } =
-                      info as Record<string, unknown>;
-                    return `${String(timestamp)} | ${String(level)} | ${String((context as string) ?? 'App')} | ${String(message)} | ${
-                      Object.keys(meta).length ? JSON.stringify(meta) : ''
+                winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+                winston.format.colorize(),
+                winston.format.printf((info) => {
+                  const { timestamp, level, message, context, ...meta } =
+                    info as Record<string, unknown>;
+                  return `${String(timestamp)} | ${String(level)} | ${String((context as string) ?? 'App')} | ${String(message)} | ${Object.keys(meta).length ? JSON.stringify(meta) : ''
                     }`;
-                  }),
-                ),
+                }),
+              ),
         }),
       ],
     }),
@@ -108,6 +107,7 @@ async function bootstrap(): Promise<void> {
     'http://localhost:6061', // The new dashboard port
     'https://inims-dashboard.vercel.app',
     'http://103.187.8.96:8686',
+    'http://103.187.8.96:8787',
   ];
   if (corsOriginEnv && !allowedOrigins.includes(corsOriginEnv)) {
     allowedOrigins.push(corsOriginEnv);
