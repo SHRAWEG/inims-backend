@@ -15,3 +15,15 @@ export class LocalizedFieldDto {
 }
 
 export class PartialLocalizedFieldDto extends PartialType(LocalizedFieldDto) {}
+
+export class RequiredLocalizedFieldDto {
+  @ApiProperty({ example: 'About Us' })
+  @IsString()
+  @IsNotEmpty()
+  en: string;
+
+  @ApiProperty({ example: 'हाम्रो बारे' })
+  @IsString()
+  @IsNotEmpty()
+  ne: string;
+}

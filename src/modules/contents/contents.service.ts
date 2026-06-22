@@ -169,9 +169,10 @@ export class ContentsService {
   }
 
   private resolveLocale(
-    field: LocalizedField,
+    field: LocalizedField | null | undefined,
     locale?: SupportedLocale,
   ): string {
+    if (!field) return '';
     const lang = locale ?? DEFAULT_LOCALE;
     return field[lang] ?? field[DEFAULT_LOCALE] ?? '';
   }
