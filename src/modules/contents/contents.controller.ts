@@ -72,19 +72,23 @@ export class ContentsController {
     return buildResponse(data);
   }
 
-  @Patch(':id')
+  @Patch(':slug')
   @Permissions('contents:update')
-  @ApiOperation({ summary: 'Update a content entry' })
-  @ApiParam({ name: 'id', type: 'string', format: 'uuid' })
+  @ApiOperation({ summary: 'Update a content entry by slug' })
+  @ApiParam({ name: 'slug', type: 'string' })
   @ApiResponse({ status: 200, type: ContentResponseDto })
   @ApiResponse({ status: 404, description: 'Not found' })
   @ApiResponse({ status: 409, description: 'Title or slug already exists' })
   async update(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('slug') slug: string,
     @Body() dto: UpdateContentDto,
     @Query() localeQuery: LocaleQueryDto,
   ) {
-    const data = await this.contentsService.update(id, dto, localeQuery.locale);
+    const data = await this.contentsService.update(
+      slug,
+      dto,
+      localeQuery.locale,
+    );
     return buildResponse(data);
   }
 
