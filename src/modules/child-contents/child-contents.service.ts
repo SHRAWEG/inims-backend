@@ -62,6 +62,7 @@ export class ChildContentsService {
         title: dto.title,
         slug: dto.slug,
         htmlContent: dto.htmlContent,
+        sortOrder: dto.sortOrder ?? 0,
         parent,
       });
       const saved = await this.repository.save(entity);
@@ -97,7 +98,8 @@ export class ChildContentsService {
       });
     }
 
-    qb.orderBy('childContent.createdAt', 'DESC')
+    qb.orderBy('childContent.sortOrder', 'ASC')
+      .addOrderBy('childContent.createdAt', 'DESC')
       .skip((query.page - 1) * query.limit)
       .take(query.limit);
 
@@ -168,6 +170,7 @@ export class ChildContentsService {
         title: dto.title ?? existing.title,
         slug: dto.slug ?? existing.slug,
         htmlContent: dto.htmlContent ?? existing.htmlContent,
+        sortOrder: dto.sortOrder ?? existing.sortOrder,
         parent,
       });
 
@@ -233,6 +236,7 @@ export class ChildContentsService {
             slug: entity.parent.slug,
           }
         : undefined,
+      sortOrder: entity.sortOrder,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };
@@ -253,6 +257,7 @@ export class ChildContentsService {
             slug: entity.parent.slug,
           }
         : undefined,
+      sortOrder: entity.sortOrder,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };

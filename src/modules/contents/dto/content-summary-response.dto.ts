@@ -10,6 +10,9 @@ export class ContentSummaryResponseDto {
   @ApiProperty({ example: 'about-us' })
   slug: string;
 
+  @ApiProperty({ example: 0 })
+  sortOrder: number;
+
   @ApiProperty()
   createdAt: Date;
 

@@ -15,6 +15,9 @@ export class Content extends BaseEntity {
   @Column({ name: 'html_content', type: 'jsonb', nullable: true })
   htmlContent: LocalizedField | null;
 
+  @Column({ name: 'sort_order', type: 'int', default: 0 })
+  sortOrder: number;
+
   @OneToMany(() => ChildContent, (child) => child.parent)
   children: ChildContent[];
 }

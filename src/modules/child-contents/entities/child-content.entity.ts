@@ -14,6 +14,9 @@ export class ChildContent extends BaseEntity {
   @Column({ name: 'html_content', type: 'jsonb' })
   htmlContent: LocalizedField;
 
+  @Column({ name: 'sort_order', type: 'int', default: 0 })
+  sortOrder: number;
+
   @Index()
   @ManyToOne(() => Content, {
     nullable: true,

@@ -44,6 +44,7 @@ export class ContentsService {
         title: dto.title,
         slug: dto.slug,
         htmlContent: dto.htmlContent,
+        sortOrder: dto.sortOrder ?? 0,
       });
       const saved = await this.repository.save(entity);
 
@@ -72,7 +73,8 @@ export class ContentsService {
       });
     }
 
-    qb.orderBy('content.createdAt', 'DESC')
+    qb.orderBy('content.sortOrder', 'ASC')
+      .addOrderBy('content.createdAt', 'DESC')
       .skip((query.page - 1) * query.limit)
       .take(query.limit);
 
@@ -186,10 +188,12 @@ export class ContentsService {
       title: this.resolveLocale(entity.title, locale),
       slug: entity.slug,
       htmlContent: this.resolveLocale(entity.htmlContent, locale),
+      sortOrder: entity.sortOrder,
       children: entity.children?.map((child) => ({
         id: child.id,
         title: this.resolveLocale(child.title, locale),
         slug: child.slug,
+        sortOrder: child.sortOrder,
         createdAt: child.createdAt,
         updatedAt: child.updatedAt,
       })),
@@ -206,6 +210,7 @@ export class ContentsService {
       id: entity.id,
       title: this.resolveLocale(entity.title, locale),
       slug: entity.slug,
+      sortOrder: entity.sortOrder,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };

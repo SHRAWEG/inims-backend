@@ -10,6 +10,9 @@ export class ContentChildSummary {
   @ApiProperty({ example: 'section-1' })
   slug: string;
 
+  @ApiProperty({ example: 0 })
+  sortOrder: number;
+
   @ApiProperty()
   createdAt: Date;
 
@@ -32,6 +35,9 @@ export class ContentResponseDto {
 
   @ApiPropertyOptional({ type: [ContentChildSummary] })
   children?: ContentChildSummary[];
+
+  @ApiProperty({ example: 0 })
+  sortOrder: number;
 
   @ApiProperty()
   createdAt: Date;

@@ -11,6 +11,7 @@ import {
   LocalizedFieldDto,
   RequiredLocalizedFieldDto,
 } from '../../../common/dto/localized-field.dto';
+import { IsInt, Min } from 'class-validator';
 
 export class CreateContentDto {
   @ApiProperty({ type: LocalizedFieldDto })
@@ -29,4 +30,10 @@ export class CreateContentDto {
   @ValidateNested()
   @Type(() => RequiredLocalizedFieldDto)
   htmlContent?: RequiredLocalizedFieldDto;
+
+  @ApiPropertyOptional({ example: 0 })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  sortOrder?: number;
 }

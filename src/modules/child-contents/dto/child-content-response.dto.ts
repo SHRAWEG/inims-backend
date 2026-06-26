@@ -27,6 +27,9 @@ export class ChildContentResponseDto {
   @ApiPropertyOptional({ type: ParentSummary })
   parent?: ParentSummary;
 
+  @ApiProperty({ example: 0 })
+  sortOrder: number;
+
   @ApiProperty()
   createdAt: Date;
 
